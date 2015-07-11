@@ -22,6 +22,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <properties>
+        <flyway.version>3.2.1</flyway.version>
+    </properties>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/dschadow/ApplicationIntrusionDetection/issues</url>
