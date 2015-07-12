@@ -22,10 +22,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <flyway.version>3.2.1</flyway.version>
-    </properties>
-
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/dschadow/ApplicationIntrusionDetection/issues</url>
@@ -51,11 +47,6 @@
                 <artifactId>h2</artifactId>
                 <version>1.4.187</version>
             </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>${flyway.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -72,11 +63,6 @@
                         <source>1.8</source>
                         <target>1.8</target>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.flywaydb</groupId>
-                    <artifactId>flyway-maven-plugin</artifactId>
-                    <version>${flyway.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
