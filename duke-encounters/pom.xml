@@ -67,19 +67,34 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>boxfuse</id>
+            <activation>
+                <file>
+                    <exists>${user.home}/.boxfuse/boxfuse.conf</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.boxfuse.client</groupId>
+                        <artifactId>boxfuse-maven-plugin</artifactId>
+                        <configuration>
+                            <image>dukeencounters:${project.version}</image>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.boxfuse.client</groupId>
-                <artifactId>boxfuse-maven-plugin</artifactId>
-                <configuration>
-                    <image>dukeencounters:${project.version}</image>
-                </configuration>
             </plugin>
         </plugins>
     </build>
