@@ -74,6 +74,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.boxfuse.client</groupId>
+                <artifactId>boxfuse-maven-plugin</artifactId>
+                <configuration>
+                    <image>dukeencounters:${project.version}</image>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

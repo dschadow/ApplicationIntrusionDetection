@@ -35,6 +35,13 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>boxfuse-repo</id>
+            <url>https://files.boxfuse.com</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -63,6 +70,31 @@
                         <source>1.8</source>
                         <target>1.8</target>
                     </configuration>
+                </plugin>
+                <!-- Boxfuse requires credentials as described here: https://boxfuse.com/docs/maven/ -->
+                <plugin>
+                    <groupId>com.boxfuse.client</groupId>
+                    <artifactId>boxfuse-maven-plugin</artifactId>
+                    <version>1.8.0.639</version>
+                    <executions>
+                        <execution>
+                            <id>fuse-image</id>
+                            <goals>
+                                <goal>fuse</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                        <execution>
+                            <id>run-on-aws</id>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <phase>deploy</phase>
+                            <configuration>
+                                <env>prod</env>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
