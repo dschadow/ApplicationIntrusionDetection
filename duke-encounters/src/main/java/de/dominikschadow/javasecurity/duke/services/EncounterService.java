@@ -43,4 +43,10 @@ public class EncounterService {
         // AID: max list size 10
         return encounters;
     }
+
+    public List<Encounter> getAllEncounters() {
+        List<Encounter> encounters = repository.findAll();
+
+        return encounters;
+    }
 }
