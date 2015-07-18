@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Duke Encounters</h1>
-    
+
     <div>
         <a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img th:src="@{duke-guitar.png}" alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" style="float:right"/></a>
     </div>
@@ -22,11 +22,13 @@
             <th>Event</th>
             <th>Location</th>
             <th>Date</th>
+            <th>Likelihood</th>
         </tr>
         <tr th:each="encounter : ${encounters}">
             <td th:text="${encounter.event}"></td>
             <td th:text="${encounter.location}"></td>
             <td th:text="${encounter.date}"></td>
+            <td th:text="${encounter.likelihood}"></td>
         </tr>
     </table>
 

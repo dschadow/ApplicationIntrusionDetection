@@ -107,4 +107,8 @@ public class Encounter {
     public void setConfirmations(int confirmations) {
         this.confirmations = confirmations;
     }
+
+    public String getLikelihood() {
+        return confirmations == 0 ? "not confirmed" : confirmations < 5 ? "possible" : "confirmed";
+    }
 }
