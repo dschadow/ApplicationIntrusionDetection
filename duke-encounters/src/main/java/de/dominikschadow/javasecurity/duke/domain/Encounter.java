@@ -20,6 +20,7 @@ package de.dominikschadow.javasecurity.duke.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Encounter {
@@ -40,9 +41,10 @@ public class Encounter {
     @Column(nullable = false)
     private Date date;
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private int confirmations;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
+    private List<Confirmation> confirmations;
 
     public long getId() {
         return id;
@@ -100,15 +102,15 @@ public class Encounter {
         this.user = user;
     }
 
-    public int getConfirmations() {
+    public List<Confirmation> getConfirmations() {
         return confirmations;
     }
 
-    public void setConfirmations(int confirmations) {
+    public void setConfirmations(List<Confirmation> confirmations) {
         this.confirmations = confirmations;
     }
 
     public String getLikelihood() {
-        return confirmations == 0 ? "not confirmed" : confirmations < 5 ? "possible" : "confirmed";
+        return confirmations.isEmpty() ? "not confirmed" : confirmations.size() < 5 ? "plausible" : "confirmed";
     }
 }
