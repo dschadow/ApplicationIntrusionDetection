@@ -39,6 +39,8 @@ public class EncounterService {
     public List<Encounter> getLatestEncounters() {
         Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestTen);
+
+        // AID: max list size 10
         return encounters;
     }
 }
