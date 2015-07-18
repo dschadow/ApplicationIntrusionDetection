@@ -6,6 +6,23 @@
 </head>
 <body>
     <h1>Duke Encounters: Encounters</h1>
+
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Confirmed by</th>
+            <th>Likelihood</th>
+        </tr>
+        <tr th:each="encounter : ${encounters}">
+            <td th:text="${encounter.event}"></td>
+            <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
+            <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+            <td th:text="${encounter.confirmations}"></td>
+            <td th:text="${encounter.likelihood}"></td>
+        </tr>
+    </table>
     
     <h2>Actions</h2>
 
