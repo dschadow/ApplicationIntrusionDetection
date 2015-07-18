@@ -17,6 +17,19 @@
 
     <h2>The Latest Encounters</h2>
 
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Location</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="encounter : ${encounters}">
+            <td th:text="${encounter.event}"></td>
+            <td th:text="${encounter.location}"></td>
+            <td th:text="${encounter.date}"></td>
+        </tr>
+    </table>
+
     <p><a href="encounters">All encounters</a> | <a href="search">Search encounters</a></p>
 
     <h2>Actions</h2>
