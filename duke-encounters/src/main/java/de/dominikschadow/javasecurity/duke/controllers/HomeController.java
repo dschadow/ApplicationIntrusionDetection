@@ -17,11 +17,15 @@
  */
 package de.dominikschadow.javasecurity.duke.controllers;
 
+import de.dominikschadow.javasecurity.duke.domain.Encounter;
 import de.dominikschadow.javasecurity.duke.services.EncounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -35,6 +39,8 @@ public class HomeController {
 
     @RequestMapping(value = "/", method= GET)
     public String home(Model model) {
+        List<Encounter> encounters = encounterService.getLatestEncounters();
+        model.addAttribute("encounters", encounters);
 
         return "index";
     }
