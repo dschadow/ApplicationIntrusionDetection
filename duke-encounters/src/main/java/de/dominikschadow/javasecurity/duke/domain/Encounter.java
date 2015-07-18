@@ -19,7 +19,7 @@ package de.dominikschadow.javasecurity.duke.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Encounter {
@@ -38,7 +38,7 @@ public class Encounter {
     private String comment;
     @NotNull
     @Column(nullable = false)
-    private LocalDate date;
+    private Date date;
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
@@ -84,11 +84,11 @@ public class Encounter {
         this.comment = comment;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

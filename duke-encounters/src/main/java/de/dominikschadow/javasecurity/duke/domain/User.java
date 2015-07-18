@@ -19,7 +19,7 @@ package de.dominikschadow.javasecurity.duke.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -37,7 +37,7 @@ public class User {
     @NotNull
     @Column(nullable = false)
     private String password;
-    private LocalDateTime registrationDate;
+    private Date registrationDate;
     @Enumerated(EnumType.STRING)
     private Level level;
 
@@ -89,11 +89,11 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getRegistrationDate() {
+    public Date getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDateTime registrationDate) {
+    public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
 
