@@ -26,7 +26,7 @@
         </tr>
         <tr th:each="encounter : ${encounters}">
             <td th:text="${encounter.event}"></td>
-            <td th:text="${encounter.location}"></td>
+            <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
             <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
             <td th:text="${encounter.likelihood}"></td>
         </tr>
