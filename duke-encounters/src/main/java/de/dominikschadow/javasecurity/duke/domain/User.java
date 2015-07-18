@@ -17,10 +17,7 @@
  */
 package de.dominikschadow.javasecurity.duke.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -41,6 +38,8 @@ public class User {
     @Column(nullable = false)
     private String password;
     private LocalDateTime registrationDate;
+    @Enumerated(EnumType.STRING)
+    private Level level;
 
     public long getId() {
         return id;
@@ -96,5 +95,13 @@ public class User {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }
