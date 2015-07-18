@@ -18,7 +18,13 @@
 package de.dominikschadow.javasecurity.duke.repositories;
 
 import de.dominikschadow.javasecurity.duke.domain.Encounter;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface EncounterRepository extends JpaRepository<Encounter, Long> {
+    @Query(value="select e from Encounter e")
+    List<Encounter> findWithPageable(Pageable latestTen);
 }

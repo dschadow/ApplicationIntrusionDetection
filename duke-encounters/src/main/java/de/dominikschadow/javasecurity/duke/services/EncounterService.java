@@ -20,6 +20,9 @@ package de.dominikschadow.javasecurity.duke.services;
 import de.dominikschadow.javasecurity.duke.domain.Encounter;
 import de.dominikschadow.javasecurity.duke.repositories.EncounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +37,8 @@ public class EncounterService {
     }
 
     public List<Encounter> getLatestEncounters() {
-        List<Encounter> encounters = repository.findAll();
+        Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
+        List<Encounter> encounters = repository.findWithPageable(latestTen);
         return encounters;
     }
 }
