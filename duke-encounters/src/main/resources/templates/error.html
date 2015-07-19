@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Duke Encounters - Error</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body role="document">
+<div class="jumbotron">
+    <div class="container">
+        <h2>Something horrible just happened...</h2>
+    </div>
+</div>
+
+<div class="container">
+    <h1 th:text="${errorCode}"></h1>
+
+    <p th:text="${errorMessage}"></p>
+
+    <p class="lead"><a href="/">Return home</a></p>
+</div>
+
+</body>
+</html>
