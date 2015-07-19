@@ -26,9 +26,6 @@ public class User {
     @Id
     @GeneratedValue
     private long id;
-    @NotNull
-    @Column(nullable = false)
-    private String username;
     private String firstname;
     private String lastname;
     @NotNull
@@ -47,14 +44,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstname() {
