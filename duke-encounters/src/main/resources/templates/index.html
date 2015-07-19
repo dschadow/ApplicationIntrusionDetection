@@ -1,42 +1,72 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Duke Encounters</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <h1>Duke Encounters</h1>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Duke Encounters</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="register">Register</a></li>
+                <li><a href="login">Login</a></li>
+                <li><a href="encounters">Encounters</a></li>
+                <li><a href="search">Search</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-    <div>
-        <a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img th:src="@{duke-guitar.png}" alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" style="float:right"/></a>
+<div class="jumbotron">
+    <div class="container">
+        <h1>Duke Encounters</h1>
+
+        <p>Welcome to <strong>Duke Encounters</strong>, the leading online platform for Java Duke
+            spotting. This web application is using <a href="http://appsensor.org" target="_blank">OWASP AppSensor</a>
+            for Application Intrusion Detection.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <h2>Latest Encounters</h2>
+        <p class="lead"><a href="encounters">View all</a> | <a href="search">Search</a></p>
     </div>
 
-    <p>Welcome to <strong>Duke Encounters</strong>, the leading online platform for Java Duke spotting.</p>
-
-    <p>This web application is using <a href="http://appsensor.org" target="_blank">OWASP AppSensor</a> for Application Intrusion Detection.</p>
-
-    <h2>The Latest Encounters</h2>
-
-    <table>
-        <tr>
-            <th>Event</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Likelihood</th>
-        </tr>
-        <tr th:each="encounter : ${encounters}">
-            <td th:text="${encounter.event}"></td>
-            <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-            <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-            <td th:text="${encounter.likelihood}"></td>
-        </tr>
-    </table>
-
-    <p><a href="encounters">All encounters</a> | <a href="search">Search encounters</a></p>
-
-    <h2>Actions</h2>
-
-    <p><a href="register">Register</a> | <a href="login">Login</a></p>
-
+    <div class="row">
+        <div class="col-md-8">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Likelihood</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="encounter : ${encounters}">
+                        <td th:text="${encounter.event}"></td>
+                        <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
+                        <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                        <td th:text="${encounter.likelihood}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img
+                th:src="@{duke-guitar.png}"
+                alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a></div>
+    </div>
+</div>
 </body>
 </html>

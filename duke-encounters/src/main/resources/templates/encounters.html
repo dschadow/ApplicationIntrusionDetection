@@ -1,32 +1,63 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Duke Encounters: Encounters</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Duke Encounters</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <h1>Duke Encounters: Encounters</h1>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Duke Encounters</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="register">Register</a></li>
+                <li><a href="login">Login</a></li>
+                <li class="active"><a href="encounters">Encounters</a></li>
+                <li><a href="search">Search</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-    <table>
-        <tr>
-            <th>Event</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Confirmed by</th>
-            <th>Likelihood</th>
-        </tr>
-        <tr th:each="encounter : ${encounters}">
-            <td th:text="${encounter.event}"></td>
-            <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-            <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-            <td th:text="${encounter.confirmations}"></td>
-            <td th:text="${encounter.likelihood}"></td>
-        </tr>
-    </table>
-    
-    <h2>Actions</h2>
+<div class="jumbotron">
+    <div class="container">
+        <h1>Encounters</h1>
 
-    <p><a href="/">Home</a> | <a href="encounters">All Encounters</a> | <a href="search">Search</a> | <a href="login">Login</a></p>
+        <p>View all <strong>Duke Encounters</strong> available in the database. You can add a new encounter or confirm
+            an existing one after login. User details are only visible after login.</p>
+    </div>
+</div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Confirmed by</th>
+                    <th>Likelihood</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="encounter : ${encounters}">
+                    <td th:text="${encounter.event}"></td>
+                    <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
+                    <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                    <td th:text="${encounter.confirmations}"></td>
+                    <td th:text="${encounter.likelihood}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
