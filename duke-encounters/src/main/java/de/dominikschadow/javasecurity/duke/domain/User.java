@@ -93,4 +93,8 @@ public class User {
     public void setLevel(Level level) {
         this.level = level;
     }
+
+    public String toString() {
+        return firstname + " " + lastname;
+    }
 }
