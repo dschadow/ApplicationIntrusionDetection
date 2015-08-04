@@ -48,7 +48,7 @@ INSERT INTO confirmation (user_id, encounter_id, date) VALUES (10, 18, '2013-10-
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (1, 10, '2005-10-10');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (2, 9, '2004-12-12');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (3, 9, '2005-02-15');
-INSERT INTO confirmation (user_id, encounter_id, date) VALUES (2, 9, '2004-10-01');
+INSERT INTO confirmation (user_id, encounter_id, date) VALUES (4, 9, '2004-10-01');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (12, 13, '2008-10-02');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (11, 11, '2006-10-30');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (10, 12, '2007-10-30');
