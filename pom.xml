@@ -8,18 +8,24 @@
     <packaging>pom</packaging>
     <name>ApplicationIntrusionDetection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
-    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.</description>
+    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.
+    </description>
 
     <organization>
         <name>Dominik Schadow</name>
         <url>http://www.dominikschadow.de</url>
     </organization>
 
+    <properties>
+        <docker.image.prefix>dschadow</docker.image.prefix>
+    </properties>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.2.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
+        <!-- lookup parent from repository -->
     </parent>
 
     <issueManagement>
@@ -48,6 +54,11 @@
                 <groupId>org.owasp.appsensor</groupId>
                 <artifactId>appsensor-core</artifactId>
                 <version>2.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp</groupId>
+                <artifactId>security-logging</artifactId>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -95,6 +106,22 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.2.12</version>
+                    <configuration>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <dockerDirectory>/</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
