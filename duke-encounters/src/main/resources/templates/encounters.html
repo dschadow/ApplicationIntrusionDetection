@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -41,7 +42,7 @@
                     <th>Event</th>
                     <th>Location</th>
                     <th>Date</th>
-                    <th>Confirmed by</th>
+                    <th sec:authorize="isAuthenticated()">Confirmed by</th>
                     <th>Likelihood</th>
                 </tr>
                 </thead>
@@ -50,7 +51,12 @@
                     <td th:text="${encounter.event}"></td>
                     <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-                    <td th:text="${encounter.confirmations}"></td>
+                    <td sec:authorize="isAuthenticated()">
+                        <span th:each="confirmation,iterStat : ${encounter.confirmations}">
+                            <span th:text="${confirmation.getUser()}"></span>
+                            <span th:text="${!iterStat.last}? '|'"></span>
+                        </span>
+                    </td>
                     <td th:text="${encounter.likelihood}"></td>
                 </tr>
                 </tbody>
