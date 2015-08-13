@@ -86,7 +86,7 @@
                 <plugin>
                     <groupId>com.boxfuse.client</groupId>
                     <artifactId>boxfuse-maven-plugin</artifactId>
-                    <version>1.8.9.673</version>
+                    <version>1.8.10.677</version>
                     <executions>
                         <execution>
                             <id>fuse-image</id>
