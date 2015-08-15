@@ -52,10 +52,10 @@
         <div class="form-group">
             <label for="likelihood">Likelihood</label>
             <select class="form-control" id="likelihood" name="likelihood">
-                <option th:each="value : ${T(de.dominikschadow.javasecurity.duke.domain.Likelihood).values()}"
+                <option th:each="value : ${T(de.dominikschadow.duke.encounters.domain.Likelihood).values()}"
                         th:value="${value}"
                         th:text="${value.name}"
-                        th:selected="${value == T(de.dominikschadow.javasecurity.duke.domain.Likelihood).ALL}"></option>
+                        th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
             </select>
         </div>
         <div class="form-group">

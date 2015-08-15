@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015 Dominik Schadow, dominikschadow@gmail.com
  *
- * This file is part of the Java Security project.
+ * This file is part of the Application Intrusion Detection project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.javasecurity.duke;
+package de.dominikschadow.duke.encounters.repositories;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import de.dominikschadow.duke.encounters.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = DukeEncountersApplication.class)
-@WebAppConfiguration
-public class DukeEncountersApplicationTests {
-    @Test
-    public void contextLoads() {
-    }
+public interface UserRepository extends JpaRepository<User, Long> {
 }

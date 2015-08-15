@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.javasecurity.duke.domain;
+package de.dominikschadow.duke.encounters.domain;
 
 public enum Level {
     NEWBIE,

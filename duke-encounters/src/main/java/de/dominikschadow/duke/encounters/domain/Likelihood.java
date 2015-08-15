@@ -15,20 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.javasecurity.duke.repositories;
+package de.dominikschadow.duke.encounters.domain;
 
-import de.dominikschadow.javasecurity.duke.domain.Encounter;
-import de.dominikschadow.javasecurity.duke.domain.SearchFilter;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+/**
+ * Encounter likelihood enum.
+ *
+ * @author Dominik Schadow
+ */
+public enum Likelihood {
+    ALL("*"), NOT_CONFIRMED("not confirmed"), PLAUSIBLE("plausible"), CONFIRMED("confirmed");
 
-import java.util.List;
+    private String name;
 
-public interface EncounterRepository extends JpaRepository<Encounter, Long> {
-    @Query(value="select e from Encounter e")
-    List<Encounter> findWithPageable(Pageable latestTen);
+    Likelihood(String name) {
+        this.name = name;
+    }
 
-    @Query(value="select e from Encounter e")
-    List<Encounter> findByFilter(SearchFilter filter);
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

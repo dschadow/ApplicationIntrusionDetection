@@ -15,10 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.javasecurity.duke.repositories;
+package de.dominikschadow.duke.encounters.repositories;
 
-import de.dominikschadow.javasecurity.duke.domain.User;
+import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.List;
+
+public interface EncounterRepository extends JpaRepository<Encounter, Long> {
+    @Query(value="select e from Encounter e")
+    List<Encounter> findWithPageable(Pageable latestTen);
+
+    @Query(value="select e from Encounter e")
+    List<Encounter> findByFilter(SearchFilter filter);
 }

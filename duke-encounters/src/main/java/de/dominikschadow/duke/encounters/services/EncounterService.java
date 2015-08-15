@@ -15,11 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.javasecurity.duke.services;
+package de.dominikschadow.duke.encounters.services;
 
-import de.dominikschadow.javasecurity.duke.domain.Encounter;
-import de.dominikschadow.javasecurity.duke.domain.SearchFilter;
-import de.dominikschadow.javasecurity.duke.repositories.EncounterRepository;
+import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
