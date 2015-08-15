@@ -33,7 +33,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping(value = "/encounters")
 public class EncountersController {
     private EncounterService encounterService;
 
@@ -42,7 +41,7 @@ public class EncountersController {
         this.encounterService = encounterService;
     }
 
-    @RequestMapping(method = GET)
+    @RequestMapping(value = "/encounters", method = GET)
     public String allEncounters(Model model) {
         List<Encounter> encounters = encounterService.getAllEncounters();
         model.addAttribute("encounters", encounters);
@@ -55,7 +54,7 @@ public class EncountersController {
         return "encounters";
     }
 
-    @RequestMapping(value = "/{id}", method = GET)
+    @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
 
         return "encounterDetails";
