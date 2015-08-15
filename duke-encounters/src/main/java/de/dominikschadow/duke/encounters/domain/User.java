@@ -24,6 +24,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * Holds a user of the application.
+ *
+ * @author Dominik Schadow
+ */
 @Entity
 public class User {
     @Id
