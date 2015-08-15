@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015 Dominik Schadow, dominikschadow@gmail.com
  *
- * This file is part of the Java Security project.
+ * This file is part of the Application Intrusion Detection project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +18,19 @@
 package de.dominikschadow.javasecurity.duke.controllers;
 
 import de.dominikschadow.javasecurity.duke.domain.Encounter;
+import de.dominikschadow.javasecurity.duke.domain.SearchFilter;
 import de.dominikschadow.javasecurity.duke.services.EncounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping(value = "/encounters")
@@ -48,13 +50,13 @@ public class EncountersController {
         return "encounters";
     }
 
-    @RequestMapping(params = "type", method = GET)
-    public String encountersByType(@RequestParam("type") String type, Model model) {
+    @RequestMapping(value = "/searchEncounters", method = POST)
+    public String searchEncounters(@ModelAttribute(value = "filter") SearchFilter filter, Model model) {
         return "encounters";
     }
 
     @RequestMapping(value = "/{id}", method = GET)
-    public String encounter(@PathVariable("id") long id, Model model) {
+    public String encounterById(@PathVariable("id") long id, Model model) {
 
         return "encounterDetails";
     }
