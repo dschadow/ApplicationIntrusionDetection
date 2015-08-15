@@ -17,8 +17,29 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+/**
+ * Enum for the level of a user.
+ *
+ * @author Dominik Schadow
+ */
 public enum Level {
-    NEWBIE,
-    ROOKIE,
-    PRO
+    NEWBIE("Newbie"),
+    ROOKIE("Rookie"),
+    PRO("Pro");
+
+    private String level;
+
+    Level(String level) {
+        this.level = level;
+
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    @Override
+    public String toString() {
+        return getLevel();
+    }
 }
