@@ -111,6 +111,7 @@ public class Encounter {
     }
 
     public String getLikelihood() {
-        return confirmations.isEmpty() ? "not confirmed" : confirmations.size() < 5 ? "plausible" : "confirmed";
+        return confirmations.isEmpty() ? Likelihood.NOT_CONFIRMED.toString() : confirmations.size() < 5 ? Likelihood
+                .PLAUSIBLE.toString() : Likelihood.CONFIRMED.toString();
     }
 }
