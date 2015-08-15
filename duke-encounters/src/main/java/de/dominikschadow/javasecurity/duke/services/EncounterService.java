@@ -18,6 +18,7 @@
 package de.dominikschadow.javasecurity.duke.services;
 
 import de.dominikschadow.javasecurity.duke.domain.Encounter;
+import de.dominikschadow.javasecurity.duke.domain.SearchFilter;
 import de.dominikschadow.javasecurity.duke.repositories.EncounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +47,12 @@ public class EncounterService {
 
     public List<Encounter> getAllEncounters() {
         List<Encounter> encounters = repository.findAll();
+
+        return encounters;
+    }
+
+    public List<Encounter> getEncounters(SearchFilter filter) {
+        List<Encounter> encounters = repository.findByFilter(filter);
 
         return encounters;
     }
