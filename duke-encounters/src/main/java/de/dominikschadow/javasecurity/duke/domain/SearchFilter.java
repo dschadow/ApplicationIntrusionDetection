@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.javasecurity.duke.domain;
 
+import java.time.LocalDateTime;
+
 /**
  * SearchFilter to search for Duke encounters based on various fields.
  *
@@ -26,7 +28,7 @@ public class SearchFilter {
     private String event;
     private String location;
     private String country;
-    private int year;
+    private int year = LocalDateTime.now().getYear();
     private Likelihood likelihood;
     private int confirmations;
 
