@@ -1,16 +1,16 @@
 -- USERS
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (1, 'Dominik', 'Schadow', 'dominikschadow@gmail.com', '', '2010-05-05 10:45:33', 'PRO');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (2, 'John', 'Doe', 'john@doe.com', '', '2012-10-01 11:02:29', 'ROOKIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (3, 'Jane', 'Doe', 'jane@doe.com', '', '2015-09-23 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (4, 'User', '1', '1@user.com', '', '2010-01-01 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (5, 'User', '2', '2@user.com', '', '2011-02-02 08:52:11', 'PRO');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (6, 'User', '3', '3@user.com', '', '2012-03-03 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (7, 'User', '4', '4@user.com', '', '2013-04-04 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (8, 'User', '5', '5@user.com', '', '2014-05-05 08:52:11', 'ROOKIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (9, 'User', '6', '6@user.com', '', '2015-06-06 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (10, 'User', '7', '7@user.com', '', '2010-07-07 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (11, 'User', '8', '8@user.com', '', '2011-08-08 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (12, 'User', '9', '9@user.com', '', '2012-09-09 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (1, 'Arthur', 'Dent', 'arthur@dent.com', '', '2010-05-05 10:45:33', 'PRO');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (2, 'Ford', 'Prefect', 'ford@prefect.com', '', '2012-10-01 11:02:29', 'ROOKIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (3, 'Zaphod', 'Beeblebrox', 'zaphod@beeblebrox.com', '', '2015-09-23 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (4, 'Marvin', null, 'marvin@marvin.com', '', '2010-01-01 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (5, 'Humma', 'Kavula', 'humma@kavula.com', '', '2011-02-02 08:52:11', 'PRO');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (6, 'Questular', 'Rontok', 'questular@rontok.com', '', '2012-03-03 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (7, 'Deep', 'Thought', 'deep@thought.com', '', '2013-04-04 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (8, 'Tricia', 'McMillan', 'tricia@mcmillan.com', '', '2014-05-05 08:52:11', 'ROOKIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (9, 'Slartibartfast', null, 'slartibartfast@slartibartfast.com', '', '2015-06-06 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (10, 'Jin', 'Jenz', 'jin@jenz.com', '', '2010-07-07 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (11, 'Gag', 'Halfrunt', 'gag@halfrunt.com', '', '2011-08-08 08:52:11', 'NEWBIE');
+INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (12, 'Stephen', 'Fry', 'stephen@fry.com', '', '2012-09-09 08:52:11', 'NEWBIE');
 
 -- ENCOUNTERS
 INSERT INTO encounter (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-10-01', 5);
