@@ -28,8 +28,8 @@
     <div class="container">
         <h1>Encounters</h1>
 
-        <p>View all <strong>Duke Encounters</strong> available in the database. You can add a new encounter or confirm
-            an existing one after login. User details are only visible after login.</p>
+        <p>View the <strong>Duke Encounters</strong> that match your search criteria. You can add a new encounter or
+            confirm an existing one after login. User details are only visible after login.</p>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
                     <th>Event</th>
                     <th>Location</th>
                     <th>Date</th>
-                    <th sec:authorize="isAuthenticated()">Confirmed by</th>
+                    <th>Confirmed by</th>
                     <th>Likelihood</th>
                 </tr>
                 </thead>
@@ -51,7 +51,7 @@
                     <td th:text="${encounter.event}"></td>
                     <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-                    <td sec:authorize="isAuthenticated()">
+                    <td>
                         <span th:each="confirmation,iterStat : ${encounter.confirmations}">
                             <span th:text="${confirmation.getUser()}"></span>
                             <span th:text="${!iterStat.last}? '|'"></span>
