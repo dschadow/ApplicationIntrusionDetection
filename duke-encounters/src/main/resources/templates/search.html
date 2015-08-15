@@ -52,16 +52,19 @@
         <div class="form-group">
             <label for="likelihood">Likelihood</label>
             <select class="form-control" id="likelihood" name="likelihood">
-                <option th:each="likelihood : ${T(de.dominikschadow.javasecurity.duke.domain.Likelihood).values()}"
-                        th:value="${likelihood}"
-                        th:text="${likelihood.name}"
-                        th:selected="${likelihood == T(de.dominikschadow.javasecurity.duke.domain.Likelihood).ALL}"></option>
+                <option th:each="value : ${T(de.dominikschadow.javasecurity.duke.domain.Likelihood).values()}"
+                        th:value="${value}"
+                        th:text="${value.name}"
+                        th:selected="${value == T(de.dominikschadow.javasecurity.duke.domain.Likelihood).ALL}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="confirmations">Minimum no. of confirmations</label>
-            <input type="text" id="confirmations" name="confirmations" th:field="*{confirmations}"
-                   class="form-control"/>
+            <select class="form-control" id="confirmations" name="confirmations">
+                <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"
+                        th:selected="${ i==0 } ">
+                </option>
+            </select>
         </div>
         <button type="submit" class="btn btn-default">Search</button>
     </form>
