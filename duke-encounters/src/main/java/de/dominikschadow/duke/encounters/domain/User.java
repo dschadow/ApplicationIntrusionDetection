@@ -17,6 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Strings;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -94,7 +97,11 @@ public class User {
         this.level = level;
     }
 
+    @Override
     public String toString() {
-        return firstname + " " + lastname;
+        String name = Strings.nullToEmpty(getFirstname()) + " " + Strings.nullToEmpty(getLastname());
+        name = CharMatcher.WHITESPACE.trimTrailingFrom(name);
+
+        return name;
     }
 }
