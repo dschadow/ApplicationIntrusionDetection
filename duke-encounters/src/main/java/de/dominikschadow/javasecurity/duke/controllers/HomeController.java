@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015 Dominik Schadow, dominikschadow@gmail.com
  *
- * This file is part of the Java Security project.
+ * This file is part of the Application Intrusion Detection project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package de.dominikschadow.javasecurity.duke.controllers;
 
 import de.dominikschadow.javasecurity.duke.domain.Encounter;
+import de.dominikschadow.javasecurity.duke.domain.SearchFilter;
 import de.dominikschadow.javasecurity.duke.services.EncounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,8 @@ public class HomeController {
 
     @RequestMapping(value = "search", method = GET)
     public String searchEncounters(Model model) {
+        model.addAttribute("searchFilter", new SearchFilter());
+
         return "search";
     }
 }
