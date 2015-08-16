@@ -10,7 +10,6 @@ INSERT INTO user (id, firstname, lastname, email, password, registration_date, l
 INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (9, 'Slartibartfast', null, 'slartibartfast@slartibartfast.com', '', '2015-06-06 08:52:11', 'NEWBIE');
 INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (10, 'Jin', 'Jenz', 'jin@jenz.com', '', '2010-07-07 08:52:11', 'NEWBIE');
 INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (11, 'Gag', 'Halfrunt', 'gag@halfrunt.com', '', '2011-08-08 08:52:11', 'NEWBIE');
-INSERT INTO user (id, firstname, lastname, email, password, registration_date, level) VALUES (12, 'Stephen', 'Fry', 'stephen@fry.com', '', '2012-09-09 08:52:11', 'NEWBIE');
 
 -- ENCOUNTERS
 INSERT INTO encounter (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-10-01', 5);
@@ -42,14 +41,14 @@ INSERT INTO confirmation (user_id, encounter_id, date) VALUES (8, 19, '2014-10-3
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (2, 1, '1996-12-12');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (3, 2, '1998-02-15');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (2, 2, '1997-10-01');
-INSERT INTO confirmation (user_id, encounter_id, date) VALUES (12, 1, '1996-10-02');
+INSERT INTO confirmation (user_id, encounter_id, date) VALUES (7, 1, '1996-10-02');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (11, 18, '2013-10-30');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (10, 18, '2013-10-30');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (1, 10, '2005-10-10');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (2, 9, '2004-12-12');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (3, 9, '2005-02-15');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (4, 9, '2004-10-01');
-INSERT INTO confirmation (user_id, encounter_id, date) VALUES (12, 13, '2008-10-02');
+INSERT INTO confirmation (user_id, encounter_id, date) VALUES (4, 13, '2008-10-02');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (11, 11, '2006-10-30');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (10, 12, '2007-10-30');
 INSERT INTO confirmation (user_id, encounter_id, date) VALUES (1, 17, '2012-10-10');
