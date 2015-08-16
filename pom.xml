@@ -96,7 +96,27 @@
                             <phase>package</phase>
                         </execution>
                         <execution>
-                            <id>run-on-aws</id>
+                            <id>run-on-test</id>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <phase>pre-integration-test</phase>
+                            <configuration>
+                                <env>test</env>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>kill-on-test</id>
+                            <goals>
+                                <goal>kill</goal>
+                            </goals>
+                            <phase>post-integration-test</phase>
+                            <configuration>
+                                <env>test</env>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>run-on-prod</id>
                             <goals>
                                 <goal>run</goal>
                             </goals>
@@ -122,6 +142,16 @@
                             </resource>
                         </resources>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>1.9.4</version>
                 </plugin>
             </plugins>
         </pluginManagement>
