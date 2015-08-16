@@ -4,7 +4,7 @@
     <parent>
         <groupId>de.dominikschadow</groupId>
         <artifactId>applicationintrusiondetection</artifactId>
-        <version>1.0.0</version>
+        <version>0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>duke-encounters</artifactId>
@@ -15,10 +15,6 @@
     <description>Application Intrusion Detection with AppSensor sample project. Requires a server like Apache Tomcat or the
         usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080
     </description>
-
-    <scm>
-        <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection</connection>
-    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
