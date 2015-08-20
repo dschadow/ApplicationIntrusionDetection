@@ -1,5 +1,5 @@
 sudo: false
 language: java
 jdk: oraclejdk8
-install: mvn versions:set
-script: mvn deploy
+#install: mvn versions:set
+#script: mvn deploy
