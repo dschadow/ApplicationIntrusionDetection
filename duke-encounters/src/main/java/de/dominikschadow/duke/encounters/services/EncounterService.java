@@ -17,7 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
+import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
@@ -25,9 +27,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Service
 public class EncounterService {
@@ -42,7 +48,7 @@ public class EncounterService {
         Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestTen);
 
-        // AID: max list size 10
+        // TODO AID max list size 10
         return encounters;
     }
 
@@ -53,7 +59,39 @@ public class EncounterService {
     }
 
     public List<Encounter> getEncounters(SearchFilter filter) {
-        List<Encounter> encounters = repository.findAll(EncounterSpecification.findByFilter(filter));
+        List<Specification> specifications = new ArrayList<>();
+
+        if (!Strings.isNullOrEmpty(filter.getEvent())) {
+            // TODO AID check for XSS or SQLi
+            specifications.add(EncounterSpecification.encounterByEvent(filter.getEvent()));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getLocation())) {
+            // TODO AID check for XSS or SQLi
+            specifications.add(EncounterSpecification.encounterByLocation(filter.getLocation()));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getCountry())) {
+            // TODO AID check for XSS or SQLi
+            specifications.add(EncounterSpecification.encounterByCountry(filter.getCountry()));
+        }
+
+        if (filter.getYear() > 0) {
+            // TODO AID >= 1995
+            specifications.add(EncounterSpecification.encounterAfterYear(filter.getYear()));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
+            Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
+            // TODO AID react to non enum value
+            specifications.add(EncounterSpecification.encounterByLikelihood(likelihood));
+        }
+
+        // TODO AID check between 0 and 10
+        specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
+
+        List<Encounter> encounters = repository.findAll(where(EncounterSpecification.encounterAfterYear(0)).and
+                (EncounterSpecification.encounterByConfirmations(1)));
 
         return encounters;
     }
