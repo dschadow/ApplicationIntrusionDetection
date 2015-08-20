@@ -20,6 +20,7 @@ package de.dominikschadow.duke.encounters.services;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
+import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +53,7 @@ public class EncounterService {
     }
 
     public List<Encounter> getEncounters(SearchFilter filter) {
-        List<Encounter> encounters = repository.findByFilter(filter);
+        List<Encounter> encounters = repository.findAll(EncounterSpecification.findByFilter(filter));
 
         return encounters;
     }

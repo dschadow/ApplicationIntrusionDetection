@@ -49,9 +49,9 @@ public class EncountersController {
         return "encounters";
     }
 
-    @RequestMapping(value = "/searchEncounters", method = POST)
-    public String searchEncounters(@ModelAttribute(value = "filter") SearchFilter filter, Model model) {
-        List<Encounter> encounters = encounterService.getEncounters(filter);
+    @RequestMapping(value = "/encounters", method = POST)
+    public String searchEncounters(@ModelAttribute(value="searchFilter") SearchFilter searchFilter, Model model) {
+        List<Encounter> encounters = encounterService.getEncounters(searchFilter);
         model.addAttribute("encounters", encounters);
 
         return "encounters";

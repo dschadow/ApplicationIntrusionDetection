@@ -32,7 +32,7 @@
 </div>
 
 <div class="container">
-    <form action="#" th:action="@{/searchEncounters}" th:object="${searchFilter}" method="post" role="form">
+    <form action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post" role="form">
         <div class="form-group">
             <label for="event">Event</label>
             <input type="text" id="event" name="event" th:field="*{event}" class="form-control"/>
