@@ -12,8 +12,8 @@
     <packaging>jar</packaging>
     <name>Duke Encounters</name>
 
-    <description>Application Intrusion Detection with AppSensor sample project. Requires a server like Apache Tomcat or the
-        usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080
+    <description>Application Intrusion Detection with AppSensor sample project. Requires a server like Apache Tomcat or
+        the usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080
     </description>
 
     <properties>
@@ -113,20 +113,6 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <configuration>
-                    <newVersion>${env.TRAVIS_BUILD_NUMBER}</newVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <configuration>
-                    <tag>${project.artifactId}-${project.version}</tag>
                 </configuration>
             </plugin>
         </plugins>
