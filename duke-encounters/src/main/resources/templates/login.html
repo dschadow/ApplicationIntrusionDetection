@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Duke Encounters - Login</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"/>
+</head>
+<body role="document">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Duke Encounters</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="encounters">Encounters</a></li>
+                <li><a href="search">Search</a></li>
+                <li class="active"><a href="login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Login</h1>
+
+        <p>Need to <a href="register">register</a> first?</p>
+    </div>
+</div>
+
+<div class="container">
+    <p th:if="${loginError}">Wrong user or password</p>
+
+    <form action="#" th:action="@{/j_spring_security_check}" method="post" role="form">
+        <div class="form-group">
+            <label for="j_username">Username</label>
+            <input type="text" id="j_username" name="j_username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="j_password">Password</label>
+            <input type="password" id="j_password" name="j_password" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-default">Log in</button>
+    </form>
+</div>
+</body>
+</html>

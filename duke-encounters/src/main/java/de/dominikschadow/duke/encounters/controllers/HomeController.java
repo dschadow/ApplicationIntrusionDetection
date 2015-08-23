@@ -57,4 +57,9 @@ public class HomeController {
     public String login(Model model) {
         return "login";
     }
+
+    @RequestMapping(value = "register", method = GET)
+    public String register(Model model) {
+        return "register";
+    }
 }
