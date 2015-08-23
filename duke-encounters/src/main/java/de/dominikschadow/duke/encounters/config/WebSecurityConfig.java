@@ -41,30 +41,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
             .authorizeRequests()
                 .antMatchers("/", "/webjars/bootstrap/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+            .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .and()
-                .securityContext()
+            .securityContext()
                 .securityContextRepository(securityContextRepository)
                 .and()
-                .logout()
+            .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
                 .permitAll();
+        // @formatter:on
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        // @formatter:off
         auth
             .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
+        // @formatter:on
     }
 
     @Bean
