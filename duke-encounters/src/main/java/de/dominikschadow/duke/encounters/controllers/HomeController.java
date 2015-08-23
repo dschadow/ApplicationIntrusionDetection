@@ -52,4 +52,9 @@ public class HomeController {
 
         return "search";
     }
+
+    @RequestMapping(value = "login", method = GET)
+    public String login(Model model) {
+        return "login";
+    }
 }
