@@ -62,32 +62,26 @@ public class EncounterService {
         List<Specification> specifications = new ArrayList<>();
 
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            // TODO AID check for XSS or SQLi
             specifications.add(EncounterSpecification.encounterByEvent(filter.getEvent()));
         }
 
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            // TODO AID check for XSS or SQLi
             specifications.add(EncounterSpecification.encounterByLocation(filter.getLocation()));
         }
 
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            // TODO AID check for XSS or SQLi
             specifications.add(EncounterSpecification.encounterByCountry(filter.getCountry()));
         }
 
         if (filter.getYear() > 0) {
-            // TODO AID >= 1995
             specifications.add(EncounterSpecification.encounterAfterYear(filter.getYear()));
         }
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
             Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
-            // TODO AID react to non enum value
             specifications.add(EncounterSpecification.encounterByLikelihood(likelihood));
         }
 
-        // TODO AID check between 0 and 10
         specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
         List<Encounter> encounters = repository.findAll(where(EncounterSpecification.encounterAfterYear(0)).and

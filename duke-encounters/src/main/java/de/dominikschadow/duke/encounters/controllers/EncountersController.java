@@ -20,6 +20,7 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.services.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,10 +36,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class EncountersController {
     private EncounterService encounterService;
+    private ValidationService validationService;
 
     @Autowired
-    public EncountersController(EncounterService encounterService) {
+    public EncountersController(EncounterService encounterService, ValidationService validationService) {
         this.encounterService = encounterService;
+        this.validationService = validationService;
     }
 
     @RequestMapping(value = "/encounters", method = GET)
@@ -51,6 +54,8 @@ public class EncountersController {
 
     @RequestMapping(value = "/encounters", method = POST)
     public String searchEncounters(@ModelAttribute(value="searchFilter") SearchFilter searchFilter, Model model) {
+        validationService.validateSearchFilter(searchFilter);
+        // TODO react on validation error
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
         model.addAttribute("encounters", encounters);
 
