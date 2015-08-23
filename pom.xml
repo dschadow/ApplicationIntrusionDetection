@@ -18,6 +18,7 @@
 
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
+        <appsensor.version>2.1.0</appsensor.version>
     </properties>
 
     <prerequisites>
@@ -59,8 +60,44 @@
             <dependency>
                 <groupId>org.owasp.appsensor</groupId>
                 <artifactId>appsensor-core</artifactId>
-                <version>2.1.0</version>
+                <version>${appsensor.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-local</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-storage-in-memory</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-analysis-reference</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-reporting-simple-logging</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-access-control-reference</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-configuration-stax</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.appsensor</groupId>
+                <artifactId>appsensor-integration-spring-security</artifactId>
+                <version>${appsensor.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.owasp</groupId>
                 <artifactId>security-logging-logback</artifactId>
