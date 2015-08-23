@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>org.owasp</groupId>
-            <artifactId>security-logging</artifactId>
+            <artifactId>security-logging-logback</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
