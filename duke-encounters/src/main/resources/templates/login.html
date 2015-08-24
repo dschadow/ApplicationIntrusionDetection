@@ -34,7 +34,7 @@
 <div class="container">
     <p th:if="${loginError}">Wrong user or password</p>
 
-    <form action="#" th:action="@{/j_spring_security_check}" method="post" role="form">
+    <form th:action="@{/j_spring_security_check}" method="post" role="form">
         <div class="form-group">
             <label for="j_username">Username</label>
             <input type="text" id="j_username" name="j_username" class="form-control"/>
