@@ -1,5 +1,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +39,12 @@ public class SessionController {
     /**
      * Shows the registration page.
      *
+     * @param model The model attribute container
      * @return Registration URL
      */
     @RequestMapping(value = "register", method = GET)
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("user", new User());
         return "register";
     }
 }
