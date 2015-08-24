@@ -42,6 +42,8 @@ public class User {
     @NotNull
     @Column(nullable = false)
     private String password;
+    @Transient
+    private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)
     private Level level;
@@ -84,6 +86,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Date getRegistrationDate() {
