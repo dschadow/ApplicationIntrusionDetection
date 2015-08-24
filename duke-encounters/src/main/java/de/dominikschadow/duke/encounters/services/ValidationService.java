@@ -20,6 +20,7 @@ package de.dominikschadow.duke.encounters.services;
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import de.dominikschadow.duke.encounters.domain.User;
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -67,5 +68,9 @@ public class ValidationService {
             log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range", filter.getConfirmations());
             // TODO AID react
         }
+    }
+
+    public void validateUser(User user) {
+
     }
 }
