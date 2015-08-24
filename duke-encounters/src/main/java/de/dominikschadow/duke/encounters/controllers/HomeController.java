@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
-import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,11 @@ import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+/**
+ * Controller for the main page.
+ *
+ * @author Dominik Schadow
+ */
 @Controller
 public class HomeController {
     private EncounterService encounterService;
@@ -38,28 +42,17 @@ public class HomeController {
         this.encounterService = encounterService;
     }
 
+    /**
+     * Queries for the latest encounters, adds them to the model and returns the index page.
+     *
+     * @param model The model attribute container
+     * @return Index URL
+     */
     @RequestMapping(value = "/", method= GET)
     public String home(Model model) {
         List<Encounter> encounters = encounterService.getLatestEncounters();
         model.addAttribute("encounters", encounters);
 
         return "index";
-    }
-
-    @RequestMapping(value = "search", method = GET)
-    public String searchEncounters(Model model) {
-        model.addAttribute("searchFilter", new SearchFilter());
-
-        return "search";
-    }
-
-    @RequestMapping(value = "login", method = GET)
-    public String login(Model model) {
-        return "login";
-    }
-
-    @RequestMapping(value = "register", method = GET)
-    public String register(Model model) {
-        return "register";
     }
 }
