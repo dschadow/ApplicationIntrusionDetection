@@ -4,11 +4,11 @@
     <parent>
         <groupId>de.dominikschadow</groupId>
         <artifactId>applicationintrusiondetection</artifactId>
-        <version>0-Snapshot</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>duke-encounters</artifactId>
-    <version>0-Snapshot</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Duke Encounters</name>
 

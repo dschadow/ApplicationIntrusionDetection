@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>applicationintrusiondetection</artifactId>
     <groupId>de.dominikschadow</groupId>
-    <version>0-Snapshot</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>ApplicationIntrusionDetection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
