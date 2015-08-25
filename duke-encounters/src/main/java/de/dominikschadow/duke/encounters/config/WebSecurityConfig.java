@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.context.SecurityContextRepository;
@@ -44,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
             .authorizeRequests()
-                .antMatchers("/", "/register", "/encounters", "/search", "/error", "/webjars/bootstrap/**", "/img/**").permitAll()
+                .antMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -61,6 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .permitAll();
+        // @formatter:on
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        // @formatter:off
+        web
+            .ignoring()
+                .antMatchers("/img/**", "/webjars/bootstrap/**");
         // @formatter:on
     }
 
