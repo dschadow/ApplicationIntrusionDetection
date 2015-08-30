@@ -58,7 +58,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="encounter : ${encounters}">
-                    <td th:text="${encounter.event}"></td>
+                    <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounters/${encounter.id}|}" th:text="${encounter.event}"></a></td>
+                    <td th:if="${#httpServletRequest.remoteUser == null}" th:text="${encounter.event}"></td>
                     <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                     <td>
