@@ -26,8 +26,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 /**
  * Spring Security configuration file.
@@ -39,6 +43,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityContextRepository securityContextRepository;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -63,6 +70,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    /**
+     * BCryptPasswordEncoder constructor takes a work factor as first argument. The default is 10, the valid range is
+     * 4 to 31. The amount of work increases exponentially.
+     *
+     * @return The PasswordEncoder to use for all user passwords
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
+
     @Override
     public void configure(WebSecurity web) {
         // @formatter:off
@@ -73,11 +91,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
         // @formatter:off
         auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+            .jdbcAuthentication()
+                .dataSource(dataSource)
+            .passwordEncoder(passwordEncoder)
+                .usersByUsernameQuery("select username, password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery("select username, role from roles where username = ?");
         // @formatter:on
     }
 
