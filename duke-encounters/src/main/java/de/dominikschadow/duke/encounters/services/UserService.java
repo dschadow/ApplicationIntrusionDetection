@@ -22,6 +22,7 @@ import de.dominikschadow.duke.encounters.domain.Role;
 import de.dominikschadow.duke.encounters.domain.User;
 import de.dominikschadow.duke.encounters.repositories.RoleRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
+import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +75,14 @@ public class UserService {
         register.setPassword(passwordEncoder.encode(register.getPassword()));
 
         if (userRepository.findByUsername(register.getUsername()) != null) {
+            LOGGER.error("User with username {} already exists", register.getUsername());
             return null;
         }
 
         User user = userRepository.save(register);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
+                user.getUsername(), user.getId(), user.getRole());
 
         return user;
     }
