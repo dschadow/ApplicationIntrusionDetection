@@ -38,7 +38,9 @@
             spotting. This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
                 AppSensor</a> for Application Intrusion Detection. The application is developed by Dominik Schadow, all
             source code is available on <a
-                    href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>.</p>
+                    href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>. This
+            application is using an in-memory database to temporarily persist all information. Keep in mind that all
+            entered information will be lost when restarting.</p>
 
         <p th:if="${#httpServletRequest.remoteUser == null}"><a href="register">Register</a> or <a
                 href="login">login</a> to contribute.</p>
