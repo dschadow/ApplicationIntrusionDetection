@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
             .passwordEncoder(passwordEncoder)
                 .usersByUsernameQuery("select username, password, enabled from users where username = ?")
-                .authoritiesByUsernameQuery("select username, role from roles where username = ?");
+                .authoritiesByUsernameQuery("select username, role from users u, roles r where u.username = ? and u.role_id = r.id");
         // @formatter:on
     }
 

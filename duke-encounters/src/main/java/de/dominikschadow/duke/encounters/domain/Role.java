@@ -25,22 +25,13 @@ import javax.persistence.*;
  * @author Dominik Schadow
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = {"role"}))
 public class Role {
     @Id
     @GeneratedValue
     private long id;
     private String rolename;
     private String role;
-    private String username;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public long getId() {
         return id;

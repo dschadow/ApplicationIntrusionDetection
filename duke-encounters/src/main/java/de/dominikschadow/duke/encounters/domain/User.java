@@ -30,7 +30,7 @@ import java.util.Date;
  * @author Dominik Schadow
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 public class User {
     @Id
     @GeneratedValue
@@ -52,6 +52,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Level level;
     private boolean enabled;
+    @OneToOne
+    private Role role;
 
     public long getId() {
         return id;
@@ -125,19 +127,27 @@ public class User {
         this.level = level;
     }
 
-    @Override
-    public String toString() {
-        String name = Strings.nullToEmpty(getFirstname()) + " " + Strings.nullToEmpty(getLastname());
-        name = CharMatcher.WHITESPACE.trimTrailingFrom(name);
-
-        return name;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        String name = Strings.nullToEmpty(getFirstname()) + " " + Strings.nullToEmpty(getLastname());
+        name = CharMatcher.WHITESPACE.trimTrailingFrom(name);
+
+        return name;
     }
 }
