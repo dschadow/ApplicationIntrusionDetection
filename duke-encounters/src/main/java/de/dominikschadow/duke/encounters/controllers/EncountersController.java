@@ -65,6 +65,6 @@ public class EncountersController {
     @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
 
-        return "encounterDetails";
+        return "user/encounterDetails";
     }
 }
