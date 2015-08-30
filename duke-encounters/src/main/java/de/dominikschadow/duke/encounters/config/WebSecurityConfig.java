@@ -51,17 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/encounters")
-                .failureUrl("/login")
                 .permitAll()
-                .and()
-            .securityContext()
-                .securityContextRepository(securityContextRepository)
                 .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .permitAll();
+                .permitAll()
+                .and()
+            .securityContext()
+                .securityContextRepository(securityContextRepository);
         // @formatter:on
     }
 
