@@ -89,4 +89,8 @@ public class EncounterService {
 
         return encounters;
     }
+
+    public Encounter getEncounterById(long id) {
+        return encounterRepository.findOne(id);
+    }
 }

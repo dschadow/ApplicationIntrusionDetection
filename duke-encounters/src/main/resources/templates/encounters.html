@@ -64,7 +64,7 @@
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                     <td>
                         <span th:each="confirmation,iterStat : ${encounter.confirmations}">
-                            <span th:text="${confirmation.getUser()}"></span>
+                            <span th:text="${confirmation.user}"></span>
                             <span th:text="${!iterStat.last}? '|'"></span>
                         </span>
                     </td>

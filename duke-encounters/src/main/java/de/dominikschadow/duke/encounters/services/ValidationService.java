@@ -75,4 +75,8 @@ public class ValidationService {
         // TODO AID created user must have role USER
 
     }
+
+    public void validateEncounterId(long id) {
+        // TOTOD AID validate id
+    }
 }

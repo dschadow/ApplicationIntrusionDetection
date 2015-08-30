@@ -64,6 +64,11 @@ public class EncountersController {
 
     @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
+        validationService.validateEncounterId(id);
+        // TODO react on validation error
+
+        Encounter encounter = encounterService.getEncounterById(id);
+        model.addAttribute("encounter", encounter);
 
         return "user/encounterDetails";
     }

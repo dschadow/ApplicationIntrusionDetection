@@ -33,11 +33,47 @@
     <div class="container">
         <h1>Encounter Details</h1>
 
-        <p></p>
+        <h2 th:text="${encounter.event}"></h2>
     </div>
 </div>
 
 <div class="container">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>City</th>
+                <th>Country</th>
+                <th>Date</th>
+                <th>Likelihood</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${encounter.location}"></td>
+                <td th:text="${encounter.country}"></td>
+                <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                <td th:text="${encounter.likelihood}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-12">
+        <h2>Confirmations</h2>
+
+        <p th:each="confirmation,iterStat : ${encounter.confirmations}">
+            <span th:text="${confirmation.user} + ' (' + ${#calendars.format(confirmation.date,'yyyy-MM-dd')} + ')'"></span><br/>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-12">
+        <p><a th:href="@{/encounters}">Back to encounters</a></p>
+    </div>
 </div>
 </body>
 </html>
