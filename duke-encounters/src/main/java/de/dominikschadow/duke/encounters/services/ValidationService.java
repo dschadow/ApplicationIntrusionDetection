@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ValidationService {
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValidationService.class);
     private AppSensorClient appSensorClient = new AppSensorClient();
 
     public void validateSearchFilter(SearchFilter filter) {
@@ -50,7 +50,8 @@ public class ValidationService {
 
         if (filter.getYear() > 0) {
             if (filter.getYear() < 1995) {
-                log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo", filter.getYear());
+                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
+                        filter.getYear());
                 // TODO AID react
             }
         }
@@ -59,13 +60,13 @@ public class ValidationService {
             try {
                 Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
-                log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum range", filter.getLikelihood());
+                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum range", filter.getLikelihood());
                 // TODO AID react
             }
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
-            log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range", filter.getConfirmations());
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range", filter.getConfirmations());
             // TODO AID react
         }
     }
