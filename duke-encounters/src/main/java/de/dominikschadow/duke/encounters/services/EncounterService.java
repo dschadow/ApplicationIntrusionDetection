@@ -37,23 +37,23 @@ import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Service
 public class EncounterService {
-    private EncounterRepository repository;
+    private EncounterRepository encounterRepository;
 
     @Autowired
-    public EncounterService(EncounterRepository repository) {
-        this.repository = repository;
+    public EncounterService(EncounterRepository encounterRepository) {
+        this.encounterRepository = encounterRepository;
     }
 
     public List<Encounter> getLatestEncounters() {
         Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
-        List<Encounter> encounters = repository.findWithPageable(latestTen);
+        List<Encounter> encounters = encounterRepository.findWithPageable(latestTen);
 
         // TODO AID max list size 10
         return encounters;
     }
 
     public List<Encounter> getAllEncounters() {
-        List<Encounter> encounters = repository.findAll();
+        List<Encounter> encounters = encounterRepository.findAll();
 
         return encounters;
     }
@@ -84,7 +84,7 @@ public class EncounterService {
 
         specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
-        List<Encounter> encounters = repository.findAll(where(EncounterSpecification.encounterAfterYear(0)).and
+        List<Encounter> encounters = encounterRepository.findAll(where(EncounterSpecification.encounterAfterYear(0)).and
                 (EncounterSpecification.encounterByConfirmations(1)));
 
         return encounters;
