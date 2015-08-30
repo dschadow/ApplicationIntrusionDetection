@@ -23,6 +23,9 @@ import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
+import org.owasp.security.logging.SecurityMarkers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,8 +38,15 @@ import java.util.List;
 
 import static org.springframework.data.jpa.domain.Specifications.where;
 
+/**
+ * CRUD service for all encounter related operations.
+ *
+ * @author Dominik Schadow
+ */
 @Service
 public class EncounterService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EncounterService.class);
+
     private EncounterRepository encounterRepository;
 
     @Autowired
@@ -54,6 +64,8 @@ public class EncounterService {
 
     public List<Encounter> getAllEncounters() {
         List<Encounter> encounters = encounterRepository.findAll();
+
+        LOGGER.info("Query for all encounters returned {} encounters", encounters.size());
 
         return encounters;
     }
@@ -91,6 +103,8 @@ public class EncounterService {
     }
 
     public Encounter getEncounterById(long id) {
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
+
         return encounterRepository.findOne(id);
     }
 }
