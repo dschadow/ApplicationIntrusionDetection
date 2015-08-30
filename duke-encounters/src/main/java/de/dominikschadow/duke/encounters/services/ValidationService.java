@@ -71,6 +71,7 @@ public class ValidationService {
     }
 
     public void validateUser(User user) {
+        // TODO AID created user must have role USER
 
     }
 }
