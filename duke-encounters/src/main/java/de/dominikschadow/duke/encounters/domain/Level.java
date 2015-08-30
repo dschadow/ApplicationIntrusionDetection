@@ -27,19 +27,19 @@ public enum Level {
     ROOKIE("Rookie"),
     PRO("Pro");
 
-    private String level;
+    private String name;
 
-    Level(String level) {
-        this.level = level;
+    Level(String name) {
+        this.name = name;
 
     }
 
-    public String getLevel() {
-        return level;
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
-        return getLevel();
+        return getName();
     }
 }
