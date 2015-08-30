@@ -2,7 +2,7 @@
 INSERT INTO roles(id, name, technical_name) VALUES (1, 'user', 'ROLE_USER');
 INSERT INTO roles(id, name, technical_name) VALUES (2, 'admin', 'ROLE_ADMIN');
 
--- USERS
+-- USERS (username and password are always identical)
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, role_id, enabled) VALUES (1, 'Arthur', 'Dent', 'arthur@dent.com', 'arthur@dent.com', '$2a$10$UYOseFWgR87PwL2j8VmycO.IjuH2uGht3lGFGBn2ShUUS9B4zclIe', '2010-05-05 10:45:33', 'PRO', 1, TRUE);
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, role_id, enabled) VALUES (2, 'Ford', 'Prefect', 'ford@prefect.com', 'ford@prefect.com', '$2a$10$8yg/hBDXP0bpQuuKJneYbucl0/NsjfT1zQjMsEcnFrjt.6tVnrAEW', '2012-10-01 11:02:29', 'ROOKIE', 1, TRUE);
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, role_id, enabled) VALUES (3, 'Zaphod', 'Beeblebrox', 'zaphod@beeblebrox.com', 'zaphod@beeblebrox.com', '$2a$10$fBUuTN5MQafWRqWULmC8DuN30CTWOphJZlUOJnO/woK2uPM.5e4vC', '2015-09-23 08:52:11', 'NEWBIE', 1, TRUE);
