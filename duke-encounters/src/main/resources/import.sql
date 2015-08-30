@@ -1,6 +1,6 @@
 -- ROLES
-INSERT INTO roles(id, rolename, role) VALUES (1, 'user', 'ROLE_USER');
-INSERT INTO roles(id, rolename, role) VALUES (2, 'admin', 'ROLE_ADMIN');
+INSERT INTO roles(id, name, technical_name) VALUES (1, 'user', 'ROLE_USER');
+INSERT INTO roles(id, name, technical_name) VALUES (2, 'admin', 'ROLE_ADMIN');
 
 -- USERS
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, role_id, enabled) VALUES (1, 'Arthur', 'Dent', 'arthur@dent.com', 'arthur@dent.com', '$2a$10$UYOseFWgR87PwL2j8VmycO.IjuH2uGht3lGFGBn2ShUUS9B4zclIe', '2010-05-05 10:45:33', 'PRO', 1, TRUE);

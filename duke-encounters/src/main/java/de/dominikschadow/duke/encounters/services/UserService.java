@@ -51,7 +51,7 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
 
-        userRole = roleRepository.findByRolename("user");
+        userRole = roleRepository.findByName("user");
     }
 
     /**

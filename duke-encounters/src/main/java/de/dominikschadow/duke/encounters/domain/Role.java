@@ -25,13 +25,13 @@ import javax.persistence.*;
  * @author Dominik Schadow
  */
 @Entity
-@Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = {"role"}))
+@Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Role {
     @Id
     @GeneratedValue
     private long id;
-    private String rolename;
-    private String role;
+    private String name;
+    private String technicalName;
 
     public long getId() {
         return id;
@@ -41,24 +41,24 @@ public class Role {
         this.id = id;
     }
 
-    public String getRolename() {
-        return rolename;
+    public String getName() {
+        return name;
     }
 
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRole() {
-        return role;
+    public String getTechnicalName() {
+        return technicalName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setTechnicalName(String technicalName) {
+        this.technicalName = technicalName;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder(getRole()).append(" (").append(getRolename()).append(")").toString();
+        return new StringBuilder(getTechnicalName()).append(" (").append(getName()).append(")").toString();
     }
 }
