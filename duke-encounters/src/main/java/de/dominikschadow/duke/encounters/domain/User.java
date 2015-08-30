@@ -30,6 +30,7 @@ import java.util.Date;
  * @author Dominik Schadow
  */
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue
@@ -38,15 +39,19 @@ public class User {
     private String lastname;
     @NotNull
     @Column(nullable = false)
-    private String email;
+    private String username;
     @NotNull
     @Column(nullable = false)
+    private String email;
+    @NotNull
+    @Column(nullable = false, length = 60)
     private String password;
     @Transient
     private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)
     private Level level;
+    private boolean enabled;
 
     public long getId() {
         return id;
@@ -70,6 +75,14 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -118,5 +131,13 @@ public class User {
         name = CharMatcher.WHITESPACE.trimTrailingFrom(name);
 
         return name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

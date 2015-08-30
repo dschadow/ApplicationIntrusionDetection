@@ -21,6 +21,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "confirmations")
 public class Confirmation {
     @Id
     @GeneratedValue
