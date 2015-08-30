@@ -49,18 +49,6 @@ public class SessionController {
     }
 
     /**
-     * Shows the login form with an error message.
-     *
-     * @param model The model attribute container
-     * @return Login URL
-     */
-    @RequestMapping(value = "/login-error", method = GET)
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
-
-    /**
      * Shows the registration page.
      *
      * @param model The model attribute container
