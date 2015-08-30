@@ -17,9 +17,12 @@
  */
 package de.dominikschadow.duke.encounters.repositories;
 
-import de.dominikschadow.duke.encounters.domain.User;
+import de.dominikschadow.duke.encounters.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+/**
+ * @author Dominik Schadow
+ */
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByRolename(String rolename);
 }
