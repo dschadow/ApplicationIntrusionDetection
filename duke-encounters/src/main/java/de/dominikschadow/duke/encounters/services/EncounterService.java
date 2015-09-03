@@ -107,4 +107,12 @@ public class EncounterService {
 
         return encounterRepository.findOne(id);
     }
+
+    public List<Encounter> getEncountersByUsername(String username) {
+        List<Encounter> encounters = encounterRepository.findAllByUsername(username);
+
+        LOGGER.info("Query for user {} encounters returned {} encounters", username, encounters.size());
+
+        return encounters;
+    }
 }
