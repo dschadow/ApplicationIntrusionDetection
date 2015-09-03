@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/encounters}">Encounters</a></li>
                 <li><a th:href="@{/search}">Search</a></li>
-                <li><a th:href="@{/account}">My Account</a></li>
+                <li class="active"><a th:href="@{/account}">My Account</a></li>
                 <li>
                     <form th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-default" style="margin-top: 8px; margin-left: 20px;">
@@ -31,48 +31,38 @@
 </nav>
 <div class="jumbotron">
     <div class="container">
-        <h1>Encounter Details</h1>
+        <h1>My Account</h1>
 
-        <h2 th:text="${encounter.event}"></h2>
+        <h2 th:text="${#httpServletRequest.remoteUser}"></h2>
     </div>
 </div>
 
 <div class="container">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>City</th>
-                <th>Country</th>
-                <th>Date</th>
-                <th>Likelihood</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td th:text="${encounter.location}"></td>
-                <td th:text="${encounter.country}"></td>
-                <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-                <td th:text="${encounter.likelihood}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="page-header">
+        <h2>My Encounters</h2>
     </div>
-</div>
 
-<div class="container">
-    <div class="col-md-12">
-        <h2>Confirmations</h2>
-
-        <p th:each="confirmation,iterStat : ${encounter.confirmations}">
-            <span th:text="${confirmation.user} + ' (' + ${#calendars.format(confirmation.date,'yyyy-MM-dd')} + ')'"></span><br/>
-        </p>
-    </div>
-</div>
-
-<div class="container">
-    <div class="col-md-12">
-        <p><a th:href="@{/encounters}">Back to encounters</a></p>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="encounter : ${encounters}">
+                        <td th:text="${encounter.event}"></td>
+                        <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
+                        <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </body>
