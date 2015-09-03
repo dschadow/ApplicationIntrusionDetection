@@ -22,10 +22,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface EncounterRepository extends JpaRepository<Encounter, Long>, JpaSpecificationExecutor {
     @Query(value="select e from Encounter e")
     List<Encounter> findWithPageable(Pageable latestTen);
+
+    @Query(value="select e from Encounter e, User u where e.user = u.id and u.username = :username")
+    List<Encounter> findAllByUsername(@Param("username")String username);
 }
