@@ -33,6 +33,9 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+/**
+ * Controller to handle all encounter related requests.
+ */
 @Controller
 public class EncountersController {
     private EncounterService encounterService;
