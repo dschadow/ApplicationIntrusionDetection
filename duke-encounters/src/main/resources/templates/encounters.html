@@ -55,6 +55,7 @@
                     <th>Date</th>
                     <th>Confirmed by</th>
                     <th>Likelihood</th>
+                    <th th:if="${#httpServletRequest.remoteUser}">Confirm</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,6 +71,11 @@
                         </span>
                     </td>
                     <td th:text="${encounter.likelihood}"></td>
+                    <td th:if="${#httpServletRequest.remoteUser}">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Confirm">
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
