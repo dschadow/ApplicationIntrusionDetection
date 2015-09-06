@@ -65,6 +65,20 @@ public class EncountersController {
         return "encounters";
     }
 
+    @RequestMapping(value = "/encounters/new", method = GET)
+    public String newEncounter(Model model) {
+        model.addAttribute("encounter", new Encounter());
+
+        return "user/newEncounter";
+    }
+
+    @RequestMapping(value = "/encounters/delete", method = POST)
+    public String deleteEncounter(Model model) {
+        model.addAttribute("encounter", new Encounter());
+
+        return "user/account";
+    }
+
     @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
         validationService.validateEncounterId(id);
