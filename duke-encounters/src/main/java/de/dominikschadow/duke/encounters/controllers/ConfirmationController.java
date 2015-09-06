@@ -20,6 +20,9 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
+import org.owasp.security.logging.SecurityMarkers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +39,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class ConfirmationController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
+
     private EncounterService encounterService;
     private ValidationService validationService;
 
@@ -49,6 +54,9 @@ public class ConfirmationController {
     public String revokeConfirmation(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {} from encounter {}",
+                username, "", "");
 
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);

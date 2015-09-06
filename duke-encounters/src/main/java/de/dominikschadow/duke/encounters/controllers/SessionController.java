@@ -3,6 +3,9 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.User;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
+import org.owasp.security.logging.SecurityMarkers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class SessionController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionController.class);
+
     private ValidationService validationService;
     private UserService userService;
 
@@ -72,6 +77,8 @@ public class SessionController {
         // TODO react on validation error
         User user = userService.createUser(register);
         model.addAttribute("user", user);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);
 
         return "login";
     }

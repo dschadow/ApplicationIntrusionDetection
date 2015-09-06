@@ -20,6 +20,9 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
+import org.owasp.security.logging.SecurityMarkers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +39,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class AccountController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+
     private EncounterService encounterService;
     private ValidationService validationService;
 
@@ -50,6 +55,8 @@ public class AccountController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
+
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
 
@@ -60,6 +67,8 @@ public class AccountController {
     public String editMyAccount(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
         return "/user/editAccount";
     }
