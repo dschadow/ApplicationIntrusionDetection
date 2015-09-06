@@ -55,4 +55,12 @@ public class AccountController {
 
         return "/user/account";
     }
+
+    @RequestMapping(value = "/account/edit", method = GET)
+    public String editMyAccount(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        return "/user/editAccount";
+    }
 }
