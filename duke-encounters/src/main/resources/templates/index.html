@@ -76,9 +76,12 @@
                         <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                         <td th:text="${encounter.likelihood}"></td>
                         <td th:if="${#httpServletRequest.remoteUser}">
-                            <button type="button" class="btn btn-default btn-sm" aria-label="Confirm">
-                                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                            </button>
+                            <form th:action="@{/encounters/confirm}" method="post">
+                                <input type="hidden" th:value="${encounter.id}"/>
+                                <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

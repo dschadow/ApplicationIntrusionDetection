@@ -22,6 +22,8 @@ import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -75,6 +77,20 @@ public class EncountersController {
     @RequestMapping(value = "/encounters/delete", method = POST)
     public String deleteEncounter(Model model) {
         model.addAttribute("encounter", new Encounter());
+
+        return "user/account";
+    }
+
+    @RequestMapping(value = "/encounters/confirm", method = POST)
+    public String confirmEncounter(Model model) {
+
+        // TODO AID react to double confirmations
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
+        model.addAttribute("encounters", encounters);
 
         return "user/account";
     }
