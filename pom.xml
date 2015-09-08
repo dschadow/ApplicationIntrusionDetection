@@ -19,6 +19,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.1.0</appsensor.version>
+        <boxfuse.version>1.10.0.704</boxfuse.version>
     </properties>
 
     <prerequisites>
@@ -134,7 +135,7 @@
                 <plugin>
                     <groupId>com.boxfuse.client</groupId>
                     <artifactId>boxfuse-maven-plugin</artifactId>
-                    <version>1.9.7.701</version>
+                    <version>${boxfuse.version}</version>
                     <executions>
                         <execution>
                             <id>fuse-image</id>
@@ -178,7 +179,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.3.2</version>
+                    <version>0.3.3</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
