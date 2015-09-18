@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
-public class User {
+public class DukeEncountersUser {
     @Id
     @GeneratedValue
     private long id;

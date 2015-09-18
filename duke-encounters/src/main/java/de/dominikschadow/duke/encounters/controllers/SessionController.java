@@ -1,6 +1,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.domain.User;
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
 import org.owasp.security.logging.SecurityMarkers;
@@ -61,7 +61,7 @@ public class SessionController {
      */
     @RequestMapping(value = "/register", method = GET)
     public String register(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new DukeEncountersUser());
         return "register";
     }
 
@@ -72,10 +72,10 @@ public class SessionController {
      * @return Login URL
      */
     @RequestMapping(value = "/register", method = POST)
-    public String register(@ModelAttribute(value = "user") User register, Model model) {
+    public String register(@ModelAttribute(value = "user") DukeEncountersUser register, Model model) {
         validationService.validateUser(register);
         // TODO react on validation error
-        User user = userService.createUser(register);
+        DukeEncountersUser user = userService.createUser(register);
         model.addAttribute("user", user);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);

@@ -17,9 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.repositories;
 
-import de.dominikschadow.duke.encounters.domain.User;
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<DukeEncountersUser, Long> {
+    DukeEncountersUser findByUsername(String username);
 }

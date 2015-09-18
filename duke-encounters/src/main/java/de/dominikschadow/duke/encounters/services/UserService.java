@@ -19,7 +19,7 @@ package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.domain.Level;
 import de.dominikschadow.duke.encounters.domain.Role;
-import de.dominikschadow.duke.encounters.domain.User;
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.repositories.RoleRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.security.logging.SecurityMarkers;
@@ -61,7 +61,7 @@ public class UserService {
      * @param register The user to created
      * @return The created user with all fields filled
      */
-    public User createUser(User register) {
+    public DukeEncountersUser createUser(DukeEncountersUser register) {
         LOGGER.info("Creating user with username {}", register.getEmail());
 
         register.setUsername(register.getEmail());
@@ -79,7 +79,7 @@ public class UserService {
             return null;
         }
 
-        User user = userRepository.save(register);
+        DukeEncountersUser user = userRepository.save(register);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getRole());

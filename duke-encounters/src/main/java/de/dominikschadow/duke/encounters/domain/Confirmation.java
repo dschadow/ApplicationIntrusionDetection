@@ -28,7 +28,7 @@ public class Confirmation {
     private long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private DukeEncountersUser user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "encounter_id", nullable = false)
     private Encounter encounter;
@@ -42,11 +42,11 @@ public class Confirmation {
         this.id = id;
     }
 
-    public User getUser() {
+    public DukeEncountersUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(DukeEncountersUser user) {
         this.user = user;
     }
 

@@ -43,7 +43,7 @@ public class Encounter {
     private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private DukeEncountersUser user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
     private List<Confirmation> confirmations;
 
@@ -95,11 +95,11 @@ public class Encounter {
         this.date = date;
     }
 
-    public User getUser() {
+    public DukeEncountersUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(DukeEncountersUser user) {
         this.user = user;
     }
 
