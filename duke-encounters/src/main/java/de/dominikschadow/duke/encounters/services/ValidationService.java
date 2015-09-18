@@ -18,14 +18,21 @@
 package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
-import de.dominikschadow.duke.encounters.domain.User;
-import org.owasp.appsensor.core.AppSensorClient;
+import org.apache.commons.lang3.StringUtils;
+import org.owasp.appsensor.core.*;
+import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author Dominik Schadow
@@ -33,10 +40,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationService.class);
-    private AppSensorClient appSensorClient = new AppSensorClient();
+    private DetectionSystem detectionSystem;
+
+    @Autowired
+    private AppSensorClient appSensorClient;
+
+    @Autowired
+    private EventManager ids;
+
+    @PostConstruct
+    public void init() {
+        detectionSystem = new DetectionSystem(
+                appSensorClient.getConfiguration().getServerConnection()
+                        .getClientApplicationIdentificationHeaderValue());
+    }
 
     public void validateSearchFilter(SearchFilter filter) {
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
+            if (hasXssPayload(filter.getEvent())) {
+                reactToXss();
+            }
             // TODO AID check for XSS or SQLi
         }
 
@@ -60,23 +83,37 @@ public class ValidationService {
             try {
                 Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
-                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum range", filter.getLikelihood());
+                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
+                        "range", filter.getLikelihood());
                 // TODO AID react
             }
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range", filter.getConfirmations());
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
+                    filter.getConfirmations());
             // TODO AID react
         }
     }
 
-    public void validateUser(User user) {
+    public void validateUser(DukeEncountersUser user) {
         // TODO AID created user must have role USER
 
     }
 
     public void validateEncounterId(long id) {
         // TOTOD AID validate id
+    }
+
+    private boolean hasXssPayload(String payload) {
+        return StringUtils.contains(payload, "<script>");
+    }
+
+    private void reactToXss() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = new User(authentication.getName());
+
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
+        ids.addEvent(new Event(user, detectionPoint, detectionSystem));
     }
 }
