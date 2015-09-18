@@ -60,7 +60,10 @@ public class ValidationService {
             if (hasXssPayload(filter.getEvent())) {
                 reactToXss();
             }
-            // TODO AID check for XSS or SQLi
+
+            if (hasSqlIPayload(filter.getEvent())) {
+                reactToSqlInjection();
+            }
         }
 
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
@@ -109,11 +112,23 @@ public class ValidationService {
         return StringUtils.contains(payload, "<script>");
     }
 
+    private boolean hasSqlIPayload(String payload) {
+        return false;
+    }
+
     private void reactToXss() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = new User(authentication.getName());
 
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
+        ids.addEvent(new Event(user, detectionPoint, detectionSystem));
+    }
+
+    private void reactToSqlInjection() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = new User(authentication.getName());
+
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1");
         ids.addEvent(new Event(user, detectionPoint, detectionSystem));
     }
 }
