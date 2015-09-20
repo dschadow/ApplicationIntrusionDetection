@@ -74,12 +74,6 @@
         <dependency>
             <groupId>org.owasp.appsensor</groupId>
             <artifactId>appsensor-integration-spring-security</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-security-core</artifactId>
-                    <groupId>org.springframework.security</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -99,12 +93,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
