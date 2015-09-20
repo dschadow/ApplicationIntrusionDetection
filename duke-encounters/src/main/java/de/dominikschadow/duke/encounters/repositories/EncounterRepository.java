@@ -30,6 +30,6 @@ public interface EncounterRepository extends JpaRepository<Encounter, Long>, Jpa
     @Query(value="select e from Encounter e")
     List<Encounter> findWithPageable(Pageable latestTen);
 
-    @Query(value="select e from Encounter e, User u where e.user = u.id and u.username = :username")
+    @Query(value="select e from Encounter e, DukeEncountersUser u where e.user = u.id and u.username = :username")
     List<Encounter> findAllByUsername(@Param("username")String username);
 }

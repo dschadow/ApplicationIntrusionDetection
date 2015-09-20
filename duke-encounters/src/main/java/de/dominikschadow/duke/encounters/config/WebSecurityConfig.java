@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * BCryptPasswordEncoder constructor takes a work factor as first argument. The default is 10, the valid range is
      * 4 to 31. The amount of work increases exponentially.
      *
-     * @return The PasswordEncoder to use for all user passwords
+     * @return The PasswordEncoder to use for all dukeEncountersUser passwords
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -96,8 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .jdbcAuthentication()
                 .dataSource(dataSource)
             .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username, password, enabled from users where username = ?")
-                .authoritiesByUsernameQuery("select username, technical_name from users u, roles r where u.username = ? and u.role_id = r.id");
+                .usersByUsernameQuery("select username, password, enabled from dukeEncountersUser where username = ?")
+                .authoritiesByUsernameQuery("select username, technical_name from dukeEncountersUser u, roles r where u.username = ? and u.role_id = r.id");
         // @formatter:on
     }
 
