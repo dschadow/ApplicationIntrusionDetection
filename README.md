@@ -9,3 +9,5 @@ Available users are listed in the [src/main/resources/import.sql](https://github
 
 ##Meta
 [![Build Status](https://travis-ci.org/dschadow/ApplicationIntrusionDetection.svg)](https://travis-ci.org/dschadow/ApplicationIntrusionDetection)
+
+[![codecov.io](http://codecov.io/github/dschadow/ApplicationIntrusionDetection/coverage.svg?branch=master)](http://codecov.io/github/dschadow/ApplicationIntrusionDetection?branch=master)
