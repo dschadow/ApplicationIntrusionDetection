@@ -121,6 +121,72 @@
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>
+                    <newVersion>${env.TRAVIS_BUILD_NUMBER}</newVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.boxfuse.client</groupId>
+                <artifactId>boxfuse-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>fuse-image</id>
+                        <goals>
+                            <goal>fuse</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>run-on-test</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <env>test</env>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>kill-on-test</id>
+                        <goals>
+                            <goal>kill</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <env>test</env>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>run-on-prod</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <env>prod</env>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <configuration>
+                    <tag>${project.artifactId}-${project.version}</tag>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>

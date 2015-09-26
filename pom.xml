@@ -125,64 +125,17 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.2</version>
-                    <configuration>
-                        <newVersion>${env.TRAVIS_BUILD_NUMBER}</newVersion>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.3</version>
-                    <configuration>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
                 </plugin>
                 <!-- Boxfuse requires credentials as described here: https://boxfuse.com/docs/maven/ -->
                 <plugin>
                     <groupId>com.boxfuse.client</groupId>
                     <artifactId>boxfuse-maven-plugin</artifactId>
                     <version>${boxfuse.version}</version>
-                    <executions>
-                        <execution>
-                            <id>fuse-image</id>
-                            <goals>
-                                <goal>fuse</goal>
-                            </goals>
-                            <phase>package</phase>
-                        </execution>
-                        <execution>
-                            <id>run-on-test</id>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <phase>pre-integration-test</phase>
-                            <configuration>
-                                <env>test</env>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>kill-on-test</id>
-                            <goals>
-                                <goal>kill</goal>
-                            </goals>
-                            <phase>post-integration-test</phase>
-                            <configuration>
-                                <env>test</env>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>run-on-prod</id>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <phase>deploy</phase>
-                            <configuration>
-                                <env>prod</env>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.spotify</groupId>
@@ -193,9 +146,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-plugin</artifactId>
                     <version>1.9.4</version>
-                    <configuration>
-                        <tag>${project.artifactId}-${project.version}</tag>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
