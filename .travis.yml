@@ -1,5 +1,5 @@
 sudo: false
 language: java
 jdk: oraclejdk8
-install: mvn versions:set
+install: mvn versions:set -DnewVersion=${TRAVIS_BUILD_NUMBER}
 script: mvn package
