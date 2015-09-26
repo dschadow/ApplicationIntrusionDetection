@@ -1,14 +1,7 @@
-sudo:
-  - false
-language:
-  - java
-jdk:
-  - oraclejdk8
-before_install:
-  - pip install codecov
-after_success:
-  - codecov
-install:
-  - mvn versions:set -DnewVersion=${TRAVIS_BUILD_NUMBER}
-script:
-  - mvn package
+sudo: false
+language: java
+jdk: oraclejdk8
+before_install: pip install codecov
+after_success: codecov
+install:  mvn versions:set -DnewVersion=${TRAVIS_BUILD_NUMBER}
+script: mvn package
