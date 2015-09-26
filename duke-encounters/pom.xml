@@ -135,6 +135,9 @@
             <plugin>
                 <groupId>com.boxfuse.client</groupId>
                 <artifactId>boxfuse-maven-plugin</artifactId>
+                <configuration>
+                    <app>dukeencounters</app>
+                </configuration>
                 <executions>
                     <execution>
                         <id>fuse-image</id>
