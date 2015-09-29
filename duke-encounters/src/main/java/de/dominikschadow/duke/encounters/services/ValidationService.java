@@ -84,7 +84,7 @@ public class ValidationService {
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
             try {
-                Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
+                Likelihood likelihood = Likelihood.fromString(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
                 LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
                         "range", filter.getLikelihood());

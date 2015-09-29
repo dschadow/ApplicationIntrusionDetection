@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import com.google.common.base.Strings;
+
 /**
  * Encounter likelihood enum.
  *
@@ -38,5 +40,17 @@ public enum Likelihood {
     @Override
     public String toString() {
         return getName();
+    }
+
+    public static Likelihood fromString(String value) {
+        if (!Strings.isNullOrEmpty(value)) {
+            for (Likelihood l : Likelihood.values()) {
+                if (value.equalsIgnoreCase(l.getName())) {
+                    return l;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("No enum found for " + value);
     }
 }

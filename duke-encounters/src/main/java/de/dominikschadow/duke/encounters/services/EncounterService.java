@@ -90,7 +90,7 @@ public class EncounterService {
         }
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
-            Likelihood likelihood = Likelihood.valueOf(filter.getLikelihood());
+            Likelihood likelihood = Likelihood.fromString(filter.getLikelihood());
             specifications.add(EncounterSpecification.encounterByLikelihood(likelihood));
         }
 
