@@ -73,31 +73,36 @@ public class EncounterService {
     public List<Encounter> getEncounters(SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
+        String event = "%";
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            specifications.add(EncounterSpecification.encounterByEvent(filter.getEvent()));
+            event = filter.getEvent();
         }
+        specifications.add(EncounterSpecification.encounterByEvent(event));
 
+        String location = "%";
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            specifications.add(EncounterSpecification.encounterByLocation(filter.getLocation()));
+            location = filter.getLocation();
         }
+        specifications.add(EncounterSpecification.encounterByLocation(location));
 
+        String country = "%";
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            specifications.add(EncounterSpecification.encounterByCountry(filter.getCountry()));
+            country = filter.getCountry();
         }
+        specifications.add(EncounterSpecification.encounterByCountry(country));
 
+        int year = 1995;
         if (filter.getYear() > 0) {
-            specifications.add(EncounterSpecification.encounterAfterYear(filter.getYear()));
+            year = filter.getYear();
         }
+        specifications.add(EncounterSpecification.encounterAfterYear(year));
 
-        if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
-            Likelihood likelihood = Likelihood.fromString(filter.getLikelihood());
-            specifications.add(EncounterSpecification.encounterByLikelihood(likelihood));
-        }
+        //specifications.add(EncounterSpecification.encounterByLikelihood(Likelihood.fromString(filter.getLikelihood())));
 
-        specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
+        //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
-        List<Encounter> encounters = encounterRepository.findAll(where(EncounterSpecification.encounterAfterYear(0)).and
-                (EncounterSpecification.encounterByConfirmations(1)));
+        List<Encounter> encounters = encounterRepository.findAll(where(specifications.get(0)).and(specifications.get
+                (1)).and(specifications.get(2)).and(specifications.get(3)));
 
         return encounters;
     }
