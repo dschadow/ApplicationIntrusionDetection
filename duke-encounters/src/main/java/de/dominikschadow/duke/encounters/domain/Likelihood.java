@@ -53,4 +53,9 @@ public enum Likelihood {
 
         throw new IllegalArgumentException("No enum found for " + value);
     }
+
+    public static Likelihood getLikelihood(int confirmations) {
+        return confirmations < 1 ? Likelihood.NOT_CONFIRMED : confirmations < 3 ? Likelihood.PLAUSIBLE : Likelihood
+                .CONFIRMED;
+    }
 }
