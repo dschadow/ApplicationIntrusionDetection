@@ -21,6 +21,7 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.ValidationService;
+import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -47,11 +52,14 @@ public class EncountersController {
 
     private EncounterService encounterService;
     private ValidationService validationService;
+    private SearchFilterValidator searchFilterValidator;
 
     @Autowired
-    public EncountersController(EncounterService encounterService, ValidationService validationService) {
+    public EncountersController(EncounterService encounterService, ValidationService validationService,
+                                SearchFilterValidator searchFilterValidator) {
         this.encounterService = encounterService;
         this.validationService = validationService;
+        this.searchFilterValidator = searchFilterValidator;
     }
 
     @RequestMapping(value = "/encounters", method = GET)
@@ -63,9 +71,13 @@ public class EncountersController {
     }
 
     @RequestMapping(value = "/encounters", method = POST)
-    public String searchEncounters(@ModelAttribute(value="searchFilter") SearchFilter searchFilter, Model model) {
-        validationService.validateSearchFilter(searchFilter);
+    public String searchEncounters(@ModelAttribute(value = "searchFilter") SearchFilter searchFilter, Model model,
+                                   BindingResult result) {
+        //validationService.validateSearchFilter(searchFilter);
         // TODO react on validation error
+        if (result.hasErrors()) {
+            return "encounters";
+        }
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
         model.addAttribute("encounters", encounters);
 
@@ -117,5 +129,10 @@ public class EncountersController {
         model.addAttribute("encounter", encounter);
 
         return "user/encounterDetails";
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(searchFilterValidator);
     }
 }
