@@ -46,6 +46,7 @@ public class SearchFilterValidator implements Validator {
     private static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof";
     private static final String XSS_ERROR_CODE = "xss.attempt";
     private static final String SQLI_ERROR_CODE = "sqli.attempt";
+    private static final String ATTACK_ERROR_CODE = "attack.attempt";
 
     private SpringValidatorAdapter validator;
     private DetectionSystem detectionSystem;
@@ -82,9 +83,7 @@ public class SearchFilterValidator implements Validator {
             if (hasXssPayload(filter.getEvent())) {
                 fireXssEvent();
                 errors.rejectValue("event", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            }
-
-            if (hasSqlIPayload(filter.getEvent())) {
+            } else if (hasSqlIPayload(filter.getEvent())) {
                 fireSqlIEvent();
                 errors.rejectValue("event", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
@@ -94,9 +93,7 @@ public class SearchFilterValidator implements Validator {
             if (hasXssPayload(filter.getEvent())) {
                 fireXssEvent();
                 errors.rejectValue("location", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            }
-
-            if (hasSqlIPayload(filter.getEvent())) {
+            } else if (hasSqlIPayload(filter.getEvent())) {
                 fireSqlIEvent();
                 errors.rejectValue("location", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
@@ -106,9 +103,7 @@ public class SearchFilterValidator implements Validator {
             if (hasXssPayload(filter.getEvent())) {
                 fireXssEvent();
                 errors.rejectValue("country", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            }
-
-            if (hasSqlIPayload(filter.getEvent())) {
+            } else if (hasSqlIPayload(filter.getEvent())) {
                 fireSqlIEvent();
                 errors.rejectValue("country", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
@@ -118,7 +113,7 @@ public class SearchFilterValidator implements Validator {
             if (filter.getYear() < 1995) {
                 LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
                         filter.getYear());
-                // TODO AID react
+                errors.rejectValue("year", "typo", "Java did not exist before 1995");
             }
         }
 
@@ -128,16 +123,31 @@ public class SearchFilterValidator implements Validator {
             } catch (IllegalArgumentException ex) {
                 LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
                         "range", filter.getLikelihood());
-                // TODO AID react
+                if (hasXssPayload(filter.getEvent())) {
+                    fireXssEvent();
+                    errors.rejectValue("likelihood", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+                } else if (hasSqlIPayload(filter.getEvent())) {
+                    fireSqlIEvent();
+                    errors.rejectValue("likelihood", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+                } else {
+                    errors.rejectValue("likelihood", ATTACK_ERROR_CODE, "This is not a valid likelihood value");
+                }
             }
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
-            // TODO AID react
+            if (hasXssPayload(filter.getEvent())) {
+                fireXssEvent();
+                errors.rejectValue("confirmations", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+            } else if (hasSqlIPayload(filter.getEvent())) {
+                fireSqlIEvent();
+                errors.rejectValue("confirmations", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+            } else {
+                errors.rejectValue("confirmations", ATTACK_ERROR_CODE, "No of confirmations out ot range");
+            }
         }
-
     }
 
     private boolean hasXssPayload(String payload) {
