@@ -19,7 +19,6 @@ package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.domain.Encounter;
-import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
