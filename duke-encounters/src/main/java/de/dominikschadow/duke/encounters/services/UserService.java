@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -61,7 +62,7 @@ public class UserService {
      * @param register The user to created
      * @return The created user with all fields filled
      */
-    public DukeEncountersUser createUser(DukeEncountersUser register) {
+    public DukeEncountersUser createUser(@NotNull DukeEncountersUser register) {
         LOGGER.info("Creating user with username {}", register.getEmail());
 
         register.setUsername(register.getEmail());

@@ -33,6 +33,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Dominik Schadow
@@ -55,7 +56,7 @@ public class ValidationService {
                         .getClientApplicationIdentificationHeaderValue());
     }
 
-    public void validateSearchFilter(SearchFilter filter) {
+    public void validateSearchFilter(@NotNull SearchFilter filter) {
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
             if (hasXssPayload(filter.getEvent())) {
                 reactToXss();
@@ -99,20 +100,20 @@ public class ValidationService {
         }
     }
 
-    public void validateUser(DukeEncountersUser user) {
+    public void validateUser(@NotNull DukeEncountersUser user) {
         // TODO AID created user must have role USER
 
     }
 
-    public void validateEncounterId(long id) {
+    public void validateEncounterId(@NotNull long id) {
         // TOTOD AID validate id
     }
 
-    private boolean hasXssPayload(String payload) {
+    private boolean hasXssPayload(@NotNull String payload) {
         return StringUtils.contains(payload, "<script>");
     }
 
-    private boolean hasSqlIPayload(String payload) {
+    private boolean hasSqlIPayload(@NotNull String payload) {
         return false;
     }
 

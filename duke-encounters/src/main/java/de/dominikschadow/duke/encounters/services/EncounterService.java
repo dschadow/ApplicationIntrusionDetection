@@ -33,6 +33,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class EncounterService {
         return encounters;
     }
 
-    public List<Encounter> getEncounters(SearchFilter filter) {
+    public List<Encounter> getEncounters(@NotNull SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
         String event = "%";
@@ -107,13 +108,13 @@ public class EncounterService {
         return encounters;
     }
 
-    public Encounter getEncounterById(long id) {
+    public Encounter getEncounterById(@NotNull long id) {
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
 
         return encounterRepository.findOne(id);
     }
 
-    public List<Encounter> getEncountersByUsername(String username) {
+    public List<Encounter> getEncountersByUsername(@NotNull String username) {
         List<Encounter> encounters = encounterRepository.findAllByUsername(username);
 
         LOGGER.info("Query for user {} encounters returned {} encounters", username, encounters.size());
