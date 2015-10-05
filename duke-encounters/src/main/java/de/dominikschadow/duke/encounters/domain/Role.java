@@ -59,6 +59,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return new StringBuilder(getTechnicalName()).append(" (").append(getName()).append(")").toString();
+        return getTechnicalName() + " (" + getName() + ")";
     }
 }
