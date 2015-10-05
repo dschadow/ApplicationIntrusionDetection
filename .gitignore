@@ -1,8 +1,6 @@
-*.class
 *.iml
 *.log
 *.lck
-.Idea*
 */target*
 .settings*
 .metadata*
@@ -12,4 +10,3 @@
 # Package Files #
 *.jar
 *.war
-*.ear
