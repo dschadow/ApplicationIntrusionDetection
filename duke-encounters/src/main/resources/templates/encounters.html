@@ -44,6 +44,10 @@
 </div>
 
 <div class="container">
+    <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a href="encounter/create">Create</a>
+        a new one.
+    </p>
+
     <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong> returned
         the following results:</p>
 
@@ -75,7 +79,7 @@
                     </td>
                     <td th:text="${encounter.likelihood}"></td>
                     <td th:if="${#httpServletRequest.remoteUser}">
-                        <form th:action="@{/encounters/confirm}" method="post">
+                        <form th:action="@{/encounter/confirm}" method="post">
                             <input type="hidden" th:value="${encounter.id}"/>
                             <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
                                 <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
