@@ -29,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,9 +64,7 @@ public class EncountersController {
     }
 
     @RequestMapping(value = "/encounter/create", method = GET)
-    public String createEncounter(Model model) {
-        model.addAttribute("encounter", new Encounter());
-
+    public String createEncounter(@ModelAttribute Encounter encounterl) {
         return "user/createEncounter";
     }
 

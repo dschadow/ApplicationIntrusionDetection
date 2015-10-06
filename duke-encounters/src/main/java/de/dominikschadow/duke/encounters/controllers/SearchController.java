@@ -23,10 +23,10 @@ import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,13 +57,11 @@ public class SearchController {
     /**
      * Shows the search form.
      *
-     * @param model The model attribute container
+     * @param searchFilterl The new SearchFilter
      * @return Search URL
      */
     @RequestMapping(value = "/search", method = GET)
-    public String searchEncounters(Model model) {
-        model.addAttribute("searchFilter", new SearchFilter());
-
+    public String searchEncounters(@ModelAttribute SearchFilter searchFilterl) {
         return "search";
     }
 

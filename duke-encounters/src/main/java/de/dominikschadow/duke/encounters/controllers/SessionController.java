@@ -2,7 +2,7 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,12 +35,11 @@ public class SessionController {
     /**
      * Shows the registration page.
      *
-     * @param model The model attribute container
+     * @param dukeEncountersUserl The new DukeEncountersUser
      * @return Register URL
      */
     @RequestMapping(value = "/register", method = GET)
-    public String register(Model model) {
-        model.addAttribute("dukeEncountersUser", new DukeEncountersUser());
+    public String register(@ModelAttribute DukeEncountersUser dukeEncountersUserl) {
         return "register";
     }
 }
