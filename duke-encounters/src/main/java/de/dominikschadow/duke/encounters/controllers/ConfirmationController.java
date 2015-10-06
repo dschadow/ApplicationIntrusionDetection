@@ -17,7 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.security.logging.SecurityMarkers;
@@ -25,10 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.servlet.ModelAndView;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -39,40 +37,34 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class ConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
 
-    private EncounterService encounterService;
+    private ConfirmationService confirmationService;
     private UserService userService;
 
     @Autowired
-    public ConfirmationController(EncounterService encounterService, UserService userService) {
-        this.encounterService = encounterService;
+    public ConfirmationController(ConfirmationService confirmationService, UserService userService) {
+        this.confirmationService = confirmationService;
         this.userService = userService;
     }
 
     @RequestMapping(value = "/confirmations/add", method = POST)
-    public String addConfirmation(Model model) {
+    public ModelAndView addConfirmation(long encounterId) {
 
         // TODO AID react to double confirmations
 
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, "");
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, encounterId);
 
-        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
-        model.addAttribute("encounters", encounters);
-
-        return "user/account";
+        return new ModelAndView("redirect:/account");
     }
 
     @RequestMapping(value = "/confirmations/revoke", method = POST)
-    public String revokeConfirmation(Model model) {
+    public ModelAndView revokeConfirmation(long encounterId) {
         String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {} from encounter {}",
-                username, "", "");
+                username, "", encounterId);
 
-        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
-        model.addAttribute("encounters", encounters);
-
-        return "user/account";
+        return new ModelAndView("redirect:/account");
     }
 }

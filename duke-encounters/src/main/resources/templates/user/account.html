@@ -107,13 +107,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="encounter : ${encounters}">
-                    <td th:text="${encounter.event}"></td>
-                    <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-                    <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                <tr th:each="confirmation : ${confirmations}">
+                    <td th:text="${confirmation.encounter.event}"></td>
+                    <td th:text="${confirmation.encounter.location} + ' ('+ ${confirmation.encounter.country} + ')'"></td>
+                    <td th:text="${#calendars.format(confirmation.date,'yyyy-MM-dd')}"></td>
                     <td>
                         <form th:action="@{/confirmations/revoke}" method="post">
-                            <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
+                            <input type="hidden" th:value="${confirmation.encounter.id}" th:name="confirmation.id"/>
                             <button type="submit" class="btn btn-default btn-sm" aria-label="Revoke Confirmation">
                                 <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                             </button>

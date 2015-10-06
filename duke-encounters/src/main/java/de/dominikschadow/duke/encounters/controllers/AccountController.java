@@ -17,8 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
@@ -48,13 +50,16 @@ public class AccountController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
     private EncounterService encounterService;
+    private ConfirmationService confirmationService;
     private UserService userService;
     private DukeEncountersUserValidator dukeEncountersUserValidator;
 
     @Autowired
-    public AccountController(EncounterService encounterService, UserService userService, DukeEncountersUserValidator
+    public AccountController(EncounterService encounterService, ConfirmationService confirmationService, UserService
+            userService, DukeEncountersUserValidator
             dukeEncountersUserValidator) {
         this.encounterService = encounterService;
+        this.confirmationService = confirmationService;
         this.userService = userService;
         this.dukeEncountersUserValidator = dukeEncountersUserValidator;
     }
@@ -67,6 +72,9 @@ public class AccountController {
 
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
+
+        List<Confirmation> confirmations = confirmationService.getConfirmationsByUsername(username);
+        model.addAttribute("confirmations", confirmations);
 
         return "/user/account";
     }
