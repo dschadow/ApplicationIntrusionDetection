@@ -35,11 +35,11 @@ public class SessionController {
     /**
      * Shows the registration page.
      *
-     * @param dukeEncountersUserl The new DukeEncountersUser
+     * @param dukeEncountersUser The new DukeEncountersUser
      * @return Register URL
      */
     @RequestMapping(value = "/register", method = GET)
-    public String register(@ModelAttribute DukeEncountersUser dukeEncountersUserl) {
+    public String register(@ModelAttribute DukeEncountersUser dukeEncountersUser) {
         return "register";
     }
 }
