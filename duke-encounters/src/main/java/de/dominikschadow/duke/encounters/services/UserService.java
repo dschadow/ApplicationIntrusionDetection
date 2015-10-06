@@ -59,28 +59,27 @@ public class UserService {
     /**
      * Creates a new user. This user receives the normal user role, is enabled and has the {@link Level} NEWBIE.
      *
-     * @param register The user to created
+     * @param newUser The user to create
      * @return The created user with all fields filled
      */
-    public DukeEncountersUser createUser(@NotNull DukeEncountersUser register) {
-        LOGGER.info("Creating user with username {}", register.getEmail());
+    public DukeEncountersUser createUser(@NotNull DukeEncountersUser newUser) {
+        LOGGER.info("Creating user with username {}", newUser.getEmail());
 
-        register.setUsername(register.getEmail());
-        register.setEnabled(true);
-        register.setLevel(Level.NEWBIE);
-        register.setRegistrationDate(new Date());
+        newUser.setEnabled(true);
+        newUser.setLevel(Level.NEWBIE);
+        newUser.setRegistrationDate(new Date());
 
-        LOGGER.info("Setting role {} for user {}", userRole, register.getEmail());
-        register.setRole(userRole);
+        LOGGER.info("Setting role {} for user {}", userRole, newUser.getEmail());
+        newUser.setRole(userRole);
 
-        register.setPassword(passwordEncoder.encode(register.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
-        if (userRepository.findByUsername(register.getUsername()) != null) {
-            LOGGER.error("User with username {} already exists", register.getUsername());
+        if (userRepository.findByUsername(newUser.getUsername()) != null) {
+            LOGGER.error("User with username {} already exists", newUser.getUsername());
             return null;
         }
 
-        DukeEncountersUser user = userRepository.save(register);
+        DukeEncountersUser user = userRepository.save(newUser);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getRole());

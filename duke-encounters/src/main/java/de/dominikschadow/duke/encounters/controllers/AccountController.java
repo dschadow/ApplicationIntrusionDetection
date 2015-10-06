@@ -19,7 +19,6 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
-import de.dominikschadow.duke.encounters.services.ValidationService;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +41,10 @@ public class AccountController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
     private EncounterService encounterService;
-    private ValidationService validationService;
 
     @Autowired
-    public AccountController(EncounterService encounterService, ValidationService validationService) {
+    public AccountController(EncounterService encounterService) {
         this.encounterService = encounterService;
-        this.validationService = validationService;
     }
 
     @RequestMapping(value = "/account", method = GET)

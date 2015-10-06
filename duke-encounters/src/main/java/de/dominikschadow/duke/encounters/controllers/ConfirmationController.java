@@ -19,7 +19,6 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
-import de.dominikschadow.duke.encounters.services.ValidationService;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +41,10 @@ public class ConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
 
     private EncounterService encounterService;
-    private ValidationService validationService;
 
     @Autowired
-    public ConfirmationController(EncounterService encounterService, ValidationService validationService) {
+    public ConfirmationController(EncounterService encounterService) {
         this.encounterService = encounterService;
-        this.validationService = validationService;
     }
 
     @RequestMapping(value = "/confirmations/revoke", method = POST)

@@ -32,7 +32,7 @@
 </div>
 
 <div class="container">
-    <form action="#" th:action="@{/register}" th:object="${user}" method="post" role="form">
+    <form action="#" th:action="@{/register}" th:object="${dukeEncountersUser}" method="post" role="form">
         <div class="form-group">
             <label for="firstname">Firstname</label>
             <input type="text" id="firstname" name="firstname" th:field="*{firstname}" class="form-control"/>
@@ -42,7 +42,11 @@
             <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="email">Email (will be your username)</label>
+            <label for="email">Username</label>
+            <input type="text" id="username" name="username" th:field="*{username}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
             <input type="text" id="email" name="email" th:field="*{email}" class="form-control"/>
         </div>
         <div class="form-group">
@@ -51,7 +55,8 @@
         </div>
         <div class="form-group">
             <label for="confirmPassword">Confirm password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}" class="form-control"/>
+            <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}"
+                   class="form-control"/>
         </div>
         <button type="submit" class="btn btn-default">Create user</button>
     </form>

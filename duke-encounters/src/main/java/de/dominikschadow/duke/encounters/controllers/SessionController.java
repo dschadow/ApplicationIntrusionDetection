@@ -2,17 +2,21 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.services.ValidationService;
+import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -26,13 +30,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class SessionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionController.class);
 
-    private ValidationService validationService;
     private UserService userService;
+    private DukeEncountersUserValidator dukeEncountersUserValidator;
 
     @Autowired
-    public SessionController(ValidationService validationService, UserService userService) {
-        this.validationService = validationService;
+    public SessionController(UserService userService, DukeEncountersUserValidator dukeEncountersUserValidator) {
         this.userService = userService;
+        this.dukeEncountersUserValidator = dukeEncountersUserValidator;
     }
 
     /**
@@ -61,25 +65,32 @@ public class SessionController {
      */
     @RequestMapping(value = "/register", method = GET)
     public String register(Model model) {
-        model.addAttribute("user", new DukeEncountersUser());
+        model.addAttribute("dukeEncountersUser", new DukeEncountersUser());
         return "register";
     }
 
     /**
      * Creates the new user and stored it in the database.
      *
-     * @param model The model attribute container
+     * @param newUser The new user to register
      * @return Login URL
      */
     @RequestMapping(value = "/register", method = POST)
-    public String register(@ModelAttribute(value = "user") DukeEncountersUser register, Model model) {
-        validationService.validateUser(register);
+    public ModelAndView createUser(@Valid DukeEncountersUser newUser, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("register", "formErrors", result.getAllErrors());
+        }
+
         // TODO react on validation error
-        DukeEncountersUser user = userService.createUser(register);
-        model.addAttribute("user", user);
+        DukeEncountersUser user = userService.createUser(newUser);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);
 
-        return "login";
+        return new ModelAndView("login");
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(dukeEncountersUserValidator);
     }
 }
