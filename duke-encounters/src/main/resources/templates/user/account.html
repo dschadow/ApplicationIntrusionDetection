@@ -71,11 +71,13 @@
                     <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                     <td>
-                        <a th:href="@{/encounters/(id=${encounter.id})}" class="btn btn-default btn-sm" aria-label="Edit Encounter">
+                        <a th:href="@{/encounters/{id}(id=${encounter.id},action='edit')}"
+                           class="btn btn-default btn-sm" aria-label="Edit Encounter">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
-                        <form th:action="@{/encounter/delete}" method="post">
-                            <input type="hidden" id="encounterId" th:value="${encounter.id}" />
+
+                        <form action="#" th:action="@{/encounter/delete}" method="post">
+                            <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
                             <button type="submit" class="btn btn-default btn-sm" aria-label="Delete Encounter">
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                             </button>
@@ -111,7 +113,7 @@
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                     <td>
                         <form th:action="@{/confirmations/revoke}" method="post">
-                            <input type="hidden" th:value="${encounter.id}" />
+                            <input type="hidden" th:value="${encounter.id}"/>
                             <button type="submit" class="btn btn-default btn-sm" aria-label="Revoke Confirmation">
                                 <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                             </button>

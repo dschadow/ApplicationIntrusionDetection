@@ -120,4 +120,10 @@ public class EncounterService {
 
         return encounters;
     }
+
+    public void deleteEncounter(@NotNull String username, @NotNull long encounterId) {
+        encounterRepository.delete(encounterId);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
+    }
 }

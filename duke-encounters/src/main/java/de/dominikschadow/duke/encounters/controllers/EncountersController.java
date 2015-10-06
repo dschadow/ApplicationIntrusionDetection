@@ -18,30 +18,22 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
-import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
-import de.dominikschadow.duke.encounters.services.ValidationService;
-import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
+import de.dominikschadow.duke.encounters.validators.EncounterValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -54,15 +46,12 @@ public class EncountersController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EncountersController.class);
 
     private EncounterService encounterService;
-    private ValidationService validationService;
-    private SearchFilterValidator searchFilterValidator;
+    private EncounterValidator encounterValidator;
 
     @Autowired
-    public EncountersController(EncounterService encounterService, ValidationService validationService,
-                                SearchFilterValidator searchFilterValidator) {
+    public EncountersController(EncounterService encounterService, EncounterValidator encounterValidator) {
         this.encounterService = encounterService;
-        this.validationService = validationService;
-        this.searchFilterValidator = searchFilterValidator;
+        this.encounterValidator = encounterValidator;
     }
 
     @RequestMapping(value = "/encounters", method = GET)
@@ -73,21 +62,6 @@ public class EncountersController {
         return "encounters";
     }
 
-    @RequestMapping(value = "/encounters", method = POST)
-    public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ModelAndView("encounters", "formErrors", result.getAllErrors());
-        }
-
-        List<Encounter> encounters = encounterService.getEncounters(searchFilter);
-
-        Map<String, Object> modelMap = new LinkedHashMap<>();
-        modelMap.put("encounters", encounters);
-        modelMap.put("searchFilter", searchFilter);
-
-        return new ModelAndView("encounters", modelMap);
-    }
-
     @RequestMapping(value = "/encounter/create", method = GET)
     public String createEncounter(Model model) {
         model.addAttribute("encounter", new Encounter());
@@ -96,13 +70,16 @@ public class EncountersController {
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
-    public ModelAndView deleteEncounter(@ModelAttribute(value = "encounterId") long encounterId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+    public ModelAndView deleteEncounter(long encounterId) {
+        String username = getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, "");
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
-        return new ModelAndView("redirect:/user/account");
+        // TODO AID react to not own encounter
+
+        encounterService.deleteEncounter(username, encounterId);
+
+        return new ModelAndView("redirect:/account");
     }
 
     @RequestMapping(value = "/encounter/confirm", method = POST)
@@ -110,8 +87,7 @@ public class EncountersController {
 
         // TODO AID react to double confirmations
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+        String username = getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, "");
 
@@ -123,7 +99,6 @@ public class EncountersController {
 
     @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
-        validationService.validateEncounterId(id);
         // TODO react on validation error
 
         Encounter encounter = encounterService.getEncounterById(id);
@@ -132,8 +107,12 @@ public class EncountersController {
         return "user/encounterDetails";
     }
 
+    private String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(searchFilterValidator);
+        binder.setValidator(encounterValidator);
     }
 }
