@@ -57,11 +57,11 @@ public class SearchController {
     /**
      * Shows the search form.
      *
-     * @param searchFilterl The new SearchFilter
+     * @param searchFilter The new SearchFilter
      * @return Search URL
      */
     @RequestMapping(value = "/search", method = GET)
-    public String searchEncounters(@ModelAttribute SearchFilter searchFilterl) {
+    public String searchEncounters(@ModelAttribute SearchFilter searchFilter) {
         return "search";
     }
 
