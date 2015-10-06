@@ -19,12 +19,12 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.EncounterValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -48,11 +48,14 @@ public class EncountersController {
 
     private EncounterService encounterService;
     private EncounterValidator encounterValidator;
+    private UserService userService;
 
     @Autowired
-    public EncountersController(EncounterService encounterService, EncounterValidator encounterValidator) {
+    public EncountersController(EncounterService encounterService, EncounterValidator encounterValidator, UserService
+            userService) {
         this.encounterService = encounterService;
         this.encounterValidator = encounterValidator;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/encounters", method = GET)
@@ -70,7 +73,7 @@ public class EncountersController {
 
     @RequestMapping(value = "/encounter/delete", method = POST)
     public ModelAndView deleteEncounter(long encounterId) {
-        String username = getUsername();
+        String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
@@ -81,21 +84,6 @@ public class EncountersController {
         return new ModelAndView("redirect:/account");
     }
 
-    @RequestMapping(value = "/encounter/confirm", method = POST)
-    public String confirmEncounter(Model model) {
-
-        // TODO AID react to double confirmations
-
-        String username = getUsername();
-
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, "");
-
-        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
-        model.addAttribute("encounters", encounters);
-
-        return "user/account";
-    }
-
     @RequestMapping(value = "/encounters/{id}", method = GET)
     public String encounterById(@PathVariable("id") long id, Model model) {
         // TODO react on validation error
@@ -104,10 +92,6 @@ public class EncountersController {
         model.addAttribute("encounter", encounter);
 
         return "user/encounterDetails";
-    }
-
-    private String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @InitBinder

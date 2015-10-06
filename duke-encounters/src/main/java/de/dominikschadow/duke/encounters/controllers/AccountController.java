@@ -26,8 +26,6 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,8 +61,7 @@ public class AccountController {
 
     @RequestMapping(value = "/account", method = GET)
     public String showMyAccount(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+        String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
 
@@ -76,8 +73,7 @@ public class AccountController {
 
     @RequestMapping(value = "/account/edit", method = GET)
     public String editMyAccount(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+        String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 

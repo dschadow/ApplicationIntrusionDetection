@@ -19,12 +19,11 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,16 +40,32 @@ public class ConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
 
     private EncounterService encounterService;
+    private UserService userService;
 
     @Autowired
-    public ConfirmationController(EncounterService encounterService) {
+    public ConfirmationController(EncounterService encounterService, UserService userService) {
         this.encounterService = encounterService;
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "/confirmations/add", method = POST)
+    public String addConfirmation(Model model) {
+
+        // TODO AID react to double confirmations
+
+        String username = userService.getUsername();
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, "");
+
+        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
+        model.addAttribute("encounters", encounters);
+
+        return "user/account";
     }
 
     @RequestMapping(value = "/confirmations/revoke", method = POST)
     public String revokeConfirmation(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+        String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {} from encounter {}",
                 username, "", "");
