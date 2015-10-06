@@ -36,8 +36,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -70,42 +74,38 @@ public class EncountersController {
     }
 
     @RequestMapping(value = "/encounters", method = POST)
-    public String searchEncounters(@ModelAttribute(value = "searchFilter") SearchFilter searchFilter, Model model,
-                                   BindingResult result) {
-        //validationService.validateSearchFilter(searchFilter);
-        // TODO react on validation error
+    public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
         if (result.hasErrors()) {
-            return "encounters";
+            return new ModelAndView("encounters", "formErrors", result.getAllErrors());
         }
 
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
-        model.addAttribute("encounters", encounters);
-        model.addAttribute("searchFilter", searchFilter);
 
-        return "encounters";
+        Map<String, Object> modelMap = new LinkedHashMap<>();
+        modelMap.put("encounters", encounters);
+        modelMap.put("searchFilter", searchFilter);
+
+        return new ModelAndView("encounters", modelMap);
     }
 
-    @RequestMapping(value = "/encounters/new", method = GET)
-    public String newEncounter(Model model) {
+    @RequestMapping(value = "/encounter/create", method = GET)
+    public String createEncounter(Model model) {
         model.addAttribute("encounter", new Encounter());
 
-        return "user/newEncounter";
+        return "user/createEncounter";
     }
 
-    @RequestMapping(value = "/encounters/delete", method = POST)
-    public String deleteEncounter(Model model) {
+    @RequestMapping(value = "/encounter/delete", method = POST)
+    public ModelAndView deleteEncounter(@ModelAttribute(value = "encounterId") long encounterId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, "");
 
-        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
-        model.addAttribute("encounters", encounters);
-
-        return "user/account";
+        return new ModelAndView("redirect:/user/account");
     }
 
-    @RequestMapping(value = "/encounters/confirm", method = POST)
+    @RequestMapping(value = "/encounter/confirm", method = POST)
     public String confirmEncounter(Model model) {
 
         // TODO AID react to double confirmations

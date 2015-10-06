@@ -30,7 +30,7 @@ public class SearchFilter {
     private String event;
     private String location;
     private String country;
-    private int year = LocalDateTime.now().getYear();
+    private int year = 1995;
     private String likelihood;
     private int confirmations;
 
