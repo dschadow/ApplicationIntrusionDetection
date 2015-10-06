@@ -17,8 +17,11 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +30,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all account related requests.
@@ -41,10 +50,15 @@ public class AccountController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
     private EncounterService encounterService;
+    private UserService userService;
+    private DukeEncountersUserValidator dukeEncountersUserValidator;
 
     @Autowired
-    public AccountController(EncounterService encounterService) {
+    public AccountController(EncounterService encounterService, UserService userService, DukeEncountersUserValidator
+            dukeEncountersUserValidator) {
         this.encounterService = encounterService;
+        this.userService = userService;
+        this.dukeEncountersUserValidator = dukeEncountersUserValidator;
     }
 
     @RequestMapping(value = "/account", method = GET)
@@ -68,5 +82,30 @@ public class AccountController {
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
         return "/user/editAccount";
+    }
+
+    /**
+     * Creates the new user and stored it in the database.
+     *
+     * @param newUser The new user to register
+     * @return Login URL
+     */
+    @RequestMapping(value = "/register", method = POST)
+    public ModelAndView createUser(@Valid DukeEncountersUser newUser, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("register", "formErrors", result.getAllErrors());
+        }
+
+        // TODO react on validation error
+        DukeEncountersUser user = userService.createUser(newUser);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);
+
+        return new ModelAndView("login");
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(dukeEncountersUserValidator);
     }
 }
