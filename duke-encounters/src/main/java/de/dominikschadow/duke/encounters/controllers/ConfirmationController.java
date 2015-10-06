@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
-import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -59,11 +58,13 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "/confirmations/revoke", method = POST)
-    public ModelAndView revokeConfirmation(long encounterId) {
+    public ModelAndView revokeConfirmation(long confirmationId) {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {} from encounter {}",
-                username, "", encounterId);
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {}",
+                username, confirmationId);
+
+        confirmationService.deleteConfirmation(username, confirmationId);
 
         return new ModelAndView("redirect:/account");
     }
