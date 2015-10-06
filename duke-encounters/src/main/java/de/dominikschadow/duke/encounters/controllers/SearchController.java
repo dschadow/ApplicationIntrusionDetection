@@ -37,7 +37,7 @@ public class SearchController {
      * @param model The model attribute container
      * @return Search URL
      */
-    @RequestMapping(value = "search", method = GET)
+    @RequestMapping(value = "/search", method = GET)
     public String searchEncounters(Model model) {
         model.addAttribute("searchFilter", new SearchFilter());
 
