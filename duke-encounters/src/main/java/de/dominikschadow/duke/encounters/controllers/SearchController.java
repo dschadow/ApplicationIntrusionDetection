@@ -17,12 +17,26 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller for all search related requests.
@@ -31,6 +45,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class SearchController {
+    private EncounterService encounterService;
+    private SearchFilterValidator searchFilterValidator;
+
+    @Autowired
+    public SearchController(EncounterService encounterService, SearchFilterValidator searchFilterValidator) {
+        this.encounterService = encounterService;
+        this.searchFilterValidator = searchFilterValidator;
+    }
+
     /**
      * Shows the search form.
      *
@@ -42,5 +65,25 @@ public class SearchController {
         model.addAttribute("searchFilter", new SearchFilter());
 
         return "search";
+    }
+
+    @RequestMapping(value = "/encounters", method = POST)
+    public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("encounters", "formErrors", result.getAllErrors());
+        }
+
+        List<Encounter> encounters = encounterService.getEncounters(searchFilter);
+
+        Map<String, Object> modelMap = new LinkedHashMap<>();
+        modelMap.put("encounters", encounters);
+        modelMap.put("searchFilter", searchFilter);
+
+        return new ModelAndView("encounters", modelMap);
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(searchFilterValidator);
     }
 }
