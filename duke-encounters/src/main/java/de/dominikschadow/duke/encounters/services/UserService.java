@@ -17,9 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
 import de.dominikschadow.duke.encounters.domain.Role;
-import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.repositories.RoleRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.security.logging.SecurityMarkers;

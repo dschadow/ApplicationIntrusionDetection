@@ -19,8 +19,6 @@ package de.dominikschadow.duke.encounters.domain;
 
 import com.google.common.base.Strings;
 
-import java.time.LocalDateTime;
-
 /**
  * SearchFilter to search for Duke encounters based on various fields.
  *
