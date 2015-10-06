@@ -77,8 +77,10 @@ public class EncountersController {
         if (result.hasErrors()) {
             return "encounters";
         }
+
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
         model.addAttribute("encounters", encounters);
+        model.addAttribute("searchFilter", searchFilter);
 
         return "encounters";
     }

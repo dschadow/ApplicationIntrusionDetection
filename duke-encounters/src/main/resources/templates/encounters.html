@@ -44,6 +44,9 @@
 </div>
 
 <div class="container">
+    <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong> returned
+        the following results:</p>
+
     <div class="row">
         <div class="col-md-12">
             <table class="table">
@@ -59,7 +62,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="encounter : ${encounters}">
-                    <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounters/${encounter.id}|}" th:text="${encounter.event}"></a></td>
+                    <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounters/${encounter.id}|}"
+                                                                     th:text="${encounter.event}"></a></td>
                     <td th:if="${#httpServletRequest.remoteUser == null}" th:text="${encounter.event}"></td>
                     <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
