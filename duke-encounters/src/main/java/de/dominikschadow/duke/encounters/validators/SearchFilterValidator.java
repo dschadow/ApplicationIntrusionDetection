@@ -109,12 +109,10 @@ public class SearchFilterValidator implements Validator {
             }
         }
 
-        if (filter.getYear() > 0) {
-            if (filter.getYear() < 1995) {
-                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
-                        filter.getYear());
-                errors.rejectValue("year", "typo", "Java did not exist before 1995");
-            }
+        if (filter.getYear() < 1995) {
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
+                    filter.getYear());
+            errors.rejectValue("year", "typo", "Java did not exist before 1995");
         }
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
