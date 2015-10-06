@@ -67,7 +67,7 @@ public class EncountersController {
     }
 
     @RequestMapping(value = "/encounter/create", method = GET)
-    public String createEncounter(@ModelAttribute Encounter encounterl) {
+    public String createEncounter(@ModelAttribute Encounter encounter) {
         return "user/createEncounter";
     }
 
