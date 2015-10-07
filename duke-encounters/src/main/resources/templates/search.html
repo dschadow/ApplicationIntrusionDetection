@@ -41,23 +41,32 @@
 
 <div class="container">
     <form action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post" role="form">
-        <div class="form-group">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-error">
+            <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
+                Validation error
+            </p>
+        </div>
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="event">Event</label>
             <input type="text" id="event" name="event" th:field="*{event}" class="form-control"/>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group">
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="location">Location</label>
             <input type="text" id="location" name="location" th:field="*{location}" class="form-control"/>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group">
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="country">Country</label>
             <input type="text" id="country" name="country" th:field="*{country}" class="form-control"/>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group">
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="year">Year</label>
             <input type="text" id="year" name="year" th:field="*{year}" class="form-control"/>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group">
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="likelihood">Likelihood</label>
             <select class="form-control" id="likelihood" name="likelihood">
                 <option th:each="value : ${T(de.dominikschadow.duke.encounters.domain.Likelihood).values()}"
@@ -65,14 +74,16 @@
                         th:text="${value.name}"
                         th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
             </select>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group">
+        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="confirmations">Minimum no. of confirmations</label>
             <select class="form-control" id="confirmations" name="confirmations">
                 <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"
                         th:selected="${ i==0 } ">
                 </option>
             </select>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <button type="submit" class="btn btn-default">Search</button>
     </form>
