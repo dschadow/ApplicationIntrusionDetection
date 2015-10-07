@@ -22,6 +22,7 @@ import de.dominikschadow.duke.encounters.domain.Level;
 import de.dominikschadow.duke.encounters.domain.Role;
 import de.dominikschadow.duke.encounters.repositories.RoleRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
+import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,5 +91,9 @@ public class UserService {
 
     public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public User getUser() {
+        return new User(getUsername());
     }
 }
