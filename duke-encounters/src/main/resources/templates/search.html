@@ -41,7 +41,7 @@
 
 <div class="container">
     <form action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post" role="form">
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-error">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
                 Validation error
             </p>
