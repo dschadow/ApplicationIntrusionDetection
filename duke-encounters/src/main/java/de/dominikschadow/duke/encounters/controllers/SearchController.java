@@ -68,7 +68,7 @@ public class SearchController {
     @RequestMapping(value = "/encounters", method = POST)
     public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("encounters", "formErrors", result.getAllErrors());
+            return new ModelAndView("search", "formErrors", result.getAllErrors());
         }
 
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
