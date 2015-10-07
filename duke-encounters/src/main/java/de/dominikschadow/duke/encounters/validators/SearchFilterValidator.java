@@ -44,14 +44,13 @@ import javax.inject.Named;
 @Named
 public class SearchFilterValidator implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchFilterValidator.class);
-    private static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof";
-    private static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof";
+    private static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
+    private static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof!";
     private static final String XSS_ERROR_CODE = "xss.attempt";
     private static final String SQLI_ERROR_CODE = "sqli.attempt";
     private static final String ATTACK_ERROR_CODE = "attack.attempt";
 
     private SpringValidatorAdapter validator;
-    private DetectionSystem detectionSystem;
 
     @Autowired
     private javax.validation.Validator jsr303Validator;
@@ -65,9 +64,6 @@ public class SearchFilterValidator implements Validator {
     @PostConstruct
     public void init() {
         validator = new SpringValidatorAdapter(jsr303Validator);
-        detectionSystem = new DetectionSystem(
-                appSensorClient.getConfiguration().getServerConnection()
-                        .getClientApplicationIdentificationHeaderValue());
     }
 
     @Override
@@ -92,20 +88,20 @@ public class SearchFilterValidator implements Validator {
         }
 
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            if (hasXssPayload(filter.getEvent())) {
+            if (hasXssPayload(filter.getLocation())) {
                 fireXssEvent();
                 errors.rejectValue("location", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getEvent())) {
+            } else if (hasSqlIPayload(filter.getLocation())) {
                 fireSqlIEvent();
                 errors.rejectValue("location", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
         }
 
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            if (hasXssPayload(filter.getEvent())) {
+            if (hasXssPayload(filter.getCountry())) {
                 fireXssEvent();
                 errors.rejectValue("country", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getEvent())) {
+            } else if (hasSqlIPayload(filter.getCountry())) {
                 fireSqlIEvent();
                 errors.rejectValue("country", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
@@ -126,7 +122,7 @@ public class SearchFilterValidator implements Validator {
                 if (hasXssPayload(filter.getEvent())) {
                     fireXssEvent();
                     errors.rejectValue("likelihood", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-                } else if (hasSqlIPayload(filter.getEvent())) {
+                } else if (hasSqlIPayload(filter.getLikelihood())) {
                     fireSqlIEvent();
                     errors.rejectValue("likelihood", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
                 } else {
@@ -138,15 +134,7 @@ public class SearchFilterValidator implements Validator {
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
-            if (hasXssPayload(filter.getEvent())) {
-                fireXssEvent();
-                errors.rejectValue("confirmations", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getEvent())) {
-                fireSqlIEvent();
-                errors.rejectValue("confirmations", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
-            } else {
-                errors.rejectValue("confirmations", ATTACK_ERROR_CODE, "No of confirmations out ot range");
-            }
+            errors.rejectValue("confirmations", ATTACK_ERROR_CODE, "No of confirmations out ot range");
         }
     }
 
@@ -160,11 +148,17 @@ public class SearchFilterValidator implements Validator {
 
     private void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
     }
 
     private void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
+    }
+
+    private DetectionSystem getDetectionSystem() {
+        return new DetectionSystem(
+                appSensorClient.getConfiguration().getServerConnection()
+                        .getClientApplicationIdentificationHeaderValue());
     }
 }
