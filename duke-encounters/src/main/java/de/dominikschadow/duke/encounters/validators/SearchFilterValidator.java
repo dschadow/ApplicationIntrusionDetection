@@ -119,7 +119,7 @@ public class SearchFilterValidator implements Validator {
             } catch (IllegalArgumentException ex) {
                 LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
                         "range", filter.getLikelihood());
-                if (hasXssPayload(filter.getEvent())) {
+                if (hasXssPayload(filter.getLikelihood())) {
                     fireXssEvent();
                     errors.rejectValue("likelihood", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
                 } else if (hasSqlIPayload(filter.getLikelihood())) {
