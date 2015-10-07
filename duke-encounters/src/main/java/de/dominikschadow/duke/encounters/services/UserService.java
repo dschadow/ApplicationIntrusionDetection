@@ -27,7 +27,9 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -90,7 +92,17 @@ public class UserService {
     }
 
     public String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String userName = authentication.getName();
+
+        if (authentication instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication;
+
+            userName = userDetails.getUsername();
+        }
+
+        return userName;
     }
 
     public User getUser() {
