@@ -20,15 +20,17 @@ package de.dominikschadow.duke.encounters.validators;
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import de.dominikschadow.duke.encounters.services.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.owasp.appsensor.core.*;
+import org.owasp.appsensor.core.AppSensorClient;
+import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -53,12 +55,12 @@ public class SearchFilterValidator implements Validator {
 
     @Autowired
     private javax.validation.Validator jsr303Validator;
-
     @Autowired
     private AppSensorClient appSensorClient;
-
     @Autowired
     private EventManager ids;
+    @Autowired
+    private UserService userService;
 
     @PostConstruct
     public void init() {
@@ -157,18 +159,12 @@ public class SearchFilterValidator implements Validator {
     }
 
     private void fireXssEvent() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = new User(authentication.getName());
-
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
-        ids.addEvent(new Event(user, detectionPoint, detectionSystem));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireSqlIEvent() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = new User(authentication.getName());
-
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1");
-        ids.addEvent(new Event(user, detectionPoint, detectionSystem));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }
