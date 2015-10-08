@@ -53,7 +53,7 @@ public class DukeEncountersUser {
     private Level level;
     private boolean enabled;
     @OneToOne
-    private Role role;
+    private Authority authority;
 
     public long getId() {
         return id;
@@ -135,12 +135,12 @@ public class DukeEncountersUser {
         this.enabled = enabled;
     }
 
-    public Role getRole() {
-        return role;
+    public Authority getAuthority() {
+        return authority;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
     }
 
     @Override

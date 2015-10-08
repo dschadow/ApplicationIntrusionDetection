@@ -17,10 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
+import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
-import de.dominikschadow.duke.encounters.domain.Role;
-import de.dominikschadow.duke.encounters.repositories.RoleRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
@@ -46,18 +45,12 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-    private final Role userRole;
-
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-
-        userRole = roleRepository.findByName("user");
     }
 
     /**
@@ -72,10 +65,7 @@ public class UserService {
         newUser.setEnabled(true);
         newUser.setLevel(Level.NEWBIE);
         newUser.setRegistrationDate(new Date());
-
-        LOGGER.info("Setting role {} for user {}", userRole, newUser.getEmail());
-        newUser.setRole(userRole);
-
+        newUser.setAuthority(new Authority(newUser.getUsername(), "ROLE_USER"));
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         if (userRepository.findByUsername(newUser.getUsername()) != null) {
@@ -86,7 +76,7 @@ public class UserService {
         DukeEncountersUser user = userRepository.save(newUser);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
-                user.getUsername(), user.getId(), user.getRole());
+                user.getUsername(), user.getId(), user.getAuthority());
 
         return user;
     }
