@@ -62,7 +62,7 @@
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('year')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="year">Year</label>
+            <label for="year">Year (greater than or equal)</label>
             <input type="text" id="year" name="year" th:field="*{year}" class="form-control"/>
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>

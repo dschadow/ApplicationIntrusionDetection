@@ -23,14 +23,14 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author Dominik Schadow
  */
 public class EncounterSpecification {
     public static Specification<Encounter> encounterAfterYear(int year) {
-        Calendar calendar = new GregorianCalendar(year, 0, 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
         return (root, query, cb) -> cb.greaterThanOrEqualTo(root.<Date>get("date"), calendar.getTime());
     }
 
