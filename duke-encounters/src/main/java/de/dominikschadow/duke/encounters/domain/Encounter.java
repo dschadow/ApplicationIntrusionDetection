@@ -114,4 +114,11 @@ public class Encounter {
     public String getLikelihood() {
         return Likelihood.getLikelihood(getConfirmations().size()).toString();
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() + ", Event: " + getEvent() + ", Location: " + getLocation() + ", Country: " +
+                getCountry() + ", Comment: " + getComment() + ", Date: " + getDate() + ", User: " + getUser() + ", " +
+                "Confirmations: " + getConfirmations() + ", Likelihood: " + getLikelihood();
+    }
 }
