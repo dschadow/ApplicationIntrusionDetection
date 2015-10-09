@@ -19,6 +19,9 @@ package de.dominikschadow.duke.encounters.domain;
 
 import com.google.common.base.Strings;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Encounter likelihood enum.
  *
@@ -54,8 +57,11 @@ public enum Likelihood {
         throw new IllegalArgumentException("No enum found for " + value);
     }
 
-    public static Likelihood getLikelihood(int confirmations) {
-        return confirmations < 1 ? Likelihood.NOT_CONFIRMED : confirmations < 3 ? Likelihood.PLAUSIBLE : Likelihood
-                .CONFIRMED;
+    public static Likelihood getLikelihood(List<Confirmation> confirmations) {
+        if (Objects.isNull(confirmations) || confirmations.isEmpty()) {
+            return Likelihood.NOT_CONFIRMED;
+        }
+
+        return confirmations.size() < 3 ? Likelihood.PLAUSIBLE : Likelihood.CONFIRMED;
     }
 }
