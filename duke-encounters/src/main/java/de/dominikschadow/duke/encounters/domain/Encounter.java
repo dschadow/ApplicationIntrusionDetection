@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -40,6 +42,7 @@ public class Encounter {
     private String comment;
     @NotNull
     @Column(nullable = false)
+    @DateTimeFormat(pattern="YYYY-MM-dd")
     private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
