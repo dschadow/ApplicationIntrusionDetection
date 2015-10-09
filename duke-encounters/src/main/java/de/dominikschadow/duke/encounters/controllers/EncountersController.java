@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -71,6 +73,24 @@ public class EncountersController {
         return "user/createEncounter";
     }
 
+    @RequestMapping(value = "/encounter/create", method = POST)
+    public ModelAndView saveEncounter(@Valid Encounter newEncounter, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("encounter/create", "formErrors", result.getAllErrors());
+        }
+
+        String username = userService.getUsername();
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", username,
+                newEncounter);
+
+        Encounter encounter = encounterService.createEncounter(newEncounter, username);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully created encounter {}", username, encounter);
+
+        return new ModelAndView("redirect:/account");
+    }
+
     @RequestMapping(value = "/encounter/delete", method = POST)
     public ModelAndView deleteEncounter(long encounterId) {
         String username = userService.getUsername();
@@ -80,6 +100,8 @@ public class EncountersController {
         // TODO AID react to not own encounter
 
         encounterService.deleteEncounter(username, encounterId);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully deleted encounter {}", username, encounterId);
 
         return new ModelAndView("redirect:/account");
     }
