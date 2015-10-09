@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -42,7 +43,7 @@ public class Encounter {
     private String comment;
     @NotNull
     @Column(nullable = false)
-    @DateTimeFormat(pattern="YYYY-MM-dd")
+    @DateTimeFormat(pattern = "YYYY-MM-dd")
     private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -115,13 +116,21 @@ public class Encounter {
     }
 
     public String getLikelihood() {
-        return Likelihood.getLikelihood(getConfirmations().size()).toString();
+        return Likelihood.getLikelihood(getConfirmations()).toString();
     }
 
     @Override
     public String toString() {
-        return "ID: " + getId() + ", Event: " + getEvent() + ", Location: " + getLocation() + ", Country: " +
-                getCountry() + ", Comment: " + getComment() + ", Date: " + getDate() + ", User: " + getUser() + ", " +
-                "Confirmations: " + getConfirmations() + ", Likelihood: " + getLikelihood();
+        return new ToStringBuilder(this).
+                append("id", getId()).
+                append("event", getEvent()).
+                append("location", getLocation()).
+                append("country", getCountry()).
+                append("comment", getComment()).
+                append("date", getDate()).
+                append("user", getUser()).
+                append("confirmations", getConfirmations()).
+                append("likelihood", getLikelihood()).
+                toString();
     }
 }
