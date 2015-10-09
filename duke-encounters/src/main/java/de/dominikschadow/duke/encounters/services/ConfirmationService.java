@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.domain.Confirmation;
-import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
