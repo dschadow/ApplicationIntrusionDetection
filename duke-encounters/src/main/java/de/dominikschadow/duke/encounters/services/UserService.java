@@ -84,15 +84,15 @@ public class UserService {
     public String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String userName = authentication.getName();
+        String username = authentication.getName();
 
         if (authentication instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication;
 
-            userName = userDetails.getUsername();
+            username = userDetails.getUsername();
         }
 
-        return userName;
+        return username;
     }
 
     public User getUser() {
