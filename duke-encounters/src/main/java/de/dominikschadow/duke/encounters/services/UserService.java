@@ -98,4 +98,8 @@ public class UserService {
     public User getUser() {
         return new User(getUsername());
     }
+
+    public DukeEncountersUser getDukeEncountersUser() {
+        return userRepository.findByUsername(getUsername());
+    }
 }
