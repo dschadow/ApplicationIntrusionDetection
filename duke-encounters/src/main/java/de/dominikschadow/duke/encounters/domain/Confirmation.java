@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -64,5 +66,15 @@ public class Confirmation {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).
+                append("id", getId()).
+                append("user", getUser()).
+                append("encounter", getEncounter()).
+                append("date", getDate()).
+                toString();
     }
 }

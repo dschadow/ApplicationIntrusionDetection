@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * Enum for the level of a user.
  *
@@ -40,6 +42,6 @@ public enum Level {
 
     @Override
     public String toString() {
-        return getName();
+        return new ToStringBuilder(this).append("name", getName()).toString();
     }
 }
