@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
-import de.dominikschadow.duke.encounters.domain.Encounter;
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.event.EventManager;
