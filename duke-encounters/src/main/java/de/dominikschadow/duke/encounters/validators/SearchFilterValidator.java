@@ -20,8 +20,8 @@ package de.dominikschadow.duke.encounters.validators;
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
+import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -60,6 +60,8 @@ public class SearchFilterValidator implements Validator {
     private EventManager ids;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SecurityValidationService securityValidationService;
 
     @PostConstruct
     public void init() {
@@ -78,30 +80,30 @@ public class SearchFilterValidator implements Validator {
         SearchFilter filter = (SearchFilter) target;
 
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            if (hasXssPayload(filter.getEvent())) {
+            if (securityValidationService.hasXssPayload(filter.getEvent())) {
                 fireXssEvent();
                 errors.rejectValue("event", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getEvent())) {
+            } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
                 fireSqlIEvent();
                 errors.rejectValue("event", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
         }
 
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            if (hasXssPayload(filter.getLocation())) {
+            if (securityValidationService.hasXssPayload(filter.getLocation())) {
                 fireXssEvent();
                 errors.rejectValue("location", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getLocation())) {
+            } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
                 fireSqlIEvent();
                 errors.rejectValue("location", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
         }
 
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            if (hasXssPayload(filter.getCountry())) {
+            if (securityValidationService.hasXssPayload(filter.getCountry())) {
                 fireXssEvent();
                 errors.rejectValue("country", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-            } else if (hasSqlIPayload(filter.getCountry())) {
+            } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
                 fireSqlIEvent();
                 errors.rejectValue("country", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
             }
@@ -115,14 +117,14 @@ public class SearchFilterValidator implements Validator {
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
             try {
-                Likelihood likelihood = Likelihood.fromString(filter.getLikelihood());
+                Likelihood.fromString(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
                 LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
                         "range", filter.getLikelihood());
-                if (hasXssPayload(filter.getLikelihood())) {
+                if (securityValidationService.hasXssPayload(filter.getLikelihood())) {
                     fireXssEvent();
                     errors.rejectValue("likelihood", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
-                } else if (hasSqlIPayload(filter.getLikelihood())) {
+                } else if (securityValidationService.hasSqlIPayload(filter.getLikelihood())) {
                     fireSqlIEvent();
                     errors.rejectValue("likelihood", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
                 } else {
@@ -136,14 +138,6 @@ public class SearchFilterValidator implements Validator {
                     filter.getConfirmations());
             errors.rejectValue("confirmations", ATTACK_ERROR_CODE, "No of confirmations out ot range");
         }
-    }
-
-    private boolean hasXssPayload(String payload) {
-        return StringUtils.contains(payload, "<script>");
-    }
-
-    private boolean hasSqlIPayload(String payload) {
-        return false;
     }
 
     private void fireXssEvent() {
