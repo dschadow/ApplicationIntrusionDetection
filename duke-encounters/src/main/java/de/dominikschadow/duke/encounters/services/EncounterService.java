@@ -48,10 +48,12 @@ public class EncounterService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EncounterService.class);
 
     private EncounterRepository encounterRepository;
+    private UserService userService;
 
     @Autowired
-    public EncounterService(EncounterRepository encounterRepository) {
+    public EncounterService(EncounterRepository encounterRepository, UserService userService) {
         this.encounterRepository = encounterRepository;
+        this.userService = userService;
     }
 
     public List<Encounter> getLatestEncounters() {
@@ -128,6 +130,8 @@ public class EncounterService {
     }
 
     public Encounter createEncounter(Encounter newEncounter, String username) {
+        newEncounter.setUser(userService.getDukeEncountersUser());
+
         Encounter encounter = encounterRepository.save(newEncounter);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
