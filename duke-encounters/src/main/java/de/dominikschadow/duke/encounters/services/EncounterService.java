@@ -126,4 +126,12 @@ public class EncounterService {
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
+
+    public Encounter createEncounter(Encounter newEncounter, String username) {
+        Encounter encounter = encounterRepository.save(newEncounter);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
+
+        return encounter;
+    }
 }
