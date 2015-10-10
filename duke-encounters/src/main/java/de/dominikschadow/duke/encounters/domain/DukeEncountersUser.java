@@ -35,18 +35,21 @@ public class DukeEncountersUser {
     @Id
     @GeneratedValue
     private long id;
+    @NotNull(message = "Your firstname is required")
     private String firstname;
+    @NotNull(message = "Your lastname is required")
     private String lastname;
-    @NotNull
+    @NotNull(message = "A username is required")
     @Column(nullable = false)
     private String username;
-    @NotNull
+    @NotNull(message = "Your email address is required")
     @Column(nullable = false)
     private String email;
-    @NotNull
+    @NotNull(message = "A password is required")
     @Column(nullable = false, length = 60)
     private String password;
     @Transient
+    @NotNull(message = "Please re-enter your password")
     private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)
