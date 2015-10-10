@@ -33,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -89,21 +90,32 @@ public class AccountController {
     }
 
     /**
+     * Shows the registration page.
+     *
+     * @param dukeEncountersUser The new DukeEncountersUser
+     * @return Register URL
+     */
+    @RequestMapping(value = "/register", method = GET)
+    public String register(@ModelAttribute DukeEncountersUser dukeEncountersUser) {
+        return "/register";
+    }
+
+    /**
      * Creates the new user and stored it in the database.
      *
-     * @param newUser The new user to register
+     * @param dukeEncountersUser The new user to register
      * @return Login URL
      */
     @RequestMapping(value = "/register", method = POST)
-    public ModelAndView createUser(@Valid DukeEncountersUser newUser, BindingResult result) {
+    public ModelAndView createUser(@Valid DukeEncountersUser dukeEncountersUser, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("register", "formErrors", result.getAllErrors());
+            return new ModelAndView("/register", "formErrors", result.getAllErrors());
         }
 
         // TODO react on validation error
-        DukeEncountersUser user = userService.createUser(newUser);
+        DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
         return new ModelAndView("/login");
     }
