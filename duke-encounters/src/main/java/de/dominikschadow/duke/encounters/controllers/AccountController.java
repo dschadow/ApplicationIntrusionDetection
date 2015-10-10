@@ -105,7 +105,7 @@ public class AccountController {
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", user);
 
-        return new ModelAndView("login");
+        return new ModelAndView("/login");
     }
 
     @InitBinder

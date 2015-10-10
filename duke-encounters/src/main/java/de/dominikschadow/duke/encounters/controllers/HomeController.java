@@ -53,6 +53,6 @@ public class HomeController {
         List<Encounter> encounters = encounterService.getLatestEncounters();
         model.addAttribute("encounters", encounters);
 
-        return "index";
+        return "/index";
     }
 }

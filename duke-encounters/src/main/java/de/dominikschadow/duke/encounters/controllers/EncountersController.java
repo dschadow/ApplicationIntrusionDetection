@@ -65,7 +65,7 @@ public class EncountersController {
         List<Encounter> encounters = encounterService.getAllEncounters();
         model.addAttribute("encounters", encounters);
 
-        return "encounters";
+        return "/encounters";
     }
 
     @RequestMapping(value = "/encounter/create", method = GET)
@@ -76,7 +76,7 @@ public class EncountersController {
     @RequestMapping(value = "/encounter/create", method = POST)
     public ModelAndView saveEncounter(@Valid Encounter newEncounter, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("encounter/create", "formErrors", result.getAllErrors());
+            return new ModelAndView("/encounter/create", "formErrors", result.getAllErrors());
         }
 
         String username = userService.getUsername();
@@ -113,7 +113,7 @@ public class EncountersController {
         Encounter encounter = encounterService.getEncounterById(id);
         model.addAttribute("encounter", encounter);
 
-        return "user/encounterDetails";
+        return "/user/encounterDetails";
     }
 
     @InitBinder

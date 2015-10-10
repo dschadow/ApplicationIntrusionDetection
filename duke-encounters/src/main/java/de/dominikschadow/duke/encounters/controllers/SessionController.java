@@ -40,6 +40,6 @@ public class SessionController {
      */
     @RequestMapping(value = "/register", method = GET)
     public String register(@ModelAttribute DukeEncountersUser dukeEncountersUser) {
-        return "register";
+        return "/register";
     }
 }
