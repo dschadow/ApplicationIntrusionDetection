@@ -20,6 +20,7 @@ package de.dominikschadow.duke.encounters.services;
 import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
+import de.dominikschadow.duke.encounters.repositories.AuthorityRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
@@ -45,11 +46,14 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private UserRepository userRepository;
+    private AuthorityRepository authorityRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder
+            passwordEncoder) {
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -62,10 +66,12 @@ public class UserService {
     public DukeEncountersUser createUser(@NotNull DukeEncountersUser newUser) {
         LOGGER.info("Creating user with username {}", newUser.getEmail());
 
+        Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
+
         newUser.setEnabled(true);
         newUser.setLevel(Level.NEWBIE);
         newUser.setRegistrationDate(new Date());
-        newUser.setAuthority(new Authority(newUser.getUsername(), "ROLE_USER"));
+        newUser.setAuthority(authority);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         if (userRepository.findByUsername(newUser.getUsername()) != null) {

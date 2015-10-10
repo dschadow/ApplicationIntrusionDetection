@@ -33,9 +33,6 @@ public class Authority {
     private String username;
     private String authority;
 
-    public Authority() {
-    }
-
     public Authority(String username, String authority) {
         this.username = username;
         this.authority = authority;
@@ -59,10 +56,6 @@ public class Authority {
 
     public String getAuthority() {
         return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
     }
 
     @Override
