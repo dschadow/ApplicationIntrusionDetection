@@ -17,12 +17,16 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
+import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.services.SecurityValidationService;
+import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.appsensor.core.AppSensorClient;
+import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -36,26 +40,22 @@ import javax.inject.Named;
  */
 @Named
 public class EncounterValidator implements Validator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EncounterValidator.class);
-
     private SpringValidatorAdapter validator;
-    private DetectionSystem detectionSystem;
 
     @Autowired
     private javax.validation.Validator jsr303Validator;
-
     @Autowired
     private AppSensorClient appSensorClient;
-
     @Autowired
     private EventManager ids;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private SecurityValidationService securityValidationService;
 
     @PostConstruct
     public void init() {
         validator = new SpringValidatorAdapter(jsr303Validator);
-        detectionSystem = new DetectionSystem(
-                appSensorClient.getConfiguration().getServerConnection()
-                        .getClientApplicationIdentificationHeaderValue());
     }
 
     @Override
@@ -69,5 +69,59 @@ public class EncounterValidator implements Validator {
 
         Encounter encounter = (Encounter) target;
 
+        if (!Strings.isNullOrEmpty(encounter.getEvent())) {
+            if (securityValidationService.hasXssPayload(encounter.getEvent())) {
+                fireXssEvent();
+                errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            } else if (securityValidationService.hasSqlIPayload(encounter.getEvent())) {
+                fireSqlIEvent();
+                errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            }
+        }
+
+        if (!Strings.isNullOrEmpty(encounter.getLocation())) {
+            if (securityValidationService.hasXssPayload(encounter.getLocation())) {
+                fireXssEvent();
+                errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            } else if (securityValidationService.hasSqlIPayload(encounter.getLocation())) {
+                fireSqlIEvent();
+                errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            }
+        }
+
+        if (!Strings.isNullOrEmpty(encounter.getCountry())) {
+            if (securityValidationService.hasXssPayload(encounter.getCountry())) {
+                fireXssEvent();
+                errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            } else if (securityValidationService.hasSqlIPayload(encounter.getCountry())) {
+                fireSqlIEvent();
+                errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            }
+        }
+
+        if (!Strings.isNullOrEmpty(encounter.getComment())) {
+            if (securityValidationService.hasXssPayload(encounter.getComment())) {
+                fireXssEvent();
+                errors.rejectValue("comment", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            } else if (securityValidationService.hasSqlIPayload(encounter.getComment())) {
+                fireSqlIEvent();
+                errors.rejectValue("comment", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void fireXssEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
+    }
+
+    private void fireSqlIEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
+    }
+
+    private DetectionSystem getDetectionSystem() {
+        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
+                .getClientApplicationIdentificationHeaderValue());
     }
 }
