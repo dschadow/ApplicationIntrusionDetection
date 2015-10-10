@@ -31,17 +31,17 @@ public class Encounter {
     @Id
     @GeneratedValue
     private long id;
-    @NotNull
+    @NotNull(message = "An event is required for each encounter")
     @Column(nullable = false)
     private String event;
-    @NotNull
+    @NotNull(message = "A location is required for each encounter")
     @Column(nullable = false)
     private String location;
-    @NotNull
+    @NotNull(message = "A country is required for each encounter")
     @Column(nullable = false)
     private String country;
     private String comment;
-    @NotNull
+    @NotNull(message = "A date in the format YYYY-MM-dd is required for each encounter")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "YYYY-MM-dd")
     private Date date;
