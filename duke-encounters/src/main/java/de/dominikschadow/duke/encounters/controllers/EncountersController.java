@@ -70,23 +70,23 @@ public class EncountersController {
 
     @RequestMapping(value = "/encounter/create", method = GET)
     public String createEncounter(@ModelAttribute Encounter encounter) {
-        return "user/createEncounter";
+        return "/user/createEncounter";
     }
 
     @RequestMapping(value = "/encounter/create", method = POST)
-    public ModelAndView saveEncounter(@Valid Encounter newEncounter, BindingResult result) {
+    public ModelAndView saveEncounter(@Valid Encounter encounter, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("/encounter/create", "formErrors", result.getAllErrors());
+            return new ModelAndView("/user/createEncounter", "formErrors", result.getAllErrors());
         }
 
         String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", username,
-                newEncounter);
+                encounter);
 
-        Encounter encounter = encounterService.createEncounter(newEncounter, username);
+        Encounter newEncounter = encounterService.createEncounter(encounter, username);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully created encounter {}", username, encounter);
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully created encounter {}", username, newEncounter);
 
         return new ModelAndView("redirect:/account");
     }

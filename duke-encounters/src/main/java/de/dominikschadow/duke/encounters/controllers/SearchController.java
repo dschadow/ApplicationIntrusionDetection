@@ -62,7 +62,7 @@ public class SearchController {
      */
     @RequestMapping(value = "/search", method = GET)
     public String searchEncounters(@ModelAttribute SearchFilter searchFilter) {
-        return "search";
+        return "/search";
     }
 
     @RequestMapping(value = "/encounters", method = POST)
