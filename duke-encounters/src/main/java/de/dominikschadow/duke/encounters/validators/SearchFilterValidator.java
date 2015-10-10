@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
@@ -44,11 +45,6 @@ import javax.inject.Named;
 @Named
 public class SearchFilterValidator implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchFilterValidator.class);
-    private static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
-    private static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof!";
-    private static final String XSS_ERROR_CODE = "xss.attempt";
-    private static final String SQLI_ERROR_CODE = "sqli.attempt";
-    private static final String ATTACK_ERROR_CODE = "attack.attempt";
 
     private SpringValidatorAdapter validator;
 
@@ -82,30 +78,30 @@ public class SearchFilterValidator implements Validator {
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
             if (securityValidationService.hasXssPayload(filter.getEvent())) {
                 fireXssEvent();
-                errors.rejectValue("event", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+                errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
             } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
                 fireSqlIEvent();
-                errors.rejectValue("event", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+                errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
             }
         }
 
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
             if (securityValidationService.hasXssPayload(filter.getLocation())) {
                 fireXssEvent();
-                errors.rejectValue("location", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+                errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
             } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
                 fireSqlIEvent();
-                errors.rejectValue("location", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+                errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
             }
         }
 
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
             if (securityValidationService.hasXssPayload(filter.getCountry())) {
                 fireXssEvent();
-                errors.rejectValue("country", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+                errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
             } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
                 fireSqlIEvent();
-                errors.rejectValue("country", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+                errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
             }
         }
 
@@ -123,12 +119,13 @@ public class SearchFilterValidator implements Validator {
                         "range", filter.getLikelihood());
                 if (securityValidationService.hasXssPayload(filter.getLikelihood())) {
                     fireXssEvent();
-                    errors.rejectValue("likelihood", XSS_ERROR_CODE, XSS_ERROR_MESSAGE);
+                    errors.rejectValue("likelihood", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
                 } else if (securityValidationService.hasSqlIPayload(filter.getLikelihood())) {
                     fireSqlIEvent();
-                    errors.rejectValue("likelihood", SQLI_ERROR_CODE, SQLI_ERROR_MESSAGE);
+                    errors.rejectValue("likelihood", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
                 } else {
-                    errors.rejectValue("likelihood", ATTACK_ERROR_CODE, "This is not a valid likelihood value");
+                    errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, "This is not a valid likelihood " +
+                            "value");
                 }
             }
         }
@@ -136,7 +133,7 @@ public class SearchFilterValidator implements Validator {
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
-            errors.rejectValue("confirmations", ATTACK_ERROR_CODE, "No of confirmations out ot range");
+            errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE, "No of confirmations out ot range");
         }
     }
 
@@ -151,8 +148,7 @@ public class SearchFilterValidator implements Validator {
     }
 
     private DetectionSystem getDetectionSystem() {
-        return new DetectionSystem(
-                appSensorClient.getConfiguration().getServerConnection()
-                        .getClientApplicationIdentificationHeaderValue());
+        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
+                .getClientApplicationIdentificationHeaderValue());
     }
 }
