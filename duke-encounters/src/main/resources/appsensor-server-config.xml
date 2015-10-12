@@ -35,6 +35,25 @@
 			</responses>
 		</detection-point>
 		<detection-point>
+			<category>Access Control</category>
+			<id>ACE2</id>
+			<threshold>
+				<count>3</count>
+				<interval unit="minutes">5</interval>
+			</threshold>
+			<responses>
+				<response>
+					<action>log</action>
+				</response>
+				<response>
+					<action>logout</action>
+				</response>
+				<response>
+					<action>disableUser</action>
+				</response>
+			</responses>
+		</detection-point>
+		<detection-point>
 			<category>System Trend</category>
 			<id>STE1</id>
 			<threshold>

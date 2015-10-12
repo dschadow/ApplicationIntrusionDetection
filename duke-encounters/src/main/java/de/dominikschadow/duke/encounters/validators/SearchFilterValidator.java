@@ -124,6 +124,8 @@ public class SearchFilterValidator implements Validator {
                     fireSqlIEvent();
                     errors.rejectValue("likelihood", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
                 } else {
+                    DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL, "ACE2");
+                    ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
                     errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, "This is not a valid likelihood " +
                             "value");
                 }
