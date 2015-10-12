@@ -38,15 +38,12 @@
 			<category>Access Control</category>
 			<id>ACE2</id>
 			<threshold>
-				<count>3</count>
+				<count>1</count>
 				<interval unit="minutes">5</interval>
 			</threshold>
 			<responses>
 				<response>
 					<action>log</action>
-				</response>
-				<response>
-					<action>logout</action>
 				</response>
 				<response>
 					<action>disableUser</action>
