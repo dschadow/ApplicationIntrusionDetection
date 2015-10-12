@@ -23,15 +23,21 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 
 /**
+ * Searches for different attack strings with an incomplete blacklist. Detects Cross-Site Scripting (XSS) and SQL
+ * Injection attacks.
+ *
  * @author Dominik Schadow
  */
 @Service
 public class SecurityValidationService {
     public boolean hasXssPayload(@NotNull String payload) {
-        return StringUtils.contains(payload, "<script>");
+        return StringUtils.containsIgnoreCase(payload, "script") || StringUtils.containsIgnoreCase(payload, "onload");
     }
 
     public boolean hasSqlIPayload(@NotNull String payload) {
-        return false;
+        return StringUtils.containsIgnoreCase(payload, "drop") || StringUtils.containsIgnoreCase(payload, "insert")
+                || StringUtils.containsIgnoreCase(payload, "update") || StringUtils.containsIgnoreCase(payload,
+                "delete") || StringUtils.containsIgnoreCase(payload, "union join") || StringUtils.containsIgnoreCase
+                (payload, "' OR '1'='1") || StringUtils.containsIgnoreCase(payload, "' OR 1=1");
     }
 }
