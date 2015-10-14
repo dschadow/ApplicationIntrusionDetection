@@ -26,9 +26,16 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
+ * Confirmation repository class for all {@link Confirmation} related queries.
+ *
  * @author Dominik Schadow
  */
 public interface ConfirmationRepository extends JpaRepository<Confirmation, Long>, JpaSpecificationExecutor {
     @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username")
     List<Confirmation> findAllByUsername(@Param("username") String username);
+
+    @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username" +
+            " and c.encounter = :encounterId")
+    Confirmation findByUsernameAndEncounterId(@Param("username") String username, @Param("encounterId") long
+            encounterId);
 }
