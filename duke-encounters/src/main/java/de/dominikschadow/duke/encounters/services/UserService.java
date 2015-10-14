@@ -108,4 +108,8 @@ public class UserService {
     public DukeEncountersUser getDukeEncountersUser() {
         return userRepository.findByUsername(getUsername());
     }
+
+    public DukeEncountersUser getDukeEncountersUser(@NotNull String username) {
+        return userRepository.findByUsername(username);
+    }
 }

@@ -99,7 +99,8 @@ public class EncounterService {
         }
         specifications.add(EncounterSpecification.encounterAfterYear(year));
 
-        //specifications.add(EncounterSpecification.encounterByLikelihood(Likelihood.fromString(filter.getLikelihood())));
+        //specifications.add(EncounterSpecification.encounterByLikelihood(Likelihood.fromString(filter.getLikelihood
+        // ())));
 
         //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
@@ -129,7 +130,7 @@ public class EncounterService {
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
-    public Encounter createEncounter(Encounter newEncounter, String username) {
+    public Encounter createEncounter(@NotNull Encounter newEncounter, @NotNull String username) {
         newEncounter.setUser(userService.getDukeEncountersUser());
 
         Encounter encounter = encounterRepository.save(newEncounter);
@@ -137,5 +138,15 @@ public class EncounterService {
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
 
         return encounter;
+    }
+
+    public boolean isOwnEncounter(@NotNull long encounterId, @NotNull String username) {
+        Encounter encounter = encounterRepository.findByIdAndUsername(encounterId, username);
+
+        boolean owner = encounter != null ? true : false;
+
+        LOGGER.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
+
+        return owner;
     }
 }

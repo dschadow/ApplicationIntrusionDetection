@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
+import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -37,22 +38,40 @@ public class ConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
 
     private ConfirmationService confirmationService;
+    private EncounterService encounterService;
     private UserService userService;
 
     @Autowired
-    public ConfirmationController(ConfirmationService confirmationService, UserService userService) {
+    public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService,
+                                  UserService userService) {
         this.confirmationService = confirmationService;
+        this.encounterService = encounterService;
         this.userService = userService;
     }
 
     @RequestMapping(value = "/confirmations/add", method = POST)
     public ModelAndView addConfirmation(long encounterId) {
-
-        // TODO AID react to double confirmations
-
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} confirmed encounter {}", username, encounterId);
+        if (encounterService.isOwnEncounter(encounterId, username)) {
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
+                    username, encounterId);
+
+            // TODO AID react to confirming own encounter
+            return new ModelAndView("redirect:/account");
+        }
+
+        if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
+                            "confirm it again",
+                    username, encounterId);
+            // TODO AID react to double confirmations
+            return new ModelAndView("redirect:/account");
+        }
+
+        confirmationService.addConfirmation(username, encounterId);
+
+        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
 
         return new ModelAndView("redirect:/account");
     }
@@ -61,10 +80,9 @@ public class ConfirmationController {
     public ModelAndView revokeConfirmation(long confirmationId) {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is revoking confirmation {}",
-                username, confirmationId);
-
         confirmationService.deleteConfirmation(username, confirmationId);
+
+        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
 
         return new ModelAndView("redirect:/account");
     }

@@ -32,4 +32,8 @@ public interface EncounterRepository extends JpaRepository<Encounter, Long>, Jpa
 
     @Query(value = "select e from Encounter e, DukeEncountersUser u where e.user = u.id and u.username = :username")
     List<Encounter> findAllByUsername(@Param("username") String username);
+
+    @Query(value = "select e from Encounter e, DukeEncountersUser u where e.user = u.id and u.username = :username " +
+            "and e.id = :encounterId")
+    Encounter findByIdAndUsername(@Param("encounterId") long encounterId, @Param("username") String username);
 }

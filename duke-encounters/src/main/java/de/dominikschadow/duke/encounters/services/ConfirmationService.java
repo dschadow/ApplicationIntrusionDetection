@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,10 +39,15 @@ public class ConfirmationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationService.class);
 
     private ConfirmationRepository confirmationRepository;
+    private UserService userService;
+    private EncounterService encounterService;
 
     @Autowired
-    public ConfirmationService(ConfirmationRepository confirmationRepository) {
+    public ConfirmationService(ConfirmationRepository confirmationRepository, UserService userService,
+                               EncounterService encounterService) {
         this.confirmationRepository = confirmationRepository;
+        this.userService = userService;
+        this.encounterService = encounterService;
     }
 
     public List<Confirmation> getConfirmationsByUsername(@NotNull String username) {
@@ -52,13 +58,35 @@ public class ConfirmationService {
         return confirmations;
     }
 
-    public void addConfirmation(@NotNull Confirmation confirmation) {
-        confirmationRepository.save(confirmation);
+    public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull String username, @NotNull long encounterId) {
+        Confirmation confirmation = confirmationRepository.findByUsernameAndEncounterId(username, encounterId);
+
+        LOGGER.info("Query for user {} confirmations returned {}", username, confirmation);
+
+        return confirmation;
+    }
+
+    public void addConfirmation(@NotNull String username, @NotNull long encounterId) {
+        Confirmation newConfirmation = new Confirmation();
+        newConfirmation.setUser(userService.getDukeEncountersUser(username));
+        newConfirmation.setDate(new Date());
+        newConfirmation.setEncounter(encounterService.getEncounterById(encounterId));
+
+        Confirmation confirmation = confirmationRepository.save(newConfirmation);
+
+        LOGGER.info("Created new confirmation {}", confirmation);
     }
 
     public void deleteConfirmation(@NotNull String username, @NotNull long confirmationId) {
         confirmationRepository.delete(confirmationId);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
+    }
+
+    public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {
+        Confirmation confirmation = getConfirmationByUsernameAndEncounterId(username,
+                encounterId);
+
+        return confirmation != null ? true : false;
     }
 }
