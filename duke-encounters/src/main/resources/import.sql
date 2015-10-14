@@ -64,4 +64,4 @@ INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (15, 4, 9, '2
 INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (16, 4, 13, '2008-10-02');
 INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (17, 11, 11, '2006-10-30');
 INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (18, 10, 12, '2007-10-30');
-INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (19, 1, 17, '2012-10-10');
+INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (19, 1, 13, '2012-10-10');
