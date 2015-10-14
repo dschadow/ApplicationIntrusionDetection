@@ -35,7 +35,7 @@ public interface ConfirmationRepository extends JpaRepository<Confirmation, Long
     List<Confirmation> findAllByUsername(@Param("username") String username);
 
     @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username" +
-            " and c.encounter = :encounterId")
+            " and c.encounter.id = :encounterId")
     Confirmation findByUsernameAndEncounterId(@Param("username") String username, @Param("encounterId") long
             encounterId);
 }
