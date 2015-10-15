@@ -26,9 +26,24 @@ public class Constants {
     private Constants() {
     }
 
+    /**
+     * Error message for XSS payload, value is {@value}.
+     */
     public static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
+    /**
+     * Error message for SQL injection payload, value is {@value}.
+     */
     public static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof!";
+    /**
+     * XSS error code, value is {@value}.
+     */
     public static final String XSS_ERROR_CODE = "xss.attempt";
+    /**
+     * SQL injection error code, value is {@value}.
+     */
     public static final String SQLI_ERROR_CODE = "sqli.attempt";
+    /**
+     * General error code, value is {@value}.
+     */
     public static final String ATTACK_ERROR_CODE = "attack.attempt";
 }
