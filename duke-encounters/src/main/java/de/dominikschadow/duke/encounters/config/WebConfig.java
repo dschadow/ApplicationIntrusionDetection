@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.validation.Validator;
 
@@ -33,5 +34,10 @@ public class WebConfig {
     @Bean
     public Validator localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
+    }
+
+    @Bean
+    public SpringValidatorAdapter springValidatorAdapter(Validator jsr303Validator) {
+        return new SpringValidatorAdapter(jsr303Validator);
     }
 }

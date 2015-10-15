@@ -36,7 +36,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 /**
@@ -45,11 +44,8 @@ import javax.inject.Named;
 @Named
 public class SearchFilterValidator implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchFilterValidator.class);
-
-    private SpringValidatorAdapter validator;
-
     @Autowired
-    private javax.validation.Validator jsr303Validator;
+    private SpringValidatorAdapter validator;
     @Autowired
     private AppSensorClient appSensorClient;
     @Autowired
@@ -58,11 +54,6 @@ public class SearchFilterValidator implements Validator {
     private UserService userService;
     @Autowired
     private SecurityValidationService securityValidationService;
-
-    @PostConstruct
-    public void init() {
-        validator = new SpringValidatorAdapter(jsr303Validator);
-    }
 
     @Override
     public boolean supports(Class<?> clazz) {
