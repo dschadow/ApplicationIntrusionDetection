@@ -61,34 +61,28 @@ public class EncounterValidator implements Validator {
 
         Encounter encounter = (Encounter) target;
 
-        if (!Strings.isNullOrEmpty(encounter.getEvent())) {
-            if (securityValidationService.hasXssPayload(encounter.getEvent())) {
-                fireXssEvent();
-                errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(encounter.getEvent())) {
-                fireSqlIEvent();
-                errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(encounter.getEvent())) {
+            fireXssEvent();
+            errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(encounter.getEvent())) {
+            fireSqlIEvent();
+            errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(encounter.getLocation())) {
-            if (securityValidationService.hasXssPayload(encounter.getLocation())) {
-                fireXssEvent();
-                errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(encounter.getLocation())) {
-                fireSqlIEvent();
-                errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(encounter.getLocation())) {
+            fireXssEvent();
+            errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(encounter.getLocation())) {
+            fireSqlIEvent();
+            errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(encounter.getCountry())) {
-            if (securityValidationService.hasXssPayload(encounter.getCountry())) {
-                fireXssEvent();
-                errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(encounter.getCountry())) {
-                fireSqlIEvent();
-                errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(encounter.getCountry())) {
+            fireXssEvent();
+            errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(encounter.getCountry())) {
+            fireSqlIEvent();
+            errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
         if (!Strings.isNullOrEmpty(encounter.getComment())) {

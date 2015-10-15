@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
-import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
@@ -61,44 +60,36 @@ public class DukeEncountersUserValidator implements Validator {
 
         DukeEncountersUser user = (DukeEncountersUser) target;
 
-        if (!Strings.isNullOrEmpty(user.getFirstname())) {
-            if (securityValidationService.hasXssPayload(user.getFirstname())) {
-                fireXssEvent();
-                errors.rejectValue("firstname", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(user.getFirstname())) {
-                fireSqlIEvent();
-                errors.rejectValue("firstname", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(user.getFirstname())) {
+            fireXssEvent();
+            errors.rejectValue("firstname", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(user.getFirstname())) {
+            fireSqlIEvent();
+            errors.rejectValue("firstname", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(user.getLastname())) {
-            if (securityValidationService.hasXssPayload(user.getLastname())) {
-                fireXssEvent();
-                errors.rejectValue("lastname", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(user.getLastname())) {
-                fireSqlIEvent();
-                errors.rejectValue("lastname", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(user.getLastname())) {
+            fireXssEvent();
+            errors.rejectValue("lastname", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(user.getLastname())) {
+            fireSqlIEvent();
+            errors.rejectValue("lastname", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(user.getUsername())) {
-            if (securityValidationService.hasXssPayload(user.getUsername())) {
-                fireXssEvent();
-                errors.rejectValue("username", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(user.getUsername())) {
-                fireSqlIEvent();
-                errors.rejectValue("username", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(user.getUsername())) {
+            fireXssEvent();
+            errors.rejectValue("username", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(user.getUsername())) {
+            fireSqlIEvent();
+            errors.rejectValue("username", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(user.getEmail())) {
-            if (securityValidationService.hasXssPayload(user.getEmail())) {
-                fireXssEvent();
-                errors.rejectValue("email", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(user.getEmail())) {
-                fireSqlIEvent();
-                errors.rejectValue("email", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(user.getEmail())) {
+            fireXssEvent();
+            errors.rejectValue("email", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(user.getEmail())) {
+            fireSqlIEvent();
+            errors.rejectValue("email", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
     }
 
