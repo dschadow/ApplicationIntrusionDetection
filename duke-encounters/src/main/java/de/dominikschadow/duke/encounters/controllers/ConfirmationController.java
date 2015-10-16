@@ -20,6 +20,11 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import org.owasp.appsensor.core.AppSensorClient;
+import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.Event;
+import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +48,10 @@ public class ConfirmationController {
     private ConfirmationService confirmationService;
     private EncounterService encounterService;
     private UserService userService;
+    @Autowired
+    private AppSensorClient appSensorClient;
+    @Autowired
+    private EventManager ids;
 
     @Autowired
     public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService,
@@ -62,8 +71,9 @@ public class ConfirmationController {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     username, encounterId);
 
+            fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("confirmationFailure", "This is your own encounter and cannot be " +
-                    "confirmed.");
+                    "confirmed by yourself.");
 
             // TODO AID react to confirming own encounter
             return modelAndView;
@@ -73,6 +83,7 @@ public class ConfirmationController {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
                     "confirm it again", username, encounterId);
 
+            fireConfirmationErrorEvent();
             // TODO AID react to double confirmations
             redirectAttributes.addFlashAttribute("confirmationFailure", "You have already confirmed this encounter " +
                     "and cannot confirm it again.");
@@ -96,5 +107,15 @@ public class ConfirmationController {
         LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
 
         return new ModelAndView("redirect:/account");
+    }
+
+    private void fireConfirmationErrorEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
+    }
+
+    private DetectionSystem getDetectionSystem() {
+        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
+                .getClientApplicationIdentificationHeaderValue());
     }
 }
