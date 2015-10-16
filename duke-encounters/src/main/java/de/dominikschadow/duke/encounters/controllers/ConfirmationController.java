@@ -17,12 +17,11 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionPoint;
-import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
@@ -48,17 +47,17 @@ public class ConfirmationController {
     private ConfirmationService confirmationService;
     private EncounterService encounterService;
     private UserService userService;
-    @Autowired
-    private AppSensorClient appSensorClient;
+    private IntrusionDetectionService intrusionDetectionService;
     @Autowired
     private EventManager ids;
 
     @Autowired
     public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService,
-                                  UserService userService) {
+                                  UserService userService, IntrusionDetectionService intrusionDetectionService) {
         this.confirmationService = confirmationService;
         this.encounterService = encounterService;
         this.userService = userService;
+        this.intrusionDetectionService = intrusionDetectionService;
     }
 
     @RequestMapping(value = "/confirmations/add", method = POST)
@@ -111,11 +110,6 @@ public class ConfirmationController {
 
     private void fireConfirmationErrorEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
-    }
-
-    private DetectionSystem getDetectionSystem() {
-        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
-                .getClientApplicationIdentificationHeaderValue());
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }

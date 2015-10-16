@@ -19,12 +19,12 @@ package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
+import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionPoint;
-import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +52,8 @@ public class EncounterValidator implements Validator {
     private UserService userService;
     @Autowired
     private SecurityValidationService securityValidationService;
+    @Autowired
+    private IntrusionDetectionService intrusionDetectionService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -105,16 +107,11 @@ public class EncounterValidator implements Validator {
 
     private void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 
     private void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, getDetectionSystem()));
-    }
-
-    private DetectionSystem getDetectionSystem() {
-        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
-                .getClientApplicationIdentificationHeaderValue());
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }
