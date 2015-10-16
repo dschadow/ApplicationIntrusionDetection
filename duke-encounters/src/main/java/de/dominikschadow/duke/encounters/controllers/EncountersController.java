@@ -43,6 +43,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all encounter related requests.
+ *
+ * @author Dominik Schadow
  */
 @Controller
 public class EncountersController {

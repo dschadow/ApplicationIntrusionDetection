@@ -45,6 +45,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all account related requests.
+ *
+ * @author Dominik Schadow
  */
 @Controller
 public class AccountController {
