@@ -28,6 +28,7 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
@@ -57,6 +58,18 @@ public class DukeEncountersUserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         validator.validate(target, errors);
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstname", "required.firstname", "Your firstname is " +
+                "required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastname", "required.lastname", "Your lastname is required" +
+                ".");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required.username", "Your username is required" +
+                ".");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.email", "Your email is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.password", "Please enter a safe " +
+                "password.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required.confirmPassword", "Please " +
+                "confirm your password.");
 
         DukeEncountersUser user = (DukeEncountersUser) target;
 
