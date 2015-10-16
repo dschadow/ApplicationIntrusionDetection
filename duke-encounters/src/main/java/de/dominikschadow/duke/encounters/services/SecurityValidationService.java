@@ -31,13 +31,13 @@ import javax.validation.constraints.NotNull;
 @Service
 public class SecurityValidationService {
     public boolean hasXssPayload(@NotNull String payload) {
-        return StringUtils.containsIgnoreCase(payload, "script") || StringUtils.containsIgnoreCase(payload, "onload");
+        return StringUtils.containsIgnoreCase(payload, "<") || StringUtils.containsIgnoreCase(payload, "javascript");
     }
 
     public boolean hasSqlIPayload(@NotNull String payload) {
         return StringUtils.containsIgnoreCase(payload, "drop") || StringUtils.containsIgnoreCase(payload, "insert")
                 || StringUtils.containsIgnoreCase(payload, "update") || StringUtils.containsIgnoreCase(payload,
-                "delete") || StringUtils.containsIgnoreCase(payload, "union join") || StringUtils.containsIgnoreCase
-                (payload, "' OR '1'='1") || StringUtils.containsIgnoreCase(payload, "' OR 1=1");
+                "delete") || StringUtils.containsIgnoreCase(payload, "union") || StringUtils.containsIgnoreCase
+                (payload, "' or '1'='1") || StringUtils.containsIgnoreCase(payload, "' or 1=1");
     }
 }
