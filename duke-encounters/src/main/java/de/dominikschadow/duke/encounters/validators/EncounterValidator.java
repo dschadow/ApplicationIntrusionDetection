@@ -23,7 +23,6 @@ import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
@@ -44,8 +43,6 @@ import javax.inject.Named;
 public class EncounterValidator implements Validator {
     @Autowired
     private SpringValidatorAdapter validator;
-    @Autowired
-    private AppSensorClient appSensorClient;
     @Autowired
     private EventManager ids;
     @Autowired
