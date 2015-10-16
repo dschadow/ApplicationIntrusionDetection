@@ -31,7 +31,8 @@ import javax.validation.constraints.NotNull;
 @Service
 public class SecurityValidationService {
     public boolean hasXssPayload(@NotNull String payload) {
-        return StringUtils.containsIgnoreCase(payload, "<") || StringUtils.containsIgnoreCase(payload, "javascript");
+        return StringUtils.containsIgnoreCase(payload, "<") || StringUtils.containsIgnoreCase(payload, "javascript")
+                || StringUtils.containsIgnoreCase(payload, "onload") || StringUtils.containsIgnoreCase(payload, "eval");
     }
 
     public boolean hasSqlIPayload(@NotNull String payload) {
