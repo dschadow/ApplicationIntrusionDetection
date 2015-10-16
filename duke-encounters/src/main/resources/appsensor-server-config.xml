@@ -38,6 +38,22 @@
             </responses>
         </detection-point>
         <detection-point>
+            <category>Input Validation</category>
+            <id>IE5</id>
+            <threshold>
+                <count>1</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
             <category>Access Control</category>
             <id>ACE2</id>
             <threshold>
