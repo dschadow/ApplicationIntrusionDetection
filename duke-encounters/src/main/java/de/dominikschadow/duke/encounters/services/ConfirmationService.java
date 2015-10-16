@@ -87,6 +87,6 @@ public class ConfirmationService {
         Confirmation confirmation = getConfirmationByUsernameAndEncounterId(username,
                 encounterId);
 
-        return confirmation != null ? true : false;
+        return confirmation != null;
     }
 }
