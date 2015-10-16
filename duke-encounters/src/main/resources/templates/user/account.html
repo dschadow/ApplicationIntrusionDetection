@@ -38,6 +38,10 @@
 </div>
 
 <div class="container">
+    <p th:if="${confirmationFailure}" class="alert alert-danger" th:text="${confirmationFailure}"></p>
+</div>
+
+<div class="container">
     <div class="page-header">
         <h2>My Actions</h2>
     </div>

@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -50,30 +51,38 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "/confirmations/add", method = POST)
-    public ModelAndView addConfirmation(long encounterId) {
+    public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/account");
 
         if (encounterService.isOwnEncounter(encounterId, username)) {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     username, encounterId);
 
+            redirectAttributes.addFlashAttribute("confirmationFailure", "This is your own encounter and cannot be " +
+                    "confirmed.");
+
             // TODO AID react to confirming own encounter
-            return new ModelAndView("redirect:/account");
+            return modelAndView;
         }
 
         if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
             LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
-                            "confirm it again",
-                    username, encounterId);
+                    "confirm it again", username, encounterId);
+
             // TODO AID react to double confirmations
-            return new ModelAndView("redirect:/account");
+            redirectAttributes.addFlashAttribute("confirmationFailure", "You have already confirmed this encounter " +
+                    "and cannot confirm it again.");
+
+            return modelAndView;
         }
 
         confirmationService.addConfirmation(username, encounterId);
 
         LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
 
-        return new ModelAndView("redirect:/account");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/confirmations/revoke", method = POST)
