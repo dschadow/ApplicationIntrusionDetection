@@ -33,6 +33,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all encounter confirmation related requests.
+ *
+ * @author Dominik Schadow
  */
 @Controller
 public class ConfirmationController {
