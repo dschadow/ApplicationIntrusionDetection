@@ -24,7 +24,6 @@ import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
@@ -48,8 +47,6 @@ public class SearchFilterValidator implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchFilterValidator.class);
     @Autowired
     private SpringValidatorAdapter validator;
-    @Autowired
-    private AppSensorClient appSensorClient;
     @Autowired
     private EventManager ids;
     @Autowired
