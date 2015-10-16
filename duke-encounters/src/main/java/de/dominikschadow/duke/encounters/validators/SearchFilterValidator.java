@@ -39,6 +39,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import javax.inject.Named;
 
 /**
+ * Validates a search filter: scans for basic Cross-Site Scripting and SQL Injection payload.
+ *
  * @author Dominik Schadow
  */
 @Named

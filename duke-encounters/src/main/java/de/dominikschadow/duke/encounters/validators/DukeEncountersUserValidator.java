@@ -35,6 +35,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import javax.inject.Named;
 
 /**
+ * Validates an user: checks required fields and scans for basic Cross-Site Scripting and SQL Injection payload.
+ *
  * @author Dominik Schadow
  */
 @Named
