@@ -143,7 +143,7 @@ public class EncounterService {
     public boolean isOwnEncounter(@NotNull long encounterId, @NotNull String username) {
         Encounter encounter = encounterRepository.findByIdAndUsername(encounterId, username);
 
-        boolean owner = encounter != null ? true : false;
+        boolean owner = encounter != null;
 
         LOGGER.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
 
