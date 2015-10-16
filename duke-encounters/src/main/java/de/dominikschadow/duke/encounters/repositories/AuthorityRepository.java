@@ -21,6 +21,8 @@ import de.dominikschadow.duke.encounters.domain.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
+ * JPA repository class to access {@link Authority}s.
+ *
  * @author Dominik Schadow
  */
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {

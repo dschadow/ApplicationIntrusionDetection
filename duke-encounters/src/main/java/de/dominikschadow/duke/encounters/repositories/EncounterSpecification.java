@@ -25,6 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * Specification to filter encounters based on the entered search filter.
+ *
  * @author Dominik Schadow
  */
 public class EncounterSpecification {

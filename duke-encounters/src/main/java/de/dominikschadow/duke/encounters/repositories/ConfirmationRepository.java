@@ -26,7 +26,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * Confirmation repository class for all {@link Confirmation} related queries.
+ * JPA repository class to access {@link Confirmation}s.
  *
  * @author Dominik Schadow
  */

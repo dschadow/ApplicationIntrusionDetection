@@ -26,6 +26,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * JPA repository class to access {@link Encounter}s.
+ *
+ * @author Dominik Schadow
+ */
 public interface EncounterRepository extends JpaRepository<Encounter, Long>, JpaSpecificationExecutor {
     @Query(value = "select e from Encounter e")
     List<Encounter> findWithPageable(Pageable latestTen);

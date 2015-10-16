@@ -20,6 +20,11 @@ package de.dominikschadow.duke.encounters.repositories;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * JPA repository class to access {@link DukeEncountersUser}s.
+ *
+ * @author Dominik Schadow
+ */
 public interface UserRepository extends JpaRepository<DukeEncountersUser, Long> {
     DukeEncountersUser findByUsername(String username);
 }
