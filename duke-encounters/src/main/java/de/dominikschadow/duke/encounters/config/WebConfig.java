@@ -26,6 +26,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import javax.validation.Validator;
 
 /**
+ * Spring configuration file.
+ *
  * @author Dominik Schadow
  */
 @Configuration
