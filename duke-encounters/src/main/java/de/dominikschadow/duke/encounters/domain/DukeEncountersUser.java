@@ -19,6 +19,7 @@ package de.dominikschadow.duke.encounters.domain;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,21 +36,21 @@ public class DukeEncountersUser {
     @Id
     @GeneratedValue
     private long id;
-    @NotNull(message = "Your firstname is required")
+    @NotEmpty(message = "Your firstname is required")
     private String firstname;
-    @NotNull(message = "Your lastname is required")
+    @NotEmpty(message = "Your lastname is required")
     private String lastname;
-    @NotNull(message = "A username is required")
+    @NotEmpty(message = "Your username is required")
     @Column(nullable = false)
     private String username;
-    @NotNull(message = "Your email address is required")
+    @NotEmpty(message = "Your email address is required")
     @Column(nullable = false)
     private String email;
-    @NotNull(message = "A password is required")
+    @NotEmpty(message = "A password is required")
     @Column(nullable = false, length = 60)
     private String password;
     @Transient
-    @NotNull(message = "Please re-enter your password")
+    @NotEmpty(message = "Please confirm your password")
     private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)

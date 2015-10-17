@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 
 /**
@@ -30,7 +32,9 @@ public class Authority {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty(message = "Username may not be null")
     private String username;
+    @NotEmpty(message = "Authority may not be null")
     private String authority;
 
     public Authority(String username, String authority) {

@@ -28,7 +28,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
@@ -60,10 +59,6 @@ public class EncounterValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         validator.validate(target, errors);
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event", "required.event", "The event is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "location", "required.location", "The location is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "required.country", "The country is required");
 
         Encounter encounter = (Encounter) target;
 
