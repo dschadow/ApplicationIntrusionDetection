@@ -117,7 +117,6 @@ public class AccountController {
             return new ModelAndView("/register", "formErrors", result.getAllErrors());
         }
 
-        // TODO react on validation error
         DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
