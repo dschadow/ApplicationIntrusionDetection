@@ -107,7 +107,7 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.189</version>
+                <version>1.4.190</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
@@ -140,7 +140,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.3.3</version>
+                    <version>0.3.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
