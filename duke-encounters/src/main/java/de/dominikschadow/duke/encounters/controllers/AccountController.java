@@ -52,20 +52,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class AccountController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
-    private EncounterService encounterService;
-    private ConfirmationService confirmationService;
-    private UserService userService;
-    private DukeEncountersUserValidator dukeEncountersUserValidator;
-
     @Autowired
-    public AccountController(EncounterService encounterService, ConfirmationService confirmationService, UserService
-            userService, DukeEncountersUserValidator
-                                     dukeEncountersUserValidator) {
-        this.encounterService = encounterService;
-        this.confirmationService = confirmationService;
-        this.userService = userService;
-        this.dukeEncountersUserValidator = dukeEncountersUserValidator;
-    }
+    private EncounterService encounterService;
+    @Autowired
+    private ConfirmationService confirmationService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private DukeEncountersUserValidator dukeEncountersUserValidator;
 
     @RequestMapping(value = "/account", method = GET)
     public String showMyAccount(Model model) {

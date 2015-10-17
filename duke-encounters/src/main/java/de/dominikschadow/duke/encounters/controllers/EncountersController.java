@@ -55,21 +55,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class EncountersController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EncountersController.class);
 
-    private EncounterService encounterService;
-    private EncounterValidator encounterValidator;
-    private UserService userService;
-    private IntrusionDetectionService intrusionDetectionService;
-    private EventManager ids;
-
     @Autowired
-    public EncountersController(EncounterService encounterService, EncounterValidator encounterValidator, UserService
-            userService, IntrusionDetectionService intrusionDetectionService, EventManager ids) {
-        this.encounterService = encounterService;
-        this.encounterValidator = encounterValidator;
-        this.userService = userService;
-        this.intrusionDetectionService = intrusionDetectionService;
-        this.ids = ids;
-    }
+    private EncounterService encounterService;
+    @Autowired
+    private EncounterValidator encounterValidator;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private IntrusionDetectionService intrusionDetectionService;
+    @Autowired
+    private EventManager ids;
 
     @RequestMapping(value = "/encounters", method = GET)
     public String allEncounters(Model model) {

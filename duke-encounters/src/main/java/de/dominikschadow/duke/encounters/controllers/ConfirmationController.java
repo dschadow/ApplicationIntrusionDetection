@@ -44,21 +44,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class ConfirmationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
 
+    @Autowired
     private ConfirmationService confirmationService;
+    @Autowired
     private EncounterService encounterService;
+    @Autowired
     private UserService userService;
+    @Autowired
     private IntrusionDetectionService intrusionDetectionService;
     @Autowired
     private EventManager ids;
-
-    @Autowired
-    public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService,
-                                  UserService userService, IntrusionDetectionService intrusionDetectionService) {
-        this.confirmationService = confirmationService;
-        this.encounterService = encounterService;
-        this.userService = userService;
-        this.intrusionDetectionService = intrusionDetectionService;
-    }
 
     @RequestMapping(value = "/confirmations/add", method = POST)
     public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {

@@ -45,14 +45,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class SearchController {
-    private EncounterService encounterService;
-    private SearchFilterValidator searchFilterValidator;
-
     @Autowired
-    public SearchController(EncounterService encounterService, SearchFilterValidator searchFilterValidator) {
-        this.encounterService = encounterService;
-        this.searchFilterValidator = searchFilterValidator;
-    }
+    private EncounterService encounterService;
+    @Autowired
+    private SearchFilterValidator searchFilterValidator;
 
     /**
      * Shows the search form.

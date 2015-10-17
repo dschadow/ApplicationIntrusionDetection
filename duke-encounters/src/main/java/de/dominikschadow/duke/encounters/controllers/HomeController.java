@@ -35,12 +35,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class HomeController {
-    private EncounterService encounterService;
-
     @Autowired
-    public HomeController(EncounterService encounterService) {
-        this.encounterService = encounterService;
-    }
+    private EncounterService encounterService;
 
     /**
      * Queries for the latest encounters, adds them to the model and returns the index page.
@@ -48,7 +44,7 @@ public class HomeController {
      * @param model The model attribute container
      * @return Index URL
      */
-    @RequestMapping(value = "/", method= GET)
+    @RequestMapping(value = "/", method = GET)
     public String home(Model model) {
         List<Encounter> encounters = encounterService.getLatestEncounters();
         model.addAttribute("encounters", encounters);
