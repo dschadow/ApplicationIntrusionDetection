@@ -19,10 +19,72 @@
 
     <detection-points>
         <detection-point>
-            <category>Input Validation</category>
-            <id>IE1</id>
+            <category>Access Control</category>
+            <id>ACE2-1001</id>
             <threshold>
-                <count>3</count>
+                <count>1</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
+            <category>Authentication</category>
+            <id>AE3-1001</id>
+            <threshold>
+                <count>13</count>
+                <interval unit="minutes">6</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>logout</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+                <response>
+                    <action>disableComponentForSpecificUser</action>
+                    <interval unit="minutes">33</interval>
+                </response>
+                <response>
+                    <action>disableComponentForAllUsers</action>
+                    <interval unit="minutes">13</interval>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
+            <category>Input Validation</category>
+            <id>IE1-1001</id>
+            <threshold>
+                <count>2</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>logout</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
+            <category>Command Injection</category>
+            <id>CIE1-1001</id>
+            <threshold>
+                <count>2</count>
                 <interval unit="minutes">5</interval>
             </threshold>
             <responses>
@@ -39,23 +101,7 @@
         </detection-point>
         <detection-point>
             <category>Input Validation</category>
-            <id>IE5</id>
-            <threshold>
-                <count>1</count>
-                <interval unit="minutes">5</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>log</action>
-                </response>
-                <response>
-                    <action>disableUser</action>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Access Control</category>
-            <id>ACE2</id>
+            <id>IE5-1001</id>
             <threshold>
                 <count>1</count>
                 <interval unit="minutes">5</interval>
@@ -71,7 +117,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE1</id>
+            <id>STE1-1001</id>
             <threshold>
                 <count>11</count>
                 <interval unit="minutes">4</interval>
@@ -98,7 +144,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE2</id>
+            <id>STE2-1001</id>
             <threshold>
                 <count>12</count>
                 <interval unit="minutes">5</interval>
@@ -120,33 +166,6 @@
                 <response>
                     <action>disableComponentForAllUsers</action>
                     <interval unit="minutes">12</interval>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Authentication</category>
-            <id>AE3</id>
-            <threshold>
-                <count>13</count>
-                <interval unit="minutes">6</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>log</action>
-                </response>
-                <response>
-                    <action>logout</action>
-                </response>
-                <response>
-                    <action>disableUser</action>
-                </response>
-                <response>
-                    <action>disableComponentForSpecificUser</action>
-                    <interval unit="minutes">33</interval>
-                </response>
-                <response>
-                    <action>disableComponentForAllUsers</action>
-                    <interval unit="minutes">13</interval>
                 </response>
             </responses>
         </detection-point>

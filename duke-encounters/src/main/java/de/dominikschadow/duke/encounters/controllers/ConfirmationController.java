@@ -109,7 +109,7 @@ public class ConfirmationController {
     }
 
     private void fireConfirmationErrorEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5");
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5-1001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }
