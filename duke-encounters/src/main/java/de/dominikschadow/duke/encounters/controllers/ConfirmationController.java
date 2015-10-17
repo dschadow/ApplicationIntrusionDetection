@@ -74,7 +74,6 @@ public class ConfirmationController {
             redirectAttributes.addFlashAttribute("confirmationFailure", "This is your own encounter and cannot be " +
                     "confirmed by yourself.");
 
-            // TODO AID react to confirming own encounter
             return modelAndView;
         }
 
@@ -83,7 +82,6 @@ public class ConfirmationController {
                     "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
-            // TODO AID react to double confirmations
             redirectAttributes.addFlashAttribute("confirmationFailure", "You have already confirmed this encounter " +
                     "and cannot confirm it again.");
 
