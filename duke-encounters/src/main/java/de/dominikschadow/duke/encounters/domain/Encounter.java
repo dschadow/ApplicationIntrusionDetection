@@ -18,10 +18,11 @@
 package de.dominikschadow.duke.encounters.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -31,17 +32,17 @@ public class Encounter {
     @Id
     @GeneratedValue
     private long id;
-    @NotEmpty(message = "An event is required for each encounter")
+    @NotBlank(message = "An event is required for each encounter")
     @Column(nullable = false)
     private String event;
-    @NotEmpty(message = "A location is required for each encounter")
+    @NotBlank(message = "A location is required for each encounter")
     @Column(nullable = false)
     private String location;
-    @NotEmpty(message = "A country is required for each encounter")
+    @NotBlank(message = "A country is required for each encounter")
     @Column(nullable = false)
     private String country;
     private String comment;
-    @NotEmpty(message = "A date in the format YYYY-MM-dd is required for each encounter")
+    @NotNull(message = "A date in the format YYYY-MM-dd is required for each encounter")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "YYYY-MM-dd")
     private Date date;
