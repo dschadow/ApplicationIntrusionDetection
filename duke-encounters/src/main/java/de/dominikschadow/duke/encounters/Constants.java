@@ -23,13 +23,11 @@ package de.dominikschadow.duke.encounters;
  * @author Dominik Schadow
  */
 public class Constants {
-    private Constants() {
-    }
-
     /**
      * Error message for XSS payload, value is {@value}.
      */
     public static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
+
     /**
      * Error message for SQL injection payload, value is {@value}.
      */
@@ -46,4 +44,7 @@ public class Constants {
      * General error code, value is {@value}.
      */
     public static final String ATTACK_ERROR_CODE = "attack.attempt";
+
+    private Constants() {
+    }
 }
