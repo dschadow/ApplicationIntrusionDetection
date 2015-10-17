@@ -38,8 +38,8 @@
             <category>Authentication</category>
             <id>AE3-1001</id>
             <threshold>
-                <count>13</count>
-                <interval unit="minutes">6</interval>
+                <count>10</count>
+                <interval unit="minutes">5</interval>
             </threshold>
             <responses>
                 <response>
@@ -53,11 +53,11 @@
                 </response>
                 <response>
                     <action>disableComponentForSpecificUser</action>
-                    <interval unit="minutes">33</interval>
+                    <interval unit="minutes">30</interval>
                 </response>
                 <response>
                     <action>disableComponentForAllUsers</action>
-                    <interval unit="minutes">13</interval>
+                    <interval unit="minutes">10</interval>
                 </response>
             </responses>
         </detection-point>
@@ -100,6 +100,19 @@
             </responses>
         </detection-point>
         <detection-point>
+            <category>Command Injection</category>
+            <id>CIE2-1001</id>
+            <threshold>
+                <count>1</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
             <category>Input Validation</category>
             <id>IE5-1001</id>
             <threshold>
@@ -119,8 +132,8 @@
             <category>System Trend</category>
             <id>STE1-1001</id>
             <threshold>
-                <count>11</count>
-                <interval unit="minutes">4</interval>
+                <count>10</count>
+                <interval unit="minutes">5</interval>
             </threshold>
             <responses>
                 <response>
@@ -134,11 +147,11 @@
                 </response>
                 <response>
                     <action>disableComponentForSpecificUser</action>
-                    <interval unit="minutes">31</interval>
+                    <interval unit="minutes">30</interval>
                 </response>
                 <response>
                     <action>disableComponentForAllUsers</action>
-                    <interval unit="minutes">11</interval>
+                    <interval unit="minutes">10</interval>
                 </response>
             </responses>
         </detection-point>
@@ -161,11 +174,11 @@
                 </response>
                 <response>
                     <action>disableComponentForSpecificUser</action>
-                    <interval unit="minutes">32</interval>
+                    <interval unit="minutes">30</interval>
                 </response>
                 <response>
                     <action>disableComponentForAllUsers</action>
-                    <interval unit="minutes">12</interval>
+                    <interval unit="minutes">10</interval>
                 </response>
             </responses>
         </detection-point>
