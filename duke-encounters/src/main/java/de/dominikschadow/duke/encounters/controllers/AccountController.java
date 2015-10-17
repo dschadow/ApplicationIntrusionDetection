@@ -88,6 +88,9 @@ public class AccountController {
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+        model.addAttribute("user", user);
+
         return "/user/editAccount";
     }
 
