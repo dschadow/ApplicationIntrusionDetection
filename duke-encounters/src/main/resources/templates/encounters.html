@@ -44,6 +44,8 @@
 </div>
 
 <div class="container">
+    <div th:if="${encounterFailure}" class="alert alert-warning" role="alert" th:text="${encounterFailure}"></div>
+
     <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a href="/encounter/create">Create</a>
         a new one.
     </p>

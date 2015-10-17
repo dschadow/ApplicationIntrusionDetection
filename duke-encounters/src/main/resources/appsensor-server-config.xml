@@ -129,6 +129,22 @@
             </responses>
         </detection-point>
         <detection-point>
+            <category>Request</category>
+            <id>RE8-1001</id>
+            <threshold>
+                <count>5</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>logout</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
             <category>System Trend</category>
             <id>STE1-1001</id>
             <threshold>

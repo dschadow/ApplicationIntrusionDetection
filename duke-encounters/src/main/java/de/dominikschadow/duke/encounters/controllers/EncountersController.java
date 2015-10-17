@@ -17,10 +17,14 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.EncounterValidator;
+import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.Event;
+import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +38,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -53,13 +58,17 @@ public class EncountersController {
     private EncounterService encounterService;
     private EncounterValidator encounterValidator;
     private UserService userService;
+    private IntrusionDetectionService intrusionDetectionService;
+    private EventManager ids;
 
     @Autowired
     public EncountersController(EncounterService encounterService, EncounterValidator encounterValidator, UserService
-            userService) {
+            userService, IntrusionDetectionService intrusionDetectionService, EventManager ids) {
         this.encounterService = encounterService;
         this.encounterValidator = encounterValidator;
         this.userService = userService;
+        this.intrusionDetectionService = intrusionDetectionService;
+        this.ids = ids;
     }
 
     @RequestMapping(value = "/encounters", method = GET)
@@ -88,7 +97,8 @@ public class EncountersController {
 
         Encounter newEncounter = encounterService.createEncounter(encounter, username);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully created encounter {}", username, newEncounter);
+        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
+                newEncounter);
 
         return new ModelAndView("redirect:/account");
     }
@@ -101,19 +111,46 @@ public class EncountersController {
 
         encounterService.deleteEncounter(username, encounterId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully deleted encounter {}", username, encounterId);
+        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} deleted encounter {}", username, encounterId);
 
         return new ModelAndView("redirect:/account");
     }
 
     @RequestMapping(value = "/encounters/{id}", method = GET)
-    public String encounterById(@PathVariable("id") long id, Model model) {
-        // TODO react on validation error
+    public String encounterById(@PathVariable("id") long encounterId, Model model, RedirectAttributes
+            redirectAttributes) {
+        String username = userService.getUsername();
 
-        Encounter encounter = encounterService.getEncounterById(id);
+        if (encounterId < 1) {
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter with negative id {}",
+                    username, encounterId);
+
+            fireInvalidUrlParameterEvent();
+            redirectAttributes.addFlashAttribute("encounterFailure", "The requested encounter does not exist.");
+
+            return "redirect:/encounters";
+        }
+
+        Encounter encounter = encounterService.getEncounterById(encounterId);
+
+        if (encounter == null) {
+            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
+                    username, encounterId);
+
+            fireInvalidUrlParameterEvent();
+            redirectAttributes.addFlashAttribute("encounterFailure", "The requested encounter does not exist.");
+
+            return "redirect:/encounters";
+        }
+
         model.addAttribute("encounter", encounter);
 
         return "/user/encounterDetails";
+    }
+
+    private void fireInvalidUrlParameterEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.REQUEST, "RE8-1001");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 
     @InitBinder
