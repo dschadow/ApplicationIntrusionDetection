@@ -99,8 +99,6 @@ public class EncountersController {
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
-        // TODO AID react to not own encounter
-
         encounterService.deleteEncounter(username, encounterId);
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} successfully deleted encounter {}", username, encounterId);
