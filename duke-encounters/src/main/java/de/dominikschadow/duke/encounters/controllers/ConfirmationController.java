@@ -17,7 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
+import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;

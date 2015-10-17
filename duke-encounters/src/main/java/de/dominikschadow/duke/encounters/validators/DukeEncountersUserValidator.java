@@ -18,7 +18,7 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
+import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;

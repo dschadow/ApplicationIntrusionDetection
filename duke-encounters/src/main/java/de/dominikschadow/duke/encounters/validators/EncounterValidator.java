@@ -19,7 +19,7 @@ package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.detection.IntrusionDetectionService;
+import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
