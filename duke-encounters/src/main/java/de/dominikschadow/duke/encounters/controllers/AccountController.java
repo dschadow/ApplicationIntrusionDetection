@@ -60,7 +60,7 @@ public class AccountController {
     @Autowired
     public AccountController(EncounterService encounterService, ConfirmationService confirmationService, UserService
             userService, DukeEncountersUserValidator
-            dukeEncountersUserValidator) {
+                                     dukeEncountersUserValidator) {
         this.encounterService = encounterService;
         this.confirmationService = confirmationService;
         this.userService = userService;
@@ -121,7 +121,11 @@ public class AccountController {
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
-        return new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("userCreated", "User " + newUser.getUsername() + " successfully created, you can now " +
+                "use your new user to log in.");
+
+        return modelAndView;
     }
 
     @InitBinder
