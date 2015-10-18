@@ -73,6 +73,9 @@ public class AccountController {
         List<Confirmation> confirmations = confirmationService.getConfirmationsByUsername(username);
         model.addAttribute("confirmations", confirmations);
 
+        DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
+        model.addAttribute("userlevel", dukeEncountersUser.getLevel().getName());
+
         return "/user/account";
     }
 

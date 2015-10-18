@@ -33,7 +33,7 @@
     <div class="container">
         <h1>My Account</h1>
 
-        <h2 th:text="${#httpServletRequest.remoteUser}"></h2>
+        <h2 th:text="${#httpServletRequest.remoteUser} + ' ('+ ${userlevel} + ')'"></h2>
     </div>
 </div>
 
