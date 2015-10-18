@@ -146,7 +146,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE1-001</id>
+            <id>STE1</id>
             <threshold>
                 <count>10</count>
                 <interval unit="minutes">5</interval>
@@ -173,7 +173,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE2-001</id>
+            <id>STE2</id>
             <threshold>
                 <count>12</count>
                 <interval unit="minutes">5</interval>
