@@ -88,6 +88,9 @@ public class AccountController {
         DukeEncountersUser user = userService.getDukeEncountersUser();
         model.addAttribute("user", user);
 
+        DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
+        model.addAttribute("userlevel", dukeEncountersUser.getLevel().getName());
+
         return "/user/editAccount";
     }
 
