@@ -144,7 +144,7 @@ public class EncountersController {
     }
 
     private void fireInvalidUrlParameterEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.REQUEST, "RE8-1001");
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.REQUEST, "RE8-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 

@@ -20,7 +20,7 @@
     <detection-points>
         <detection-point>
             <category>Access Control</category>
-            <id>ACE2-1001</id>
+            <id>ACE2-001</id>
             <threshold>
                 <count>1</count>
                 <interval unit="minutes">5</interval>
@@ -36,7 +36,7 @@
         </detection-point>
         <detection-point>
             <category>Authentication</category>
-            <id>AE3-1001</id>
+            <id>AE3-001</id>
             <threshold>
                 <count>10</count>
                 <interval unit="minutes">5</interval>
@@ -63,7 +63,7 @@
         </detection-point>
         <detection-point>
             <category>Input Validation</category>
-            <id>IE1-1001</id>
+            <id>IE1-001</id>
             <threshold>
                 <count>2</count>
                 <interval unit="minutes">5</interval>
@@ -82,7 +82,7 @@
         </detection-point>
         <detection-point>
             <category>Command Injection</category>
-            <id>CIE1-1001</id>
+            <id>CIE1-001</id>
             <threshold>
                 <count>2</count>
                 <interval unit="minutes">5</interval>
@@ -101,7 +101,7 @@
         </detection-point>
         <detection-point>
             <category>Command Injection</category>
-            <id>CIE2-1001</id>
+            <id>CIE2-001</id>
             <threshold>
                 <count>1</count>
                 <interval unit="minutes">5</interval>
@@ -114,7 +114,7 @@
         </detection-point>
         <detection-point>
             <category>Input Validation</category>
-            <id>IE5-1001</id>
+            <id>IE5-001</id>
             <threshold>
                 <count>1</count>
                 <interval unit="minutes">5</interval>
@@ -130,7 +130,7 @@
         </detection-point>
         <detection-point>
             <category>Request</category>
-            <id>RE8-1001</id>
+            <id>RE8-001</id>
             <threshold>
                 <count>5</count>
                 <interval unit="minutes">5</interval>
@@ -146,7 +146,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE1-1001</id>
+            <id>STE1-001</id>
             <threshold>
                 <count>10</count>
                 <interval unit="minutes">5</interval>
@@ -173,7 +173,7 @@
         </detection-point>
         <detection-point>
             <category>System Trend</category>
-            <id>STE2-1001</id>
+            <id>STE2-001</id>
             <threshold>
                 <count>12</count>
                 <interval unit="minutes">5</interval>

@@ -117,7 +117,7 @@ public class SearchFilterValidator implements Validator {
                     errors.rejectValue("likelihood", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
                 } else {
                     DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL,
-                            "ACE2-1001");
+                            "ACE2-001");
                     ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService
                             .getDetectionSystem()));
                     errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, "This is not a valid likelihood " +
@@ -134,12 +134,12 @@ public class SearchFilterValidator implements Validator {
     }
 
     private void fireXssEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-1001");
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 
     private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-1001");
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }
