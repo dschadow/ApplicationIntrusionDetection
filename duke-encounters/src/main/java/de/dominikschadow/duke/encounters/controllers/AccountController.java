@@ -80,18 +80,40 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/edit", method = GET)
-    public String editMyAccount(Model model) {
+    public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
         LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
+        ModelAndView modelAndView = new ModelAndView("/user/editAccount");
+
         DukeEncountersUser user = userService.getDukeEncountersUser();
-        model.addAttribute("user", user);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("userlevel", user.getLevel().getName());
 
-        DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
-        model.addAttribute("userlevel", dukeEncountersUser.getLevel().getName());
+        return modelAndView;
+    }
 
-        return "/user/editAccount";
+    /**
+     * Creates the new user and stored it in the database.
+     *
+     * @param user The new user to register
+     * @return Login URL
+     */
+    @RequestMapping(value = "/account/userdata/update", method = POST)
+    public ModelAndView updateUser(@Valid DukeEncountersUser user, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("/user/editAccount", "formErrors", result.getAllErrors());
+        }
+
+        DukeEncountersUser updatedUser = userService.updateUser(user);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", updatedUser);
+
+        ModelAndView modelAndView = new ModelAndView("/account");
+        modelAndView.addObject("userUpdated", "User successfully updated.");
+
+        return modelAndView;
     }
 
     /**
@@ -106,7 +128,7 @@ public class AccountController {
     }
 
     /**
-     * Creates the new user and stored it in the database.
+     * Creates the new user and stores it in the database.
      *
      * @param dukeEncountersUser The new user to register
      * @return Login URL
