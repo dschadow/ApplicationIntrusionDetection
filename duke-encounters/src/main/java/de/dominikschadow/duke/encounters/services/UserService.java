@@ -87,6 +87,10 @@ public class UserService {
         return user;
     }
 
+    public DukeEncountersUser updateUser(DukeEncountersUser dukeEncountersUser) {
+        return userRepository.save(dukeEncountersUser);
+    }
+
     public String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
