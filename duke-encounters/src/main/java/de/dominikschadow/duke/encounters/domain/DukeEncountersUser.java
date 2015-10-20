@@ -19,6 +19,8 @@ package de.dominikschadow.duke.encounters.domain;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -42,14 +44,14 @@ public class DukeEncountersUser {
     @NotBlank(message = "Your username is required")
     @Column(nullable = false)
     private String username;
-    @NotBlank(message = "Your email address is required")
+    @Email(message = "Your email address is required")
     @Column(nullable = false)
     private String email;
-    @NotBlank(message = "A password is required")
+    @Length(min = 10, max = 1024, message = "A password is required and must contain between 10 and 60 characters")
     @Column(nullable = false, length = 60)
     private String password;
     @Transient
-    @NotBlank(message = "Please confirm your password")
+    @Length(min = 10, max = 1024, message = "Please confirm your password")
     private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)
