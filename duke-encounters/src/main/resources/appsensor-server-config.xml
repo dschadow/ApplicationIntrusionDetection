@@ -9,13 +9,11 @@
                 <role>ADD_EVENT</role>
                 <role>ADD_ATTACK</role>
                 <role>GET_RESPONSES</role>
-                <role>EXECUTE_REPORT</role>
             </roles>
         </client-application>
     </client-applications>
 
     <!-- see https://www.owasp.org/index.php/AppSensor_DetectionPoints for the detection points list -->
-
     <detection-points>
         <detection-point>
             <category>Access Control</category>
