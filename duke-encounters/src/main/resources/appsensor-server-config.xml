@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <appsensor-server-config xmlns="https://www.owasp.org/index.php/OWASP_AppSensor_Project/xsd/appsensor_server_config_2.0.xsd">
-    <client-application-identification-header-name>X-Appsensor-Client-Application-Name
-    </client-application-identification-header-name>
+    <client-application-identification-header-name>X-Appsensor-Client-Application-Name</client-application-identification-header-name>
 
     <client-applications>
         <client-application>
