@@ -18,10 +18,14 @@
 package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
+import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.Event;
+import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +53,10 @@ public class EncounterService {
 
     private EncounterRepository encounterRepository;
     private UserService userService;
+    @Autowired
+    private EventManager ids;
+    @Autowired
+    private IntrusionDetectionService intrusionDetectionService;
 
     @Autowired
     public EncounterService(EncounterRepository encounterRepository, UserService userService) {
@@ -60,7 +68,10 @@ public class EncounterService {
         Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
         List<Encounter> encounters = encounterRepository.findWithPageable(latestTen);
 
-        // TODO AID max list size 10
+        if (encounters.size() > 10) {
+            fireSqlIEvent();
+        }
+
         return encounters;
     }
 
@@ -148,5 +159,10 @@ public class EncounterService {
         LOGGER.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
 
         return owner;
+    }
+
+    private void fireSqlIEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }
