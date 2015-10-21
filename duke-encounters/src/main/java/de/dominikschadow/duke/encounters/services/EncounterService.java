@@ -57,6 +57,7 @@ public class EncounterService {
     private EventManager ids;
     @Autowired
     private IntrusionDetectionService intrusionDetectionService;
+    private static final String LIKE = "%";
 
     @Autowired
     public EncounterService(EncounterRepository encounterRepository, UserService userService) {
@@ -86,21 +87,21 @@ public class EncounterService {
     public List<Encounter> getEncounters(@NotNull SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
-        String event = "%";
+        String event = LIKE;
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            event = filter.getEvent();
+            event = LIKE + filter.getEvent() + LIKE;
         }
         specifications.add(EncounterSpecification.encounterByEvent(event));
 
-        String location = "%";
+        String location = LIKE;
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            location = filter.getLocation();
+            location = LIKE + filter.getLocation() + LIKE;
         }
         specifications.add(EncounterSpecification.encounterByLocation(location));
 
-        String country = "%";
+        String country = LIKE;
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            country = filter.getCountry();
+            country = LIKE + filter.getCountry() + LIKE;
         }
         specifications.add(EncounterSpecification.encounterByCountry(country));
 
