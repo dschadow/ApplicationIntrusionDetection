@@ -45,6 +45,10 @@
     <div class="page-header">
         <h2>My Actions</h2>
     </div>
+
+    <div th:if="${dataUpdated}" class="alert alert-success" role="alert" th:text="${dataUpdated}"></div>
+    <div th:if="${dataNotUpdated}" class="alert alert-danger" role="alert" th:text="${dataNotUpdated}"></div>
+
     <a th:href="@{/encounter/create}" class="btn btn-default btn" aria-label="Add new Encounter">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>

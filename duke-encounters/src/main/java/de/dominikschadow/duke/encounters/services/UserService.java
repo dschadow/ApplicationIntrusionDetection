@@ -91,6 +91,10 @@ public class UserService {
         return userRepository.save(dukeEncountersUser);
     }
 
+    public boolean confirmPassword(String password) {
+        return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
+    }
+
     public String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -95,25 +96,50 @@ public class AccountController {
     }
 
     /**
-     * Creates the new user and stored it in the database.
+     * Updates the users firstname and lastname and stores it in the database.
      *
-     * @param user The new user to register
-     * @return Login URL
+     * @param updatedUser The updated user
+     * @return Account page
      */
     @RequestMapping(value = "/account/userdata/update", method = POST)
-    public ModelAndView updateUser(@Valid DukeEncountersUser user, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ModelAndView("/user/editAccount", "formErrors", result.getAllErrors());
+    public ModelAndView updateUser(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
+            redirectAttributes) {
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+        user.setFirstname(updatedUser.getFirstname());
+        user.setLastname(updatedUser.getLastname());
+
+        DukeEncountersUser storedUser = userService.updateUser(user);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+
+        redirectAttributes.addFlashAttribute("dataUpdated", "User data successfully updated.");
+
+        return new ModelAndView("redirect:/account");
+    }
+
+    /**
+     * Updates the users email and stores it in the database.
+     *
+     * @param updatedUser The updated user
+     * @return Account page
+     */
+    @RequestMapping(value = "/account/accountdata/update", method = POST)
+    public ModelAndView updateAccount(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
+            redirectAttributes) {
+        if (userService.confirmPassword(updatedUser.getPassword())) {
+            DukeEncountersUser user = userService.getDukeEncountersUser();
+            user.setEmail(updatedUser.getEmail());
+
+            DukeEncountersUser storedUser = userService.updateUser(user);
+
+            LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+
+            redirectAttributes.addFlashAttribute("dataUpdated", "Account data successfully updated.");
+        } else {
+            redirectAttributes.addFlashAttribute("dataNotUpdated", "Failed to update account data.");
         }
 
-        DukeEncountersUser updatedUser = userService.updateUser(user);
-
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", updatedUser);
-
-        ModelAndView modelAndView = new ModelAndView("/account");
-        modelAndView.addObject("userUpdated", "User successfully updated.");
-
-        return modelAndView;
+        return new ModelAndView("redirect:/account");
     }
 
     /**
