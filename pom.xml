@@ -97,6 +97,12 @@
                 <groupId>org.owasp.appsensor</groupId>
                 <artifactId>appsensor-integration-spring-security</artifactId>
                 <version>${appsensor.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>spring-security-core</artifactId>
+                        <groupId>org.springframework.security</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
