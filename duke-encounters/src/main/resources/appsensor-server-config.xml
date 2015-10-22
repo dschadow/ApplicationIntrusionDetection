@@ -18,6 +18,38 @@
             </responses>
         </detection-point>
         <detection-point>
+            <category>Command Injection</category>
+            <id>CIE1-001</id>
+            <threshold>
+                <count>2</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>logout</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
+            <category>Command Injection</category>
+            <id>CIE1-002</id>
+            <threshold>
+                <count>1</count>
+                <interval unit="hours">24</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
             <category>Input Validation</category>
             <id>IE1-001</id>
             <threshold>
@@ -46,25 +78,6 @@
             <responses>
                 <response>
                     <action>log</action>
-                </response>
-                <response>
-                    <action>disableUser</action>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Command Injection</category>
-            <id>CIE1-001</id>
-            <threshold>
-                <count>2</count>
-                <interval unit="minutes">5</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>log</action>
-                </response>
-                <response>
-                    <action>logout</action>
                 </response>
                 <response>
                     <action>disableUser</action>
