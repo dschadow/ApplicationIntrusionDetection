@@ -20,41 +20,11 @@
             <id>ACE2-001</id>
             <threshold>
                 <count>1</count>
-                <interval unit="minutes">5</interval>
+                <interval unit="hours">24</interval>
             </threshold>
             <responses>
                 <response>
-                    <action>log</action>
-                </response>
-                <response>
                     <action>disableUser</action>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Authentication</category>
-            <id>AE3-001</id>
-            <threshold>
-                <count>10</count>
-                <interval unit="minutes">5</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>log</action>
-                </response>
-                <response>
-                    <action>logout</action>
-                </response>
-                <response>
-                    <action>disableUser</action>
-                </response>
-                <response>
-                    <action>disableComponentForSpecificUser</action>
-                    <interval unit="minutes">30</interval>
-                </response>
-                <response>
-                    <action>disableComponentForAllUsers</action>
-                    <interval unit="minutes">10</interval>
                 </response>
             </responses>
         </detection-point>
@@ -78,6 +48,22 @@
             </responses>
         </detection-point>
         <detection-point>
+            <category>Input Validation</category>
+            <id>IE5-001</id>
+            <threshold>
+                <count>1</count>
+                <interval unit="minutes">5</interval>
+            </threshold>
+            <responses>
+                <response>
+                    <action>log</action>
+                </response>
+                <response>
+                    <action>disableUser</action>
+                </response>
+            </responses>
+        </detection-point>
+        <detection-point>
             <category>Command Injection</category>
             <id>CIE1-001</id>
             <threshold>
@@ -90,35 +76,6 @@
                 </response>
                 <response>
                     <action>logout</action>
-                </response>
-                <response>
-                    <action>disableUser</action>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Command Injection</category>
-            <id>CIE2-001</id>
-            <threshold>
-                <count>1</count>
-                <interval unit="minutes">5</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>disableUser</action>
-                </response>
-            </responses>
-        </detection-point>
-        <detection-point>
-            <category>Input Validation</category>
-            <id>IE5-001</id>
-            <threshold>
-                <count>1</count>
-                <interval unit="minutes">5</interval>
-            </threshold>
-            <responses>
-                <response>
-                    <action>log</action>
                 </response>
                 <response>
                     <action>disableUser</action>
