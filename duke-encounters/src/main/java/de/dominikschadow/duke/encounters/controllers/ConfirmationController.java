@@ -17,11 +17,11 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
@@ -51,7 +51,7 @@ public class ConfirmationController {
     @Autowired
     private UserService userService;
     @Autowired
-    private IntrusionDetectionService intrusionDetectionService;
+    private DetectionSystem detectionSystem;
     @Autowired
     private EventManager ids;
 
@@ -103,6 +103,6 @@ public class ConfirmationController {
 
     private void fireConfirmationErrorEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

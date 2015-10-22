@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.spring;
 
+import org.owasp.appsensor.core.AppSensorClient;
+import org.owasp.appsensor.core.DetectionSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -41,5 +43,11 @@ public class WebConfig {
     @Bean
     public SpringValidatorAdapter springValidatorAdapter(Validator jsr303Validator) {
         return new SpringValidatorAdapter(jsr303Validator);
+    }
+
+    @Bean
+    public DetectionSystem detectionSystem(AppSensorClient appSensorClient) {
+        return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
+                .getClientApplicationIdentificationHeaderValue());
     }
 }

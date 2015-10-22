@@ -19,12 +19,12 @@ package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
@@ -54,7 +54,7 @@ public class SearchFilterValidator implements Validator {
     @Autowired
     private SecurityValidationService securityValidationService;
     @Autowired
-    private IntrusionDetectionService intrusionDetectionService;
+    private DetectionSystem detectionSystem;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -118,8 +118,7 @@ public class SearchFilterValidator implements Validator {
                 } else {
                     DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL,
                             "ACE2-001");
-                    ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService
-                            .getDetectionSystem()));
+                    ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
                     errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, "This is not a valid likelihood " +
                             "value");
                 }
@@ -135,11 +134,11 @@ public class SearchFilterValidator implements Validator {
 
     private void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

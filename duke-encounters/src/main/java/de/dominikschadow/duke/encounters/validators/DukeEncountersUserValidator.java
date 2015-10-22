@@ -18,11 +18,11 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class DukeEncountersUserValidator implements Validator {
     @Autowired
     private SecurityValidationService securityValidationService;
     @Autowired
-    private IntrusionDetectionService intrusionDetectionService;
+    private DetectionSystem detectionSystem;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -96,11 +96,11 @@ public class DukeEncountersUserValidator implements Validator {
 
     private void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

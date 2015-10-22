@@ -18,12 +18,12 @@
 package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
-import de.dominikschadow.duke.encounters.appsensor.IntrusionDetectionService;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
 import org.owasp.appsensor.core.DetectionPoint;
+import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
@@ -57,7 +57,7 @@ public class EncounterService {
     @Autowired
     private EventManager ids;
     @Autowired
-    private IntrusionDetectionService intrusionDetectionService;
+    private DetectionSystem detectionSystem;
     private static final String LIKE = "%";
     private int latestEncounterAmount;
 
@@ -168,6 +168,6 @@ public class EncounterService {
 
     private void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-002");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }
