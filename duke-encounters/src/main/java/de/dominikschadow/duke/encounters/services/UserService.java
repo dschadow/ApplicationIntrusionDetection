@@ -72,7 +72,7 @@ public class UserService {
         newUser.setLevel(Level.NEWBIE);
         newUser.setRegistrationDate(new Date());
         newUser.setAuthority(authority);
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        newUser.setPassword(hashPassword(newUser.getPassword()));
 
         if (userRepository.findByUsername(newUser.getUsername()) != null) {
             LOGGER.error("User with username {} already exists", newUser.getUsername());
@@ -119,5 +119,9 @@ public class UserService {
 
     public DukeEncountersUser getDukeEncountersUser(@NotNull String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
