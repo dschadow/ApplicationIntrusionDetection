@@ -30,6 +30,7 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -58,18 +59,21 @@ public class EncounterService {
     @Autowired
     private IntrusionDetectionService intrusionDetectionService;
     private static final String LIKE = "%";
+    private int latestEncounterAmount;
 
     @Autowired
-    public EncounterService(EncounterRepository encounterRepository, UserService userService) {
+    public EncounterService(EncounterRepository encounterRepository, UserService userService,
+                            @Value("${encounters.latest.amount}") int latestEncounterAmount) {
         this.encounterRepository = encounterRepository;
         this.userService = userService;
+        this.latestEncounterAmount = latestEncounterAmount;
     }
 
     public List<Encounter> getLatestEncounters() {
-        Pageable latestTen = new PageRequest(0, 10, Sort.Direction.DESC, "date");
+        Pageable latestTen = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
         List<Encounter> encounters = encounterRepository.findWithPageable(latestTen);
 
-        if (encounters.size() > 10) {
+        if (encounters.size() > latestEncounterAmount) {
             fireSqlIEvent();
         }
 
@@ -163,7 +167,7 @@ public class EncounterService {
     }
 
     private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-002");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, intrusionDetectionService.getDetectionSystem()));
     }
 }
