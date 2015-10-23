@@ -27,11 +27,14 @@ public class Constants {
      * Error message for XSS payload, value is {@value}.
      */
     public static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
-
     /**
      * Error message for SQL injection payload, value is {@value}.
      */
     public static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof!";
+    /**
+     * Error message for not matching passwords (password and confirmation), value is {@value}.
+     */
+    public static final String PASSWORD_MATCH_ERROR_MESSAGE = "The entered passwords don't match";
     /**
      * XSS error code, value is {@value}.
      */
@@ -44,6 +47,10 @@ public class Constants {
      * General error code, value is {@value}.
      */
     public static final String ATTACK_ERROR_CODE = "attack.attempt";
+    /**
+     * Passwords don't match error code, value is {@value}.
+     */
+    public static final String PASSWORD_MATCH_ERROR_CODE = "error.passwordmatch";
 
     private Constants() {
     }

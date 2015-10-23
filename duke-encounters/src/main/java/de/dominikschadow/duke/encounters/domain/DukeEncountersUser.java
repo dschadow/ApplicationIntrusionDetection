@@ -51,7 +51,6 @@ public class DukeEncountersUser {
     @Column(nullable = false, length = 60)
     private String password;
     @Transient
-    @Length(min = 10, max = 1024, message = "Please confirm your password")
     private String confirmPassword;
     private Date registrationDate;
     @Enumerated(EnumType.STRING)

@@ -92,6 +92,10 @@ public class DukeEncountersUserValidator implements Validator {
             fireSqlIEvent();
             errors.rejectValue("email", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
+
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            errors.rejectValue("password", Constants.PASSWORD_MATCH_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
+        }
     }
 
     private void fireXssEvent() {
