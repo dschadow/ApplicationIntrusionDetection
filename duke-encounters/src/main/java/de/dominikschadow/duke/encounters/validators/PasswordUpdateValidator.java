@@ -17,7 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
+import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.PasswordUpdate;
+import de.dominikschadow.duke.encounters.services.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -35,6 +38,8 @@ import javax.inject.Named;
 public class PasswordUpdateValidator implements Validator {
     @Autowired
     private SpringValidatorAdapter validator;
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -47,5 +52,17 @@ public class PasswordUpdateValidator implements Validator {
 
         PasswordUpdate passwordUpdate = (PasswordUpdate) target;
 
+        if (!userService.confirmPassword(passwordUpdate.getCurrentPassword())) {
+            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants
+                    .PASSWORD_NOT_CORRECT_ERROR_MESSAGE);
+        }
+
+        if (StringUtils.length(passwordUpdate.getNewPassword()) < 10) {
+            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_UNSAFE_ERROR_MESSAGE);
+        }
+
+        if (!passwordUpdate.getNewPassword().equals(passwordUpdate.getNewPasswordConfirmation())) {
+            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
+        }
     }
 }

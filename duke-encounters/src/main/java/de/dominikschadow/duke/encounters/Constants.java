@@ -41,6 +41,10 @@ public class Constants {
     public static final String PASSWORD_UNSAFE_ERROR_MESSAGE = "The entered is not safe, it must contain at least 10 " +
             "characters";
     /**
+     * Error message if the current password is not correct, value is {@value}.
+     */
+    public static final String PASSWORD_NOT_CORRECT_ERROR_MESSAGE = "Your current password is not correct.";
+    /**
      * XSS error code, value is {@value}.
      */
     public static final String XSS_ERROR_CODE = "xss.attempt";

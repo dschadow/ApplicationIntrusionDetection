@@ -19,16 +19,14 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.PasswordUpdate;
-import de.dominikschadow.duke.encounters.services.ConfirmationService;
-import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import de.dominikschadow.duke.encounters.validators.PasswordUpdateValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -51,6 +50,21 @@ public class PasswordController {
     @Autowired
     private PasswordUpdateValidator passwordUpdateValidator;
 
+
+    @RequestMapping(value = "/account/password/edit", method = GET)
+    public ModelAndView changePassword(@ModelAttribute PasswordUpdate passwordUpdate) {
+        String username = userService.getUsername();
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
+
+        ModelAndView modelAndView = new ModelAndView("/user/changePassword");
+
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+        modelAndView.addObject("userlevel", user.getLevel().getName());
+
+        return modelAndView;
+    }
+
     /**
      * Updates the users password and stores it in the database.
      *
@@ -59,24 +73,18 @@ public class PasswordController {
      */
     @RequestMapping(value = "/account/password/update", method = POST)
     public ModelAndView updatePassword(@ModelAttribute PasswordUpdate update, RedirectAttributes
-            redirectAttributes) {
-        LOGGER.warn("password {}", update.getCurrentPassword());
-        LOGGER.warn("password {}", update.getNewPassword());
-        LOGGER.warn("password {}", update.getNewPasswordConfirmation());
-        if (userService.confirmPassword(update.getCurrentPassword())) {
-            if (update.getNewPassword().equals(update.getNewPasswordConfirmation())) {
-                DukeEncountersUser user = userService.getDukeEncountersUser();
-                user.setPassword(userService.hashPassword(update.getNewPassword()));
-                DukeEncountersUser storedUser = userService.updateUser(user);
-
-                LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Updated password of user {}", storedUser);
-                redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully updated.");
-            } else {
-                redirectAttributes.addFlashAttribute("dataNotUpdated", "The passwords do not match..");
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("dataNotUpdated", "Password update failed.");
+            redirectAttributes, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("/user/changePassword", "formErrors", result.getAllErrors());
         }
+
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+        user.setPassword(userService.hashPassword(update.getNewPassword()));
+
+        DukeEncountersUser storedUser = userService.updateUser(user);
+
+        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated password", storedUser);
+        redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully updated.");
 
         return new ModelAndView("redirect:/account");
     }
