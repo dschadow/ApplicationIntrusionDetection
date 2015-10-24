@@ -36,6 +36,11 @@ public class Constants {
      */
     public static final String PASSWORD_MATCH_ERROR_MESSAGE = "The entered passwords don't match";
     /**
+     * Error message for an unsafe password, value is {@value}.
+     */
+    public static final String PASSWORD_UNSAFE_ERROR_MESSAGE = "The entered is not safe, it must contain at least 10 " +
+            "characters";
+    /**
      * XSS error code, value is {@value}.
      */
     public static final String XSS_ERROR_CODE = "xss.attempt";
@@ -50,7 +55,7 @@ public class Constants {
     /**
      * Passwords don't match error code, value is {@value}.
      */
-    public static final String PASSWORD_MATCH_ERROR_CODE = "error.passwordmatch";
+    public static final String PASSWORD_ERROR_CODE = "error.password";
 
     private Constants() {
     }

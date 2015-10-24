@@ -94,7 +94,7 @@ public class DukeEncountersUserValidator implements Validator {
         }
 
         if (!user.getPassword().equals(user.getConfirmPassword())) {
-            errors.rejectValue("password", Constants.PASSWORD_MATCH_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
+            errors.rejectValue("password", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
         }
     }
 
