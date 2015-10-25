@@ -87,11 +87,11 @@ public class UserService {
         return user;
     }
 
-    public DukeEncountersUser updateUser(DukeEncountersUser dukeEncountersUser) {
+    public DukeEncountersUser updateUser(@NotNull DukeEncountersUser dukeEncountersUser) {
         return userRepository.save(dukeEncountersUser);
     }
 
-    public boolean confirmPassword(String password) {
+    public boolean confirmPassword(@NotNull String password) {
         return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
     }
 
@@ -114,7 +114,7 @@ public class UserService {
     }
 
     public DukeEncountersUser getDukeEncountersUser() {
-        return userRepository.findByUsername(getUsername());
+        return getDukeEncountersUser(getUsername());
     }
 
     public DukeEncountersUser getDukeEncountersUser(@NotNull String username) {
