@@ -121,10 +121,8 @@ public class EncounterService {
 
         //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
-        List<Encounter> encounters = encounterRepository.findAll(where(specifications.get(0)).and(specifications.get
+        return encounterRepository.findAll(where(specifications.get(0)).and(specifications.get
                 (1)).and(specifications.get(2)).and(specifications.get(3)));
-
-        return encounters;
     }
 
     public Encounter getEncounterById(@NotNull long id) {
