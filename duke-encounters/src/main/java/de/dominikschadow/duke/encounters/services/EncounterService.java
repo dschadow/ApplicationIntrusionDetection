@@ -70,8 +70,8 @@ public class EncounterService {
     }
 
     public List<Encounter> getLatestEncounters() {
-        Pageable latestTen = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
-        List<Encounter> encounters = encounterRepository.findWithPageable(latestTen);
+        Pageable latestEncounters = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
+        List<Encounter> encounters = encounterRepository.findWithPageable(latestEncounters);
 
         if (encounters.size() > latestEncounterAmount) {
             fireSqlIEvent();
