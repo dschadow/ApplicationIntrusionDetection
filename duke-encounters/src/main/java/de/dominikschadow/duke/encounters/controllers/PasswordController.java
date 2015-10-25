@@ -17,13 +17,13 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.PasswordUpdate;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.PasswordUpdateValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,7 +44,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class PasswordController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordController.class);
+    @Loggable
+    private Logger logger;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -55,7 +57,7 @@ public class PasswordController {
     public ModelAndView changePassword(@ModelAttribute PasswordUpdate passwordUpdate) {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
 
         ModelAndView modelAndView = new ModelAndView("/user/changePassword");
 
@@ -83,7 +85,7 @@ public class PasswordController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated password", storedUser);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated password", storedUser);
         redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully updated.");
 
         return new ModelAndView("redirect:/account");

@@ -17,11 +17,11 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,8 @@ import java.util.List;
  */
 @Service
 public class ConfirmationService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationService.class);
+    @Loggable
+    private Logger logger;
 
     private ConfirmationRepository confirmationRepository;
     private UserService userService;
@@ -53,7 +54,7 @@ public class ConfirmationService {
     public List<Confirmation> getConfirmationsByUsername(@NotNull String username) {
         List<Confirmation> confirmations = confirmationRepository.findAllByUsername(username);
 
-        LOGGER.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
+        logger.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
 
         return confirmations;
     }
@@ -61,7 +62,7 @@ public class ConfirmationService {
     public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull String username, @NotNull long encounterId) {
         Confirmation confirmation = confirmationRepository.findByUsernameAndEncounterId(username, encounterId);
 
-        LOGGER.info("Query for user {} confirmations returned {}", username, confirmation);
+        logger.info("Query for user {} confirmations returned {}", username, confirmation);
 
         return confirmation;
     }
@@ -74,13 +75,13 @@ public class ConfirmationService {
 
         Confirmation confirmation = confirmationRepository.save(newConfirmation);
 
-        LOGGER.info("Created new confirmation {}", confirmation);
+        logger.info("Created new confirmation {}", confirmation);
     }
 
     public void deleteConfirmation(@NotNull String username, @NotNull long confirmationId) {
         confirmationRepository.delete(confirmationId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
     public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {

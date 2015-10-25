@@ -17,10 +17,12 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -45,6 +47,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class SearchController {
+    @Loggable
+    private Logger logger;
+
     @Autowired
     private EncounterService encounterService;
     @Autowired

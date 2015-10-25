@@ -19,6 +19,7 @@ package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
@@ -29,7 +30,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -44,7 +44,9 @@ import javax.inject.Named;
  */
 @Named
 public class SearchFilterValidator implements Validator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchFilterValidator.class);
+    @Loggable
+    private Logger logger;
+
     @Autowired
     private SpringValidatorAdapter validator;
     @Autowired
@@ -98,7 +100,7 @@ public class SearchFilterValidator implements Validator {
         }
 
         if (filter.getYear() < 1995) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
                     filter.getYear());
             errors.rejectValue("year", "typo", "Java did not exist before 1995");
         }
@@ -107,7 +109,7 @@ public class SearchFilterValidator implements Validator {
             try {
                 Likelihood.fromString(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
-                LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
+                logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
                         "range", filter.getLikelihood());
                 if (securityValidationService.hasXssPayload(filter.getLikelihood())) {
                     fireXssEvent();
@@ -126,7 +128,7 @@ public class SearchFilterValidator implements Validator {
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
             errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE, "No of confirmations out ot range");
         }

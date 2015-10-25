@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
@@ -26,7 +27,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +42,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class ConfirmationController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmationController.class);
+    @Loggable
+    private Logger logger;
 
     @Autowired
     private ConfirmationService confirmationService;
@@ -62,7 +63,7 @@ public class ConfirmationController {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
 
         if (encounterService.isOwnEncounter(encounterId, username)) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     username, encounterId);
 
             fireConfirmationErrorEvent();
@@ -73,7 +74,7 @@ public class ConfirmationController {
         }
 
         if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
                     "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
@@ -85,7 +86,7 @@ public class ConfirmationController {
 
         confirmationService.addConfirmation(username, encounterId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
+        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
 
         return modelAndView;
     }
@@ -96,7 +97,7 @@ public class ConfirmationController {
 
         confirmationService.deleteConfirmation(username, confirmationId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
+        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
 
         return new ModelAndView("redirect:/account");
     }

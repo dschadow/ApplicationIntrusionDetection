@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
@@ -25,7 +26,6 @@ import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +43,8 @@ import java.util.Date;
  */
 @Service
 public class UserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+    @Loggable
+    private Logger logger;
 
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
@@ -64,7 +65,7 @@ public class UserService {
      * @return The created user with all fields filled
      */
     public DukeEncountersUser createUser(@NotNull DukeEncountersUser newUser) {
-        LOGGER.info("Creating user with username {}", newUser.getEmail());
+        logger.info("Creating user with username {}", newUser.getEmail());
 
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
 
@@ -75,13 +76,13 @@ public class UserService {
         newUser.setPassword(hashPassword(newUser.getPassword()));
 
         if (userRepository.findByUsername(newUser.getUsername()) != null) {
-            LOGGER.error("User with username {} already exists", newUser.getUsername());
+            logger.error("User with username {} already exists", newUser.getUsername());
             return null;
         }
 
         DukeEncountersUser user = userRepository.save(newUser);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getAuthority());
 
         return user;

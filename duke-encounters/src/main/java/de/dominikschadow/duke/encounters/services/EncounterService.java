@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
@@ -28,7 +29,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +50,8 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  */
 @Service
 public class EncounterService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EncounterService.class);
+    @Loggable
+    private Logger logger;
 
     private EncounterRepository encounterRepository;
     private UserService userService;
@@ -83,7 +84,7 @@ public class EncounterService {
     public List<Encounter> getAllEncounters() {
         List<Encounter> encounters = encounterRepository.findAll();
 
-        LOGGER.info("Query for all encounters returned {} encounters", encounters.size());
+        logger.info("Query for all encounters returned {} encounters", encounters.size());
 
         return encounters;
     }
@@ -127,7 +128,7 @@ public class EncounterService {
     }
 
     public Encounter getEncounterById(@NotNull long id) {
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
 
         return encounterRepository.findOne(id);
     }
@@ -135,7 +136,7 @@ public class EncounterService {
     public List<Encounter> getEncountersByUsername(@NotNull String username) {
         List<Encounter> encounters = encounterRepository.findAllByUsername(username);
 
-        LOGGER.info("Query for user {} encounters returned {} encounters", username, encounters.size());
+        logger.info("Query for user {} encounters returned {} encounters", username, encounters.size());
 
         return encounters;
     }
@@ -143,7 +144,7 @@ public class EncounterService {
     public void deleteEncounter(@NotNull String username, @NotNull long encounterId) {
         encounterRepository.delete(encounterId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
     public Encounter createEncounter(@NotNull Encounter newEncounter, @NotNull String username) {
@@ -151,7 +152,7 @@ public class EncounterService {
 
         Encounter encounter = encounterRepository.save(newEncounter);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
 
         return encounter;
     }
@@ -161,7 +162,7 @@ public class EncounterService {
 
         boolean owner = encounter != null;
 
-        LOGGER.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
+        logger.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
 
         return owner;
     }

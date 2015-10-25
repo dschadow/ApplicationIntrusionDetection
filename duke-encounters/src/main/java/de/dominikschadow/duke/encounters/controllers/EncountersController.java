@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
@@ -27,7 +28,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +53,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class EncountersController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EncountersController.class);
+    @Loggable
+    private Logger logger;
 
     @Autowired
     private EncounterService encounterService;
@@ -87,12 +88,12 @@ public class EncountersController {
 
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", username,
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", username,
                 encounter);
 
         Encounter newEncounter = encounterService.createEncounter(encounter, username);
 
-        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
+        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
                 newEncounter);
 
         return new ModelAndView("redirect:/account");
@@ -102,11 +103,11 @@ public class EncountersController {
     public ModelAndView deleteEncounter(long encounterId) {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
         encounterService.deleteEncounter(username, encounterId);
 
-        LOGGER.info(SecurityMarkers.SECURITY_SUCCESS, "User {} deleted encounter {}", username, encounterId);
+        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} deleted encounter {}", username, encounterId);
 
         return new ModelAndView("redirect:/account");
     }
@@ -117,7 +118,7 @@ public class EncountersController {
         String username = userService.getUsername();
 
         if (encounterId < 1) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter with negative id {}",
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter with negative id {}",
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();
@@ -129,7 +130,7 @@ public class EncountersController {
         Encounter encounter = encounterService.getEncounterById(encounterId);
 
         if (encounter == null) {
-            LOGGER.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();

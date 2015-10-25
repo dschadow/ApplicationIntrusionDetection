@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
@@ -26,7 +27,6 @@ import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +51,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class AccountController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+    @Loggable
+    private Logger logger;
 
     @Autowired
     private EncounterService encounterService;
@@ -66,7 +67,7 @@ public class AccountController {
     public String showMyAccount(Model model) {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
 
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
@@ -84,7 +85,7 @@ public class AccountController {
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
         ModelAndView modelAndView = new ModelAndView("/user/editAccount");
 
@@ -110,7 +111,7 @@ public class AccountController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
         redirectAttributes.addFlashAttribute("dataUpdated", "User data successfully updated.");
 
@@ -132,7 +133,7 @@ public class AccountController {
 
             DukeEncountersUser storedUser = userService.updateUser(user);
 
-            LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+            logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
             redirectAttributes.addFlashAttribute("dataUpdated", "Account data successfully updated.");
         } else {
@@ -167,7 +168,7 @@ public class AccountController {
 
         DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
-        LOGGER.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
         ModelAndView modelAndView = new ModelAndView("/login");
         modelAndView.addObject("userCreated", "User " + newUser.getUsername() + " successfully created, you can now " +
