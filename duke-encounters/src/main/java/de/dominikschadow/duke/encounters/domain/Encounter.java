@@ -26,6 +26,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a single encounter.
+ *
+ * @author Dominik Schadow
+ */
 @Entity
 @Table(name = "encounters")
 public class Encounter {

@@ -22,6 +22,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Represents a single confirmation of a single encounter.
+ *
+ * @author Dominik Schadow
+ */
 @Entity
 @Table(name = "confirmations")
 public class Confirmation {

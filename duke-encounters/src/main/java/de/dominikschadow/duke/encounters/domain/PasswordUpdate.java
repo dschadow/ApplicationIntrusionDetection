@@ -18,6 +18,8 @@
 package de.dominikschadow.duke.encounters.domain;
 
 /**
+ * Updates the password of the selected user.
+ *
  * @author Dominik Schadow
  */
 public class PasswordUpdate {
