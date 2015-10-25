@@ -45,6 +45,10 @@ public class Constants {
      */
     public static final String PASSWORD_NOT_CORRECT_ERROR_MESSAGE = "Your current password is not correct.";
     /**
+     * Error message for an invalid value, value is {@value}.
+     */
+    public static final String INVALID_VALUE_ERROR_MESSAGE = "This is not a valid value";
+    /**
      * XSS error code, value is {@value}.
      */
     public static final String XSS_ERROR_CODE = "xss.attempt";

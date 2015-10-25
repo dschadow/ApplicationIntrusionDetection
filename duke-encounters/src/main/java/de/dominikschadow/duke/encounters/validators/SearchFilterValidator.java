@@ -100,17 +100,17 @@ public class SearchFilterValidator implements Validator {
         }
 
         if (filter.getYear() < 1995) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as year of the event - possible typo",
-                    filter.getYear());
-            errors.rejectValue("year", "typo", "Java did not exist before 1995");
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo", filter
+                    .getYear());
+            errors.rejectValue("year", "warning", "Java did not exist before 1995");
         }
 
         if (!Strings.isNullOrEmpty(filter.getLikelihood())) {
             try {
                 Likelihood.fromString(filter.getLikelihood());
             } catch (IllegalArgumentException ex) {
-                logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured enum " +
-                        "range", filter.getLikelihood());
+                logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
+                        filter.getLikelihood());
                 if (securityValidationService.hasXssPayload(filter.getLikelihood())) {
                     fireXssEvent();
                     errors.rejectValue("likelihood", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
@@ -118,11 +118,9 @@ public class SearchFilterValidator implements Validator {
                     fireSqlIEvent();
                     errors.rejectValue("likelihood", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
                 } else {
-                    DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL,
-                            "ACE2-001");
-                    ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
-                    errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, "This is not a valid likelihood " +
-                            "value");
+                    fireInvalidValueEvent();
+                    errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, Constants
+                            .INVALID_VALUE_ERROR_MESSAGE);
                 }
             }
         }
@@ -130,8 +128,14 @@ public class SearchFilterValidator implements Validator {
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
-            errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE, "No of confirmations out ot range");
+            fireInvalidValueEvent();
+            errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE, Constants.INVALID_VALUE_ERROR_MESSAGE);
         }
+    }
+
+    private void fireInvalidValueEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL, "ACE2-001");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireXssEvent() {
