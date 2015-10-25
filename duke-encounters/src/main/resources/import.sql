@@ -25,9 +25,9 @@ INSERT INTO users (id, firstname, lastname, email, username, password, registrat
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (11, 'Gag', 'Halfrunt', 'gag@halfrunt.com', 'gag@halfrunt.com', '$2a$10$W7Ik5kkje5NGJQpKBV10TuKXGjZ2So2Oq8w9UMDuFj88ziwrONwQ6', '2011-08-08 08:52:11', 'NEWBIE', TRUE);
 
 -- ENCOUNTERS
-INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-10-01', 5);
-INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (2, 'JavaOne 1997', 'San Francisco', 'USA', '', '1997-10-01', 5);
-INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (3, 'JavaOne 1998', 'San Francisco', 'USA', '', '1998-10-01', 5);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-05-31', 5);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (2, 'JavaOne 1997', 'San Francisco', 'USA', '', '1997-04-04', 5);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (3, 'JavaOne 1998', 'San Francisco', 'USA', '', '1998-03-01', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (4, 'JavaOne 1999', 'San Francisco', 'USA', '', '1999-10-01', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (5, 'JavaOne 2000', 'San Francisco', 'USA', '', '2000-10-01', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (6, 'JavaOne 2001', 'San Francisco', 'USA', '', '2001-10-01', 5);
