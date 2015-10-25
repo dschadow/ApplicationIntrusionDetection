@@ -43,9 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityContextRepository securityContextRepository;
 
-    @Autowired
-    private DataSource dataSource;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
@@ -90,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
         // @formatter:off
         auth
             .jdbcAuthentication()
