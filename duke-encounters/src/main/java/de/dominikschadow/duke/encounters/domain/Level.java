@@ -29,11 +29,10 @@ public enum Level {
     ROOKIE("Rookie"),
     PRO("Pro");
 
-    private String name;
+    private final String name;
 
     Level(String name) {
         this.name = name;
-
     }
 
     public String getName() {

@@ -39,9 +39,9 @@ public class ConfirmationService {
     @Loggable
     private Logger logger;
 
-    private ConfirmationRepository confirmationRepository;
-    private UserService userService;
-    private EncounterService encounterService;
+    private final ConfirmationRepository confirmationRepository;
+    private final UserService userService;
+    private final EncounterService encounterService;
 
     @Autowired
     public ConfirmationService(ConfirmationRepository confirmationRepository, UserService userService,

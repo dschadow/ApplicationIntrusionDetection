@@ -53,14 +53,14 @@ public class EncounterService {
     @Loggable
     private Logger logger;
 
-    private EncounterRepository encounterRepository;
-    private UserService userService;
+    private final EncounterRepository encounterRepository;
+    private final UserService userService;
     @Autowired
     private EventManager ids;
     @Autowired
     private DetectionSystem detectionSystem;
     private static final String LIKE = "%";
-    private int latestEncounterAmount;
+    private final int latestEncounterAmount;
 
     @Autowired
     public EncounterService(EncounterRepository encounterRepository, UserService userService,

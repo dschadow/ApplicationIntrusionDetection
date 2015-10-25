@@ -46,9 +46,9 @@ public class UserService {
     @Loggable
     private Logger logger;
 
-    private UserRepository userRepository;
-    private AuthorityRepository authorityRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder

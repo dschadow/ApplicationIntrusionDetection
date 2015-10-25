@@ -30,7 +30,7 @@ import java.util.Objects;
 public enum Likelihood {
     ALL("*"), NOT_CONFIRMED("not confirmed"), PLAUSIBLE("plausible"), CONFIRMED("confirmed");
 
-    private String name;
+    private final String name;
 
     Likelihood(String name) {
         this.name = name;
