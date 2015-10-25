@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
@@ -59,7 +60,6 @@ public class EncounterService {
     private EventManager ids;
     @Autowired
     private DetectionSystem detectionSystem;
-    private static final String LIKE = "%";
     private final int latestEncounterAmount;
 
     @Autowired
@@ -92,21 +92,21 @@ public class EncounterService {
     public List<Encounter> getEncounters(@NotNull SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
-        String event = LIKE;
+        String event = Constants.LIKE;
         if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            event = LIKE + filter.getEvent() + LIKE;
+            event += filter.getEvent() + Constants.LIKE;
         }
         specifications.add(EncounterSpecification.encounterByEvent(event));
 
-        String location = LIKE;
+        String location = Constants.LIKE;
         if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            location = LIKE + filter.getLocation() + LIKE;
+            location += filter.getLocation() + Constants.LIKE;
         }
         specifications.add(EncounterSpecification.encounterByLocation(location));
 
-        String country = LIKE;
+        String country = Constants.LIKE;
         if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            country = LIKE + filter.getCountry() + LIKE;
+            country += filter.getCountry() + Constants.LIKE;
         }
         specifications.add(EncounterSpecification.encounterByCountry(country));
 

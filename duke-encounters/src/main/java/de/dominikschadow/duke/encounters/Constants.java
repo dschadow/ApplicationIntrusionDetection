@@ -60,6 +60,10 @@ public class Constants {
      * Passwords don't match error code, value is {@value}.
      */
     public static final String PASSWORD_ERROR_CODE = "error.password";
+    /**
+     * Like for SQL queries, value is {@value}.
+      */
+    public static final String LIKE = "%";
 
     private Constants() {
     }
