@@ -6,7 +6,7 @@
     <groupId>de.dominikschadow</groupId>
     <version>0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>ApplicationIntrusionDetection</name>
+    <name>Application Intrusion Detection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
     <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.
     </description>
@@ -19,7 +19,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.12.1.753</boxfuse.version>
+        <boxfuse.version>1.12.2.758</boxfuse.version>
     </properties>
 
     <prerequisites>
