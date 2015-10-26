@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
-import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.Loggable;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
@@ -69,34 +68,28 @@ public class SearchFilterValidator implements Validator {
 
         SearchFilter filter = (SearchFilter) target;
 
-        if (!Strings.isNullOrEmpty(filter.getEvent())) {
-            if (securityValidationService.hasXssPayload(filter.getEvent())) {
-                fireXssEvent();
-                errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
-                fireSqlIEvent();
-                errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(filter.getEvent())) {
+            fireXssEvent();
+            errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
+            fireSqlIEvent();
+            errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(filter.getLocation())) {
-            if (securityValidationService.hasXssPayload(filter.getLocation())) {
-                fireXssEvent();
-                errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
-                fireSqlIEvent();
-                errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(filter.getLocation())) {
+            fireXssEvent();
+            errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
+            fireSqlIEvent();
+            errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(filter.getCountry())) {
-            if (securityValidationService.hasXssPayload(filter.getCountry())) {
-                fireXssEvent();
-                errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
-                fireSqlIEvent();
-                errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(filter.getCountry())) {
+            fireXssEvent();
+            errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
+            fireSqlIEvent();
+            errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
         if (filter.getYear() < 1995) {

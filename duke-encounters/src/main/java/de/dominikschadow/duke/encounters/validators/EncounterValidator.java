@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
-import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
@@ -86,14 +85,12 @@ public class EncounterValidator implements Validator {
             errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
 
-        if (!Strings.isNullOrEmpty(encounter.getComment())) {
-            if (securityValidationService.hasXssPayload(encounter.getComment())) {
-                fireXssEvent();
-                errors.rejectValue("comment", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(encounter.getComment())) {
-                fireSqlIEvent();
-                errors.rejectValue("comment", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            }
+        if (securityValidationService.hasXssPayload(encounter.getComment())) {
+            fireXssEvent();
+            errors.rejectValue("comment", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+        } else if (securityValidationService.hasSqlIPayload(encounter.getComment())) {
+            fireSqlIEvent();
+            errors.rejectValue("comment", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
         }
     }
 
