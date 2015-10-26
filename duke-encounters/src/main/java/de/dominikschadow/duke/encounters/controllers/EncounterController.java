@@ -52,7 +52,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * @author Dominik Schadow
  */
 @Controller
-public class EncountersController {
+public class EncounterController {
     @Loggable
     private Logger logger;
 
