@@ -40,7 +40,8 @@
 </div>
 
 <div class="container">
-    <form class="searchForm" action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post" role="form">
+    <form class="searchForm" action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post"
+          role="form">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
                 Validation error
@@ -48,7 +49,7 @@
         </div>
         <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="event">Event</label>
-            <input type="text" id="event" name="event" th:field="*{event}" class="form-control"/>
+            <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}" class="form-control"/>
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
@@ -86,7 +87,7 @@
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div class="form-group">
-        	<button type="submit" class="btn btn-default">Search</button>
+            <button type="submit" class="btn btn-default">Search</button>
         </div>
     </form>
 </div>

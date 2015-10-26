@@ -46,7 +46,7 @@
         </div>
         <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label for="event">Event</label>
-            <input type="text" id="event" name="event" th:field="*{event}" class="form-control"/>
+            <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}" class="form-control"/>
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
