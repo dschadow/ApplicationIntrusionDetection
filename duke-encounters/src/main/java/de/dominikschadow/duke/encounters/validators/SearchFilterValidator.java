@@ -18,7 +18,7 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.Loggable;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;

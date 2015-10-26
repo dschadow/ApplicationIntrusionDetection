@@ -19,7 +19,7 @@ package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.Loggable;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;

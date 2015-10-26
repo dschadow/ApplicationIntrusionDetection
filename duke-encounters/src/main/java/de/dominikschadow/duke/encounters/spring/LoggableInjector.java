@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.duke.encounters.spring;
 
-import de.dominikschadow.duke.encounters.Loggable;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

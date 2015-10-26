@@ -17,7 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
-import de.dominikschadow.duke.encounters.Loggable;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
