@@ -8,8 +8,7 @@
     <packaging>pom</packaging>
     <name>Application Intrusion Detection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
-    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.
-    </description>
+    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.</description>
 
     <organization>
         <name>Dominik Schadow</name>
