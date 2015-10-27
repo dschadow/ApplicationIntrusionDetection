@@ -32,6 +32,9 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
+import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
+import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
+
 /**
  * Validates an encounter: checks required fields and scans for basic Cross-Site Scripting and SQL Injection payload.
  *
@@ -95,12 +98,12 @@ public class EncounterValidator implements Validator {
     }
 
     private void fireXssEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-001");
+        DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
+        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

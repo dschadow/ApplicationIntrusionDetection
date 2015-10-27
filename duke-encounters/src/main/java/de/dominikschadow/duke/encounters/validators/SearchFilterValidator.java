@@ -18,11 +18,11 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -35,6 +35,8 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
+
+import static org.owasp.appsensor.core.DetectionPoint.Category.*;
 
 /**
  * Validates a search filter: scans for basic Cross-Site Scripting and SQL Injection payload.
@@ -124,17 +126,17 @@ public class SearchFilterValidator implements Validator {
     }
 
     private void fireInvalidValueEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.ACCESS_CONTROL, "ACE2-001");
+        DetectionPoint detectionPoint = new DetectionPoint(ACCESS_CONTROL, "ACE2-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireXssEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE1-001");
+        DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
     private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-001");
+        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

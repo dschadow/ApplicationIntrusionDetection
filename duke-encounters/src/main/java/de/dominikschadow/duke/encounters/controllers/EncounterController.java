@@ -17,10 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.EncounterValidator;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -43,6 +43,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -145,7 +146,7 @@ public class EncounterController {
     }
 
     private void fireInvalidUrlParameterEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.REQUEST, "RE8-001");
+        DetectionPoint detectionPoint = new DetectionPoint(REQUEST, "RE8-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 

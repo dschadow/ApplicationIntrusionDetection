@@ -19,11 +19,11 @@ package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -42,6 +42,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
@@ -166,7 +167,7 @@ public class EncounterService {
     }
 
     private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.COMMAND_INJECTION, "CIE1-002");
+        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-002");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

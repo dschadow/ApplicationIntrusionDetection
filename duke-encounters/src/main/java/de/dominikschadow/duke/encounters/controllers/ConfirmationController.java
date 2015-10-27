@@ -17,10 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -103,7 +104,7 @@ public class ConfirmationController {
     }
 
     private void fireConfirmationErrorEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(DetectionPoint.Category.INPUT_VALIDATION, "IE5-001");
+        DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE5-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }
