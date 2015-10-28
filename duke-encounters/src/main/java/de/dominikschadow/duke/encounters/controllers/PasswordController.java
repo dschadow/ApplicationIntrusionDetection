@@ -21,7 +21,7 @@ import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.validators.PasswordUpdateValidator;
+import de.dominikschadow.duke.encounters.validators.PasswordChangeValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class PasswordController {
     @Autowired
     private UserService userService;
     @Autowired
-    private PasswordUpdateValidator passwordUpdateValidator;
+    private PasswordChangeValidator passwordChangeValidator;
 
 
     @RequestMapping(value = "/account/password/edit", method = GET)
@@ -93,6 +93,6 @@ public class PasswordController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(passwordUpdateValidator);
+        binder.setValidator(passwordChangeValidator);
     }
 }

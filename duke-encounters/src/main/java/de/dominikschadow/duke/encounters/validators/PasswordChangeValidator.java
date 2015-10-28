@@ -35,7 +35,7 @@ import javax.inject.Named;
  * @author Dominik Schadow
  */
 @Named
-public class PasswordUpdateValidator implements Validator {
+public class PasswordChangeValidator implements Validator {
     @Autowired
     private SpringValidatorAdapter validator;
     @Autowired
