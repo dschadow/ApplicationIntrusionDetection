@@ -19,7 +19,7 @@ package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
-import de.dominikschadow.duke.encounters.domain.PasswordUpdate;
+import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.PasswordUpdateValidator;
 import org.owasp.security.logging.SecurityMarkers;
@@ -54,7 +54,7 @@ public class PasswordController {
 
 
     @RequestMapping(value = "/account/password/edit", method = GET)
-    public ModelAndView changePassword(@ModelAttribute PasswordUpdate passwordUpdate) {
+    public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
         String username = userService.getUsername();
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
@@ -74,7 +74,7 @@ public class PasswordController {
      * @return Account page
      */
     @RequestMapping(value = "/account/password/update", method = POST)
-    public ModelAndView updatePassword(@ModelAttribute PasswordUpdate update, RedirectAttributes
+    public ModelAndView updatePassword(@ModelAttribute PasswordChange update, RedirectAttributes
             redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("/user/changePassword", "formErrors", result.getAllErrors());

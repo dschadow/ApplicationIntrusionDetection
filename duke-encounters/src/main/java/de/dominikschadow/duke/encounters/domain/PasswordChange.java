@@ -22,7 +22,7 @@ package de.dominikschadow.duke.encounters.domain;
  *
  * @author Dominik Schadow
  */
-public class PasswordUpdate {
+public class PasswordChange {
     private String currentPassword;
     private String newPassword;
     private String newPasswordConfirmation;

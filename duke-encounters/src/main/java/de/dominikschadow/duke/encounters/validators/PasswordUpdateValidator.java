@@ -18,7 +18,7 @@
 package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.domain.PasswordUpdate;
+import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,25 +43,25 @@ public class PasswordUpdateValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PasswordUpdate.class.equals(clazz);
+        return PasswordChange.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         validator.validate(target, errors);
 
-        PasswordUpdate passwordUpdate = (PasswordUpdate) target;
+        PasswordChange passwordChange = (PasswordChange) target;
 
-        if (!userService.confirmPassword(passwordUpdate.getCurrentPassword())) {
+        if (!userService.confirmPassword(passwordChange.getCurrentPassword())) {
             errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants
                     .PASSWORD_NOT_CORRECT_ERROR_MESSAGE);
         }
 
-        if (StringUtils.length(passwordUpdate.getNewPassword()) < 10) {
+        if (StringUtils.length(passwordChange.getNewPassword()) < 10) {
             errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_UNSAFE_ERROR_MESSAGE);
         }
 
-        if (!passwordUpdate.getNewPassword().equals(passwordUpdate.getNewPasswordConfirmation())) {
+        if (!passwordChange.getNewPassword().equals(passwordChange.getNewPasswordConfirmation())) {
             errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
         }
     }
