@@ -32,7 +32,8 @@ import java.util.List;
  */
 @Service
 public class SecurityValidationService {
-    private static final List<String> XSS_BLACKLIST = Arrays.asList("script", "onload", "eval", "document.cookie");
+    private static final List<String> XSS_BLACKLIST = Arrays.asList("<script>", "javascript", "onload", "eval",
+            "document.cookie");
     private static final List<String> SQL_BLACKLIST = Arrays.asList("drop", "insert", "update", "delete", "union",
             "select", "exec", "fetch", "or '1'='1", "or 1=1");
 
