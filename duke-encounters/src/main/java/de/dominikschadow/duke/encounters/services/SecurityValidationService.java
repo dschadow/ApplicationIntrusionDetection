@@ -32,9 +32,9 @@ import java.util.List;
  */
 @Service
 public class SecurityValidationService {
-    private static final List<String> XSS_BLACKLIST = Arrays.asList("<script>", "javascript", "onload", "eval");
-    private static final List<String> SQL_BLACKLIST = Arrays.asList("drop", "insert", "update", "delete", "union", "'" +
-            " or '1'='1", "' or 1=1");
+    private static final List<String> XSS_BLACKLIST = Arrays.asList("script", "onload", "eval", "document.cookie");
+    private static final List<String> SQL_BLACKLIST = Arrays.asList("drop", "insert", "update", "delete", "union",
+            "select", "exec", "fetch", "' or '1'='1", "' or 1=1");
 
     public boolean hasXssPayload(@NotNull String payload) {
         return XSS_BLACKLIST.contains(StringUtils.lowerCase(payload));
