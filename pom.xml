@@ -8,7 +8,8 @@
     <packaging>pom</packaging>
     <name>Application Intrusion Detection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
-    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.</description>
+    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.
+    </description>
 
     <organization>
         <name>Dominik Schadow</name>
@@ -135,6 +136,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
                 </plugin>
                 <!-- Boxfuse requires credentials as described here: https://boxfuse.com/docs/maven/ -->
                 <plugin>
