@@ -31,7 +31,8 @@ import java.util.List;
  * @author Dominik Schadow
  */
 public interface ConfirmationRepository extends JpaRepository<Confirmation, Long>, JpaSpecificationExecutor {
-    @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username")
+    @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username" +
+            " order by c.date desc")
     List<Confirmation> findAllByUsername(@Param("username") String username);
 
     @Query(value = "select c from Confirmation c, DukeEncountersUser u where c.user = u.id and u.username = :username" +
