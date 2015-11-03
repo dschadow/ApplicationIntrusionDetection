@@ -27,7 +27,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public enum Level {
     NEWBIE("Newbie"),
     ROOKIE("Rookie"),
-    PRO("Pro");
+    PRO("Pro"),
+    ADMIN("Admin");
 
     private final String name;
 

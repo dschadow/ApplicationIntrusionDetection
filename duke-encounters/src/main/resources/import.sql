@@ -10,6 +10,7 @@ INSERT INTO authorities(id, username, authority) VALUES (8, 'tricia@mcmillan.com
 INSERT INTO authorities(id, username, authority) VALUES (9, 'slartibartfast@slartibartfast.com', 'ROLE_USER');
 INSERT INTO authorities(id, username, authority) VALUES (10, 'jin@jenz.com', 'ROLE_USER');
 INSERT INTO authorities(id, username, authority) VALUES (11, 'gag@halfrunt.com', 'ROLE_USER');
+INSERT INTO authorities(id, username, authority) VALUES (12, 'admin', 'ROLE_ADMIN');
 
 -- USERS (username and password are always identical)
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (1, 'Arthur', 'Dent', 'arthur@dent.com', 'arthur@dent.com', '$2a$10$UYOseFWgR87PwL2j8VmycO.IjuH2uGht3lGFGBn2ShUUS9B4zclIe', '2010-05-05 10:45:33', 'ROOKIE', TRUE);
@@ -23,6 +24,7 @@ INSERT INTO users (id, firstname, lastname, email, username, password, registrat
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (9, 'Slartibartfast', '', 'slartibartfast@slartibartfast.com', 'slartibartfast@slartibartfast.com', '$2a$10$8lFXL0sPVQERcfJIG.UaIuPjoo9xeSRRdk8.Z20FdujLqohdvy8WO', '2015-06-06 08:52:11', 'NEWBIE', TRUE);
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (10, 'Jin', 'Jenz', 'jin@jenz.com', 'jin@jenz.com', '$2a$10$EaOdJoUZKay5RXLwR552h.QdTjYroGIU0WKT5BAWetOPSDBEA2BY2', '2010-07-07 08:52:11', 'NEWBIE', TRUE);
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (11, 'Gag', 'Halfrunt', 'gag@halfrunt.com', 'gag@halfrunt.com', '$2a$10$W7Ik5kkje5NGJQpKBV10TuKXGjZ2So2Oq8w9UMDuFj88ziwrONwQ6', '2011-08-08 08:52:11', 'NEWBIE', TRUE);
+INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (12, 'admin', '', 'admin@admin.de', 'admin', '$2a$10$VwZT7zd.Cx/dEeVvUCwP3.TW9Dax69Y.TM1DVavSMmbE8IlJyNWIe', '2015-01-01 08:08:08', 'ADMIN', TRUE);
 
 -- ENCOUNTERS
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-05-31', 5);
