@@ -105,16 +105,8 @@ public class SearchFilterValidator implements Validator {
         } catch (IllegalArgumentException ex) {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
                     filter.getLikelihood());
-            if (securityValidationService.hasXssPayload(filter.getLikelihood())) {
-                fireXssEvent();
-                errors.rejectValue("likelihood", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
-            } else if (securityValidationService.hasSqlIPayload(filter.getLikelihood())) {
-                fireSqlIEvent();
-                errors.rejectValue("likelihood", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
-            } else {
-                fireInvalidValueEvent();
-                errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, Constants.INVALID_VALUE_ERROR_MESSAGE);
-            }
+            fireInvalidValueEvent();
+            errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, Constants.INVALID_VALUE_ERROR_MESSAGE);
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
