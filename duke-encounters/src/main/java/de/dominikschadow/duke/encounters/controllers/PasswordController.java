@@ -17,10 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.PasswordChangeValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -90,8 +90,9 @@ public class PasswordController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated password", storedUser);
-        redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully updated.");
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
+
+        redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully changed.");
 
         return new ModelAndView("redirect:/account");
     }
