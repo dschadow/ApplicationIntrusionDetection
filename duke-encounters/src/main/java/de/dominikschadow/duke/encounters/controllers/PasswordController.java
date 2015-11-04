@@ -52,7 +52,12 @@ public class PasswordController {
     @Autowired
     private PasswordChangeValidator passwordChangeValidator;
 
-
+    /**
+     * Loads the change password page.
+     *
+     * @param passwordChange The PasswordChange model attribute
+     * @return The page to navigate to, including userlevel information
+     */
     @RequestMapping(value = "/account/password/edit", method = GET)
     public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
         String username = userService.getUsername();
