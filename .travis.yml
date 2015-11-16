@@ -5,5 +5,5 @@ before_install:
   - pip install --user codecov
 after_success:
   - codecov
-install:  mvn versions:set -DnewVersion=${TRAVIS_BUILD_NUMBER}
+install:  mvn versions:set
 script: mvn deploy
