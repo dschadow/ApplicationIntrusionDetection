@@ -6,4 +6,4 @@ before_install:
 after_success:
   - codecov
 install:  mvn versions:set -DnewVersion=${TRAVIS_BUILD_NUMBER}
-script: mvn package
+script: mvn deploy
