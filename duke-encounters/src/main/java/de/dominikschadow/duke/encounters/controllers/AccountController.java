@@ -78,7 +78,7 @@ public class AccountController {
         DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
         model.addAttribute("userlevel", dukeEncountersUser.getLevel().getName());
 
-        return "/user/account";
+        return "user/account";
     }
 
     @RequestMapping(value = "/account/edit", method = GET)
@@ -87,7 +87,7 @@ public class AccountController {
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
-        ModelAndView modelAndView = new ModelAndView("/user/editAccount");
+        ModelAndView modelAndView = new ModelAndView("user/editAccount");
 
         DukeEncountersUser user = userService.getDukeEncountersUser();
         modelAndView.addObject("user", user);
@@ -151,7 +151,7 @@ public class AccountController {
      */
     @RequestMapping(value = "/register", method = GET)
     public String register(@ModelAttribute DukeEncountersUser dukeEncountersUser) {
-        return "/register";
+        return "register";
     }
 
     /**
@@ -163,14 +163,14 @@ public class AccountController {
     @RequestMapping(value = "/register", method = POST)
     public ModelAndView createUser(@Valid DukeEncountersUser dukeEncountersUser, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("/register", "formErrors", result.getAllErrors());
+            return new ModelAndView("register", "formErrors", result.getAllErrors());
         }
 
         DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("userCreated", "User " + newUser.getUsername() + " successfully created, you can now " +
                 "use your new user to log in.");
 

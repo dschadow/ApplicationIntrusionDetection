@@ -64,7 +64,7 @@ public class PasswordController {
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
 
-        ModelAndView modelAndView = new ModelAndView("/user/changePassword");
+        ModelAndView modelAndView = new ModelAndView("user/changePassword");
 
         DukeEncountersUser user = userService.getDukeEncountersUser();
         modelAndView.addObject("userlevel", user.getLevel().getName());
@@ -82,7 +82,7 @@ public class PasswordController {
     public ModelAndView updatePassword(@ModelAttribute PasswordChange update, RedirectAttributes
             redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("/user/changePassword", "formErrors", result.getAllErrors());
+            return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
         }
 
         DukeEncountersUser user = userService.getDukeEncountersUser();

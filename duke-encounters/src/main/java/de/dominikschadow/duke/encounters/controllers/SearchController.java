@@ -63,13 +63,13 @@ public class SearchController {
      */
     @RequestMapping(value = "/search", method = GET)
     public String searchEncounters(@ModelAttribute SearchFilter searchFilter) {
-        return "/search";
+        return "search";
     }
 
     @RequestMapping(value = "/encounters", method = POST)
     public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("/search", "formErrors", result.getAllErrors());
+            return new ModelAndView("search", "formErrors", result.getAllErrors());
         }
 
         List<Encounter> encounters = encounterService.getEncounters(searchFilter);
@@ -78,7 +78,7 @@ public class SearchController {
         modelMap.put("encounters", encounters);
         modelMap.put("searchFilter", searchFilter);
 
-        return new ModelAndView("/encounters", modelMap);
+        return new ModelAndView("encounters", modelMap);
     }
 
     @InitBinder

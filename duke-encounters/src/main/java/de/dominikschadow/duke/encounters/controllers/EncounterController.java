@@ -73,18 +73,18 @@ public class EncounterController {
         List<Encounter> encounters = encounterService.getAllEncounters();
         model.addAttribute("encounters", encounters);
 
-        return "/encounters";
+        return "encounters";
     }
 
     @RequestMapping(value = "/encounter/create", method = GET)
     public String createEncounter(@ModelAttribute Encounter encounter) {
-        return "/user/createEncounter";
+        return "user/createEncounter";
     }
 
     @RequestMapping(value = "/encounter/create", method = POST)
     public ModelAndView saveEncounter(@Valid Encounter encounter, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("/user/createEncounter", "formErrors", result.getAllErrors());
+            return new ModelAndView("user/createEncounter", "formErrors", result.getAllErrors());
         }
 
         String username = userService.getUsername();
@@ -142,7 +142,7 @@ public class EncounterController {
 
         model.addAttribute("encounter", encounter);
 
-        return "/user/encounterDetails";
+        return "user/encounterDetails";
     }
 
     private void fireInvalidUrlParameterEvent() {
