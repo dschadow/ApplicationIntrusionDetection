@@ -128,6 +128,7 @@
                 <artifactId>boxfuse-maven-plugin</artifactId>
                 <configuration>
                     <app>dukeencounters</app>
+                    <healthcheck.path>/</healthcheck.path>
                 </configuration>
                 <executions>
                     <execution>
