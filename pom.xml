@@ -155,7 +155,6 @@
                         </delimiters>
                     </configuration>
                 </plugin>
-                <!-- Boxfuse requires credentials as described here: https://boxfuse.com/docs/maven/ -->
                 <plugin>
                     <groupId>com.boxfuse.client</groupId>
                     <artifactId>boxfuse-maven-plugin</artifactId>

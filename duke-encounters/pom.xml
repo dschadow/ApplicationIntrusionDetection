@@ -12,7 +12,8 @@
     <name>Duke Encounters</name>
 
     <description>Application Intrusion Detection with AppSensor sample project. Requires a server like Apache Tomcat or
-        the usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080
+        the usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080.
+        Depending on your Boxfuse configuration you can deploy the image to AWS test or prod.
     </description>
 
     <properties>
@@ -102,54 +103,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>com.boxfuse.client</groupId>
-                <artifactId>boxfuse-maven-plugin</artifactId>
-                <configuration>
-                    <image>dukeencounters:${project.version}</image>
-                    <app>dukeencounters</app>
-                    <healthcheck.path>/</healthcheck.path>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>fuse-image</id>
-                        <goals>
-                            <goal>fuse</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    <execution>
-                        <id>run-on-test</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <env>test</env>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>kill-on-test</id>
-                        <goals>
-                            <goal>kill</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
-                        <configuration>
-                            <env>test</env>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>run-on-prod</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                        <configuration>
-                            <env>prod</env>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <configuration>
@@ -173,4 +126,119 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Boxfuse requires credentials as described here: https://boxfuse.com/docs/maven/ -->
+        <profile>
+            <id>boxfuse-local</id>
+            <activation>
+                <file>
+                    <exists>${user.home}/.boxfuse/boxfuse.conf</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.boxfuse.client</groupId>
+                        <artifactId>boxfuse-maven-plugin</artifactId>
+                        <configuration>
+                            <image>dukeencounters:${project.version}</image>
+                            <app>dukeencounters</app>
+                            <healthcheck.path>/</healthcheck.path>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>fuse-image</id>
+                                <goals>
+                                    <goal>fuse</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                            <execution>
+                                <id>run-on-test</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <env>test</env>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>kill-on-test</id>
+                                <goals>
+                                    <goal>kill</goal>
+                                </goals>
+                                <phase>post-integration-test</phase>
+                                <configuration>
+                                    <env>test</env>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>run-on-prod</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <env>prod</env>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- Travis CI only deploys to AWS test and kills the instance right away afterwards -->
+            <id>boxfuse</id>
+            <activation>
+                <property>
+                    <name>BOXFUSE_USER</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.boxfuse.client</groupId>
+                        <artifactId>boxfuse-maven-plugin</artifactId>
+                        <configuration>
+                            <image>dukeencounters:${project.version}</image>
+                            <app>dukeencounters</app>
+                            <healthcheck.path>/</healthcheck.path>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>fuse-image</id>
+                                <goals>
+                                    <goal>fuse</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                            <execution>
+                                <id>run-on-test</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <env>test</env>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>kill-on-test</id>
+                                <goals>
+                                    <goal>kill</goal>
+                                </goals>
+                                <phase>post-integration-test</phase>
+                                <configuration>
+                                    <env>test</env>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
