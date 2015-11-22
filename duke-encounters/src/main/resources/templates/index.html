@@ -6,23 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Duke Encounters</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Duke Encounters</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bmainNavigation" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img th:src="@{img/duke-small.png}" alt="Duke Encounters Home"/></a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+
+        <div class="collapse navbar-collapse" id="mainNavigation">
             <ul class="nav navbar-nav">
                 <li><a href="encounters">Encounters</a></li>
                 <li><a href="search">Search</a></li>
-                <li th:if="${#httpServletRequest.remoteUser == null}"><a href="login">Log in</a></li>
-                <li th:if="${#httpServletRequest.remoteUser}"><a href="account">My Account</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search Encounter"/>
+                </div>
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li th:if="${#httpServletRequest.remoteUser == null}"><a href="login">Login</a></li>
+                        <li th:if="${#httpServletRequest.remoteUser}"><a href="account">Edit Profile</a></li>
+                    </ul>
+                </li>
                 <li th:if="${#httpServletRequest.remoteUser}">
                     <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-default" style="margin-top: 8px; margin-left: 20px;">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log out
+                        <button type="submit" class="btn btn-default btn-dropdown-logout">
+                            <span class="glyphicon glyphicon-off"></span> Log out
                         </button>
                     </form>
                 </li>
@@ -31,32 +58,28 @@
     </div>
 </nav>
 
-<div class="jumbotron">
-    <div class="container">
+<div class="container" id="main">
+    <div class="row" id="welcome">
         <h1>Duke Encounters</h1>
 
-        <p>Welcome to <strong>Duke Encounters</strong>, the leading online platform for Java Duke
+        <p class="lead">Welcome to <strong>Duke Encounters</strong>, the leading online platform for Java Duke
             spotting. This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
                 AppSensor</a> for Application Intrusion Detection. The application is developed by Dominik Schadow, all
             source code is available on <a
                     href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>. This
             application is using an in-memory database to temporarily persist all information. Keep in mind that all
-            entered information will be lost when restarting.</p>
+            entered information therefore will be lost when restarting the application.</p>
 
-        <p th:if="${#httpServletRequest.remoteUser == null}"><a href="register">Register</a> or <a
-                href="login">login</a> to contribute.</p>
+        <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">You have to <a href="register">register</a> or
+            <a href="login">login</a> to contribute.</p>
     </div>
-</div>
 
-<div class="container">
-    <div class="page-header">
+    <div class="row" id="latestEncounters">
         <h2>Latest Encounters</h2>
 
         <p class="lead"><a href="encounters">View all</a> encounters or <a href="search">search</a> for the ones you are
             interested in.</p>
-    </div>
 
-    <div class="row">
         <div class="col-md-8">
             <div class="col-md-12">
                 <table class="table">
@@ -93,5 +116,10 @@
                 alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a></div>
     </div>
 </div>
+
+<footer></footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
