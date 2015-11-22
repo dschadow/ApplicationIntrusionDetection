@@ -95,28 +95,6 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>boxfuse</id>
-            <activation>
-                <file>
-                    <exists>${user.home}/.boxfuse/boxfuse.conf</exists>
-                </file>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.boxfuse.client</groupId>
-                        <artifactId>boxfuse-maven-plugin</artifactId>
-                        <configuration>
-                            <image>dukeencounters:${project.version}</image>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
     <build>
         <plugins>
             <plugin>
@@ -127,6 +105,7 @@
                 <groupId>com.boxfuse.client</groupId>
                 <artifactId>boxfuse-maven-plugin</artifactId>
                 <configuration>
+                    <image>dukeencounters:${project.version}</image>
                     <app>dukeencounters</app>
                     <healthcheck.path>/</healthcheck.path>
                 </configuration>
