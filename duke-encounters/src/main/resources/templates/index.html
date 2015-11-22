@@ -43,7 +43,13 @@
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li th:if="${#httpServletRequest.remoteUser == null}"><a href="login">Login</a></li>
-                        <li th:if="${#httpServletRequest.remoteUser}"><a href="account">Edit Profile</a></li>
+                        <li th:if="${#httpServletRequest.remoteUser}"><a href="encounters"><span
+                                class="glyphicon glyphicon-camera"></span> My Encounters</a></li>
+                        <li th:if="${#httpServletRequest.remoteUser}"><a href="confirmations"><span
+                                class="glyphicon glyphicon-tags"></span> My Confirmations</a></li>
+                        <li th:if="${#httpServletRequest.remoteUser}" class="divider"></li>
+                        <li th:if="${#httpServletRequest.remoteUser}"><a href="account"><span
+                                class="glyphicon glyphicon-wrench"></span> Update Profile</a></li>
                     </ul>
                 </li>
                 <li th:if="${#httpServletRequest.remoteUser}">
