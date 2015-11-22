@@ -194,7 +194,7 @@
             <id>boxfuse</id>
             <activation>
                 <property>
-                    <name>BOXFUSE_USER</name>
+                    <name>env.BOXFUSE_USER</name>
                 </property>
             </activation>
             <build>
