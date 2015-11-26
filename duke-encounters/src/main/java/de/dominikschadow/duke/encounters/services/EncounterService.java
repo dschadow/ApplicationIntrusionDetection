@@ -55,7 +55,7 @@ public class EncounterService {
     @Loggable
     private Logger logger;
 
-    private final EncounterRepository encounterRepository;
+    private final EncounterRepository repository;
     private final UserService userService;
     @Autowired
     private EventManager ids;
@@ -64,16 +64,16 @@ public class EncounterService {
     private final int latestEncounterAmount;
 
     @Autowired
-    public EncounterService(EncounterRepository encounterRepository, UserService userService,
+    public EncounterService(EncounterRepository repository, UserService userService,
                             @Value("${encounters.latest.amount}") int latestEncounterAmount) {
-        this.encounterRepository = encounterRepository;
+        this.repository = repository;
         this.userService = userService;
         this.latestEncounterAmount = latestEncounterAmount;
     }
 
     public List<Encounter> getLatestEncounters() {
         Pageable latestEncounters = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
-        List<Encounter> encounters = encounterRepository.findWithPageable(latestEncounters);
+        List<Encounter> encounters = repository.findWithPageable(latestEncounters);
 
         if (encounters.size() > latestEncounterAmount) {
             fireSqlIEvent();
@@ -83,7 +83,7 @@ public class EncounterService {
     }
 
     public List<Encounter> getAllEncounters() {
-        List<Encounter> encounters = encounterRepository.findAll();
+        List<Encounter> encounters = repository.findAll();
 
         logger.info("Query for all encounters returned {} encounters", encounters.size());
 
@@ -122,18 +122,18 @@ public class EncounterService {
 
         //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
-        return encounterRepository.findAll(where(specifications.get(0)).and(specifications.get
+        return repository.findAll(where(specifications.get(0)).and(specifications.get
                 (1)).and(specifications.get(2)).and(specifications.get(3)));
     }
 
     public Encounter getEncounterById(@NotNull long id) {
         logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
 
-        return encounterRepository.findOne(id);
+        return repository.findOne(id);
     }
 
     public List<Encounter> getEncountersByUsername(@NotNull String username) {
-        List<Encounter> encounters = encounterRepository.findAllByUsername(username);
+        List<Encounter> encounters = repository.findAllByUsername(username);
 
         logger.info("Query for user {} encounters returned {} encounters", username, encounters.size());
 
@@ -141,7 +141,7 @@ public class EncounterService {
     }
 
     public void deleteEncounter(@NotNull String username, @NotNull long encounterId) {
-        encounterRepository.delete(encounterId);
+        repository.delete(encounterId);
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
@@ -149,7 +149,7 @@ public class EncounterService {
     public Encounter createEncounter(@NotNull Encounter newEncounter, @NotNull String username) {
         newEncounter.setUser(userService.getDukeEncountersUser());
 
-        Encounter encounter = encounterRepository.save(newEncounter);
+        Encounter encounter = repository.save(newEncounter);
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
 
@@ -157,7 +157,7 @@ public class EncounterService {
     }
 
     public boolean isOwnEncounter(@NotNull long encounterId, @NotNull String username) {
-        Encounter encounter = encounterRepository.findByIdAndUsername(encounterId, username);
+        Encounter encounter = repository.findByIdAndUsername(encounterId, username);
 
         boolean owner = encounter != null;
 

@@ -39,19 +39,19 @@ public class ConfirmationService {
     @Loggable
     private Logger logger;
 
-    private final ConfirmationRepository confirmationRepository;
+    private final ConfirmationRepository repository;
     private final UserService userService;
     private final EncounterService encounterService;
 
     @Autowired
     public ConfirmationService(ConfirmationRepository repository, UserService userService, EncounterService encounterService) {
-        this.confirmationRepository = repository;
+        this.repository = repository;
         this.userService = userService;
         this.encounterService = encounterService;
     }
 
     public List<Confirmation> getConfirmationsByUsername(@NotNull String username) {
-        List<Confirmation> confirmations = confirmationRepository.findAllByUsername(username);
+        List<Confirmation> confirmations = repository.findAllByUsername(username);
 
         logger.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
 
@@ -59,7 +59,7 @@ public class ConfirmationService {
     }
 
     public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull String username, @NotNull long encounterId) {
-        Confirmation confirmation = confirmationRepository.findByUsernameAndEncounterId(username, encounterId);
+        Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
         logger.info("Query for user {} confirmations returned {}", username, confirmation);
 
@@ -72,13 +72,13 @@ public class ConfirmationService {
         newConfirmation.setDate(new Date());
         newConfirmation.setEncounter(encounterService.getEncounterById(encounterId));
 
-        Confirmation confirmation = confirmationRepository.save(newConfirmation);
+        Confirmation confirmation = repository.save(newConfirmation);
 
         logger.info("Created new confirmation {}", confirmation);
     }
 
     public void deleteConfirmation(@NotNull String username, @NotNull long confirmationId) {
-        confirmationRepository.delete(confirmationId);
+        repository.delete(confirmationId);
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
