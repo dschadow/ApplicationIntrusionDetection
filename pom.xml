@@ -19,7 +19,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.13.4.789</boxfuse.version>
+        <boxfuse.version>1.13.5.790</boxfuse.version>
     </properties>
 
     <prerequisites>
