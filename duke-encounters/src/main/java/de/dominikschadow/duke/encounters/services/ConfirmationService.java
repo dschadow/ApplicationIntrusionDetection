@@ -17,9 +17,9 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +44,8 @@ public class ConfirmationService {
     private final EncounterService encounterService;
 
     @Autowired
-    public ConfirmationService(ConfirmationRepository confirmationRepository, UserService userService,
-                               EncounterService encounterService) {
-        this.confirmationRepository = confirmationRepository;
+    public ConfirmationService(ConfirmationRepository repository, UserService userService, EncounterService encounterService) {
+        this.confirmationRepository = repository;
         this.userService = userService;
         this.encounterService = encounterService;
     }
@@ -85,9 +84,6 @@ public class ConfirmationService {
     }
 
     public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {
-        Confirmation confirmation = getConfirmationByUsernameAndEncounterId(username,
-                encounterId);
-
-        return confirmation != null;
+        return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 }
