@@ -19,7 +19,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.13.5.790</boxfuse.version>
+        <boxfuse.version>1.13.6.791</boxfuse.version>
     </properties>
 
     <prerequisites>
@@ -191,7 +191,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>1.3.1</version>
+                <version>1.3.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
