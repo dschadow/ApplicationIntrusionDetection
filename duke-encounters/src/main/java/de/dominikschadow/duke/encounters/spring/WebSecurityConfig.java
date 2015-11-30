@@ -85,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         web
             .ignoring()
-                .antMatchers("/img/**", "/webjars/bootstrap/**");
+                .antMatchers("/img/**", "/webjars/**");
         // @formatter:on
     }
 

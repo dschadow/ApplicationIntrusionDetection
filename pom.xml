@@ -120,6 +120,11 @@
                 <artifactId>bootstrap</artifactId>
                 <version>3.3.5</version>
             </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>1.11.3</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
