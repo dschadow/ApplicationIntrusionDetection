@@ -10,86 +10,95 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#mainNavigation" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img th:src="@{img/duke-small.png}" alt="Duke Encounters Home"/></a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="mainNavigation">
-            <ul class="nav navbar-nav">
-                <li><a href="encounters">Encounters</a></li>
-                <li><a href="search">Search</a></li>
-            </ul>
-
-            <form class="navbar-form navbar-left" role="search">
-                <input type="text" class="form-control" placeholder="Search Encounter" id="searchEncounterField"/>
-                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="login">Login</a></li>
-                    </ul>
-                </li>
-                <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My Encounters</a>
-                        </li>
-                        <li><a href="confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
-                            Confirmations</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
-                    </ul>
-                </li>
-                <li th:if="${#httpServletRequest.remoteUser}">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-default btn-dropdown-logout">
-                            <span class="glyphicon glyphicon-off"></span> Log out
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <div class="container" id="main">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#mainNavigation" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img th:src="@{img/duke-small.png}" alt="Duke Encounters Home"/></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="encounters">Encounters</a></li>
+                    <li><a href="search">Search</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="text" class="form-control" placeholder="Search Encounter" id="searchEncounterField"/>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="login">Login</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                                Encounters</a>
+                            </li>
+                            <li><a href="confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                                Confirmations</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-default btn-dropdown-logout">
+                                <span class="glyphicon glyphicon-off"></span> Log out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="row" id="welcome">
-        <h1>Duke Encounters</h1>
+        <div class="col-12">
+            <div class="well">
+                <div class="page-header">
+                    <h1>Duke Encounters
+                        <small>The leading online platform for Java Duke spotting</small>
+                    </h1>
 
-        <p class="lead">Welcome to <strong>Duke Encounters</strong>, the leading online platform for Java Duke
-            spotting. This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
-                AppSensor</a> for Application Intrusion Detection. The application is developed by Dominik Schadow, all
-            source code is available on <a
-                    href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>. This
-            application is using an in-memory database to temporarily persist all information. Keep in mind that all
-            entered information therefore will be lost when restarting the application.</p>
-
-        <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">You have to <a href="register">register</a> or
-            <a href="login">login</a> to contribute.</p>
+                    <p class="lead">This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
+                        AppSensor</a> for Application Intrusion Detection. The application is developed by Dominik
+                        Schadow, all source code is available on <a
+                                href="https://github.com/dschadow/ApplicationIntrusionDetection"
+                                target="_blank">GitHub</a>.
+                        This application is using an in-memory database to temporarily persist all information. Keep in
+                        mind that all entered information therefore will be lost when restarting the application.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row" id="latestEncounters">
         <h2>Latest Encounters</h2>
 
         <p class="lead"><a href="encounters">View all</a> encounters or <a href="search">search</a> for the ones you are
-            interested in.</p>
+            interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a href="register">register</a> or <a
+                    href="login">login</a> to contribute.</span>
+        </p>
 
         <div class="col-md-8">
             <div class="col-md-12">
