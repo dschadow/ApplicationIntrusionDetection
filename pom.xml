@@ -19,8 +19,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.14.0.801</boxfuse.version>
-        <tomcat.version>8.0.29</tomcat.version>
+        <boxfuse.version>1.14.1.812</boxfuse.version>
     </properties>
 
     <prerequisites>
@@ -119,7 +118,7 @@
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap</artifactId>
-                <version>3.3.5</version>
+                <version>3.3.6</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
@@ -169,7 +168,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.3.5</version>
+                    <version>0.3.8</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
