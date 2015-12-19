@@ -92,48 +92,51 @@
         </div>
     </div>
 
-    <div class="row" id="latestEncounters">
-        <h2>Latest Encounters</h2>
+    <div class="row" id="latestEncountersHeader">
+        <div class="col-12">
+            <h2>Latest Encounters</h2>
 
-        <p class="lead"><a href="encounters">View all</a> encounters or <a href="search">search</a> for the ones you are
-            interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a href="register">register</a> or <a
-                    href="login">login</a> to contribute.</span>
-        </p>
-
-        <div class="col-md-8">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Likelihood</th>
-                        <th th:if="${#httpServletRequest.remoteUser}">Confirm</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="encounter : ${encounters}">
-                        <td th:text="${encounter.event}"></td>
-                        <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-                        <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-                        <td th:text="${encounter.likelihood}"></td>
-                        <td th:if="${#httpServletRequest.remoteUser}">
-                            <form th:action="@{/confirmations/add}" method="post">
-                                <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
-                                <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
-                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <p class="lead"><a href="encounters">View all</a> encounters or <a href="search">search</a> for the ones you
+                are interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a
+                        href="register">register</a> or <a href="login">login</a> to contribute.</span>
+            </p>
         </div>
-        <div class="col-md-4"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img
+    </div>
+
+    <div class="row" id="latestEncounters">
+        <div class="col-sm-9">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Likelihood</th>
+                    <th th:if="${#httpServletRequest.remoteUser}">Confirm</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="encounter : ${encounters}">
+                    <td th:text="${encounter.event}"></td>
+                    <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
+                    <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                    <td th:text="${encounter.likelihood}"></td>
+                    <td th:if="${#httpServletRequest.remoteUser}">
+                        <form th:action="@{/confirmations/add}" method="post">
+                            <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
+                            <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
+                                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-3 duke"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img
                 th:src="@{img/duke-guitar.png}"
-                alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a></div>
+                alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a>
+        </div>
     </div>
 </div>
 
