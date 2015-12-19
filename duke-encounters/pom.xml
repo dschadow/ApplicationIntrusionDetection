@@ -130,7 +130,6 @@
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
                     <forceTags>true</forceTags>
-                    <dockerDirectory>/</dockerDirectory>
                     <entryPoint>["java", "-jar", "-Djava.security.egd=file:/dev/./urandom", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
