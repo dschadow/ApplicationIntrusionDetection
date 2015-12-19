@@ -1,10 +1,9 @@
 FROM java:8
-MAINTAINER Dominik Schadow
+MAINTAINER Dominik Schadow <dominikschadow@gmail.com>
 
-VOLUME /tmp
+ENV SRC_DIR /app/src
+ENV SPRINGBOOT_VERSION 1.3.1.RELEASE
 
-ADD target/duke-encounters.jar app.jar
+RUN mkdir -p
 
-RUN bash -c 'touch /app.jar'
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+EXPOSE 8080
