@@ -6,50 +6,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Duke Encounters - Login</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/custom.css}"/>
 </head>
-<body role="document">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Duke Encounters</a>
+<body>
+
+<div class="container" id="main">
+    <nav class="navbar-inverse navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#mainNavigation" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/search">Search</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="text" class="form-control" placeholder="Search Encounter" id="searchEncounterField"/>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/login">Login</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                                Encounters</a>
+                            </li>
+                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                                Confirmations</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-default btn-dropdown-logout">
+                                <span class="glyphicon glyphicon-off"></span> Log out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="encounters">Encounters</a></li>
-                <li><a href="search">Search</a></li>
-                <li class="active"><a href="login">Log in</a></li>
-            </ul>
+    </nav>
+
+    <div class="row" id="welcome">
+        <div class="col-12">
+            <h1>Login</h1>
+
+            <p class="lead">Use your credentials to log in. Need to <a href="/register">register</a> first?</p>
         </div>
     </div>
-</nav>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Login</h1>
-
-        <p>Use your credentials to log in. Need to <a href="/register">register</a> first?</p>
+    <div class="row" id="login">
+        <div class="col-12">
+            <form class="form-horizontal" action="#" th:action="@{/login}" method="post" role="form">
+                <div th:if="${loginError}" class="alert alert-danger" role="alert">
+                    Login failed - wrong username and/or password.
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="username">Username</label>
+                    <div class="col-sm-10">
+                        <input autocomplete="off" autofocus="autofocus" type="text" id="username" name="username"
+                               class="form-control" placeholder="Username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="password">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="password" name="password" class="form-control"
+                               placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default pull-right">Log in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <div th:if="${userCreated}" class="alert alert-success" role="alert" th:text="${userCreated}"></div>
-
-    <div th:if="${loginError}" class="alert alert-danger" role="alert">
-        Login failed - wrong username and/or password.
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h6>Duke Encounters</h6>
+                <p>The leading online platform for Java Duke spotting.</p>
+            </div>
+            <div class="col-sm-4">
+                <h6>About</h6>
+                <p>The application is developed by <a href="http://www.dominikschadow.de" target="_blank">Dominik
+                    Schadow</a>, source code is available on <a
+                        href="https://github.com/dschadow/ApplicationIntrusionDetection"
+                        target="_blank">GitHub</a>.</p>
+            </div>
+            <div class="col-sm-2">
+                <h6>Navigation</h6>
+                <ul class="unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/account">Account</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-2">
+                <h6>Follow me</h6>
+                <ul class="unstyled">
+                    <li><a href="http://www.dominikschadow.de" target="_blank">Blog</a></li>
+                    <li><a href="https://twitter.com/dschadow" target="_blank">Twitter</a></li>
+                    <li><a href="https://github.com/dschadow" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+</footer>
 
-    <form th:action="@{/login}" method="post" role="form">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input autocomplete="off" autofocus="autofocus" type="text" id="username" name="username"
-                   class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control"/>
-        </div>
-        <button type="submit" class="btn btn-default">Log in</button>
-    </form>
-</div>
+<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

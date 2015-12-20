@@ -4,75 +4,153 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Duke Encounters</title>
+    <title>Duke Encounters - Create Encounter</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/custom.css}"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Duke Encounters</a>
+
+<div class="container" id="main">
+    <nav class="navbar-inverse navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#mainNavigation" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/search">Search</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="text" class="form-control" placeholder="Search Encounter" id="searchEncounterField"/>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                                Encounters</a>
+                            </li>
+                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                                Confirmations</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-default btn-dropdown-logout">
+                                <span class="glyphicon glyphicon-off"></span> Log out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/encounters}">Encounters</a></li>
-                <li><a th:href="@{/search}">Search</a></li>
-                <li><a th:href="@{/account}">My Account</a></li>
-                <li>
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-default" style="margin-top: 8px; margin-left: 20px;">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log out
-                        </button>
-                    </form>
-                </li>
-            </ul>
+    </nav>
+
+    <div class="row" id="welcome">
+        <div class="col-12">
+            <h1>Create Encounter</h1>
+
+            <p class="lead">Had an encounter that is missing in our database? Create it right away!</p>
         </div>
     </div>
-</nav>
-<div class="jumbotron">
-    <div class="container">
-        <h1>Create Encounter</h1>
 
-        <p>Know an encounter that is missing in our database? Create it right away!</p>
+
+    <div class="row" id="createEncounter">
+        <div class="col-12">
+            <form action="#" th:action="@{/encounter/create}" th:object="${encounter}" method="post" role="form">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
+                        Validation error
+                    </p>
+                </div>
+                <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label for="event">Event</label>
+                    <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}"
+                           class="form-control"/>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+                <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" th:field="*{location}" class="form-control"/>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+                <div th:class="${#fields.hasErrors('country')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label for="country">Country</label>
+                    <input type="text" id="country" name="country" th:field="*{country}" class="form-control"/>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+                <div th:class="${#fields.hasErrors('date')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label for="date">Date</label>
+                    <input type="text" id="date" name="date" th:field="*{date}" class="form-control"/>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+                <div th:class="${#fields.hasErrors('comment')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" th:field="*{comment}" class="form-control"></textarea>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Create Encounter</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <form action="#" th:action="@{/encounter/create}" th:object="${encounter}" method="post" role="form">
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-            <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
-                Validation error
-            </p>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h6>Duke Encounters</h6>
+                <p>The leading online platform for Java Duke spotting.</p>
+            </div>
+            <div class="col-sm-4">
+                <h6>About</h6>
+                <p>The application is developed by <a href="http://www.dominikschadow.de" target="_blank">Dominik
+                    Schadow</a>, source code is available on <a
+                        href="https://github.com/dschadow/ApplicationIntrusionDetection"
+                        target="_blank">GitHub</a>.</p>
+            </div>
+            <div class="col-sm-2">
+                <h6>Navigation</h6>
+                <ul class="unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/account">Account</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-2">
+                <h6>Follow me</h6>
+                <ul class="unstyled">
+                    <li><a href="http://www.dominikschadow.de" target="_blank">Blog</a></li>
+                    <li><a href="https://twitter.com/dschadow" target="_blank">Twitter</a></li>
+                    <li><a href="https://github.com/dschadow" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
         </div>
-        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="event">Event</label>
-            <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}" class="form-control"/>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        </div>
-        <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" th:field="*{location}" class="form-control"/>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        </div>
-        <div th:class="${#fields.hasErrors('country')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="country">Country</label>
-            <input type="text" id="country" name="country" th:field="*{country}" class="form-control"/>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        </div>
-        <div th:class="${#fields.hasErrors('date')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="date">Date</label>
-            <input type="text" id="date" name="date" th:field="*{date}" class="form-control"/>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        </div>
-        <div th:class="${#fields.hasErrors('comment')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label for="comment">Comment</label>
-            <textarea id="comment" name="comment" th:field="*{comment}" class="form-control"></textarea>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-default">Create Encounter</button>
-        </div>
-    </form>
-</div>
+    </div>
+</footer>
+
+<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

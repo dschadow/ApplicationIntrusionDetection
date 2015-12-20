@@ -6,105 +6,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Duke Encounters - Search</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/custom.css}"/>
 </head>
-<body role="document">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Duke Encounters</a>
+<body>
+
+<div class="container" id="main">
+    <nav class="navbar-inverse navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#mainNavigation" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li class="active"><a href="/search">Search</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="text" class="form-control" placeholder="Search Encounter" id="searchEncounterField"/>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/login">Login</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                                Encounters</a>
+                            </li>
+                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                                Confirmations</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${#httpServletRequest.remoteUser}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-default btn-dropdown-logout">
+                                <span class="glyphicon glyphicon-off"></span> Log out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="encounters">Encounters</a></li>
-                <li class="active"><a href="search">Search</a></li>
-                <li th:if="${#httpServletRequest.remoteUser == null}"><a href="login">Log in</a></li>
-                <li th:if="${#httpServletRequest.remoteUser}"><a href="account">My Account</a></li>
-                <li th:if="${#httpServletRequest.remoteUser}">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-default" style="margin-top: 8px; margin-left: 20px;">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log out
-                        </button>
-                    </form>
-                </li>
-            </ul>
+    </nav>
+
+    <div class="row" id="welcome">
+        <div class="col-12">
+            <h1>Search</h1>
+
+            <p class="lead">Search for <strong>Duke Encounters</strong> that have been reported in the past.</p>
         </div>
     </div>
-</nav>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Search</h1>
-
-        <p>Search for <strong>Duke Encounters</strong> that have been reported in the past.</p>
+    <div class="row" id="searchForm">
+        <div class="col-12">
+            <form class="form-horizontal" action="#" th:action="@{/encounters}" th:object="${searchFilter}"
+                  method="post"
+                  role="form">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
+                        Validation error
+                    </p>
+                </div>
+                <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="event">Event</label>
+                    <div class="col-sm-10">
+                        <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}"
+                               class="form-control" placeholder="Event"/>
+                    </div>
+                </div>
+                <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="location">Location</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="location" name="location" th:field="*{location}" class="form-control"
+                               placeholder="Location"/>
+                    </div>
+                </div>
+                <div th:class="${#fields.hasErrors('country')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="country">Country</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="country" name="country" th:field="*{country}" class="form-control"
+                               placeholder="Country"/>
+                    </div>
+                </div>
+                <div th:class="${#fields.hasErrors('year')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="year">Year</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="year" name="year" th:field="*{year}" class="form-control"
+                               placeholder="Year"/>
+                    </div>
+                    <div class="col-sm-8"></div>
+                </div>
+                <div th:class="${#fields.hasErrors('likelihood')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="likelihood">Likelihood</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" id="likelihood" name="likelihood">
+                            <option th:each="value : ${T(de.dominikschadow.duke.encounters.domain.Likelihood).values()}"
+                                    th:value="${value}"
+                                    th:text="${value.name}"
+                                    th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-8"></div>
+                </div>
+                <div th:class="${#fields.hasErrors('confirmations')} ? 'form-group has-error has-feedback' : 'form-group'">
+                    <label class="col-sm-2 control-label" for="confirmations">Confirmations</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" id="confirmations" name="confirmations">
+                            <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"
+                                    th:selected="${ i==0 } ">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default pull-right">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <form class="form-horizontal" action="#" th:action="@{/encounters}" th:object="${searchFilter}" method="post"
-          role="form">
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-            <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
-                Validation error
-            </p>
-        </div>
-        <div th:class="${#fields.hasErrors('event')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="event">Event</label>
-            <div class="col-sm-10">
-                <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}"
-                       class="form-control" placeholder="Event"/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h6>Duke Encounters</h6>
+                <p>The leading online platform for Java Duke spotting.</p>
             </div>
-        </div>
-        <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="location">Location</label>
-            <div class="col-sm-10">
-                <input type="text" id="location" name="location" th:field="*{location}" class="form-control"
-                       placeholder="Location"/>
+            <div class="col-sm-4">
+                <h6>About</h6>
+                <p>The application is developed by <a href="http://www.dominikschadow.de" target="_blank">Dominik
+                    Schadow</a>, source code is available on <a
+                        href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>.</p>
             </div>
-        </div>
-        <div th:class="${#fields.hasErrors('country')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="country">Country</label>
-            <div class="col-sm-10">
-                <input type="text" id="country" name="country" th:field="*{country}" class="form-control"
-                       placeholder="Country"/>
-            </div>
-        </div>
-        <div th:class="${#fields.hasErrors('year')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="year">Year</label>
             <div class="col-sm-2">
-                <input type="text" id="year" name="year" th:field="*{year}" class="form-control" placeholder="Year"/>
+                <h6>Navigation</h6>
+                <ul class="unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/account">Account</a></li>
+                </ul>
             </div>
-            <div class="col-sm-8"></div>
-        </div>
-        <div th:class="${#fields.hasErrors('likelihood')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="likelihood">Likelihood</label>
             <div class="col-sm-2">
-                <select class="form-control" id="likelihood" name="likelihood">
-                    <option th:each="value : ${T(de.dominikschadow.duke.encounters.domain.Likelihood).values()}"
-                            th:value="${value}"
-                            th:text="${value.name}"
-                            th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
-                </select>
-            </div>
-            <div class="col-sm-8"></div>
-        </div>
-        <div th:class="${#fields.hasErrors('confirmations')} ? 'form-group has-error has-feedback' : 'form-group'">
-            <label class="col-sm-2 control-label" for="confirmations">Confirmations</label>
-            <div class="col-sm-2">
-                <select class="form-control" id="confirmations" name="confirmations">
-                    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"
-                            th:selected="${ i==0 } ">
-                    </option>
-                </select>
-            </div>
-            <div class="col-sm-8"></div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-default pull-right">Search</button>
+                <h6>Follow me</h6>
+                <ul class="unstyled">
+                    <li><a href="http://www.dominikschadow.de" target="_blank">Blog</a></li>
+                    <li><a href="https://twitter.com/dschadow" target="_blank">Twitter</a></li>
+                    <li><a href="https://github.com/dschadow" target="_blank">GitHub</a></li>
+                </ul>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</footer>
 
+<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
