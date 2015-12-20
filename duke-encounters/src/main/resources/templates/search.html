@@ -53,7 +53,6 @@
                 <input type="text" autofocus="autofocus" id="event" name="event" th:field="*{event}"
                        class="form-control" placeholder="Event"/>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('location')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label class="col-sm-2 control-label" for="location">Location</label>
@@ -61,7 +60,6 @@
                 <input type="text" id="location" name="location" th:field="*{location}" class="form-control"
                        placeholder="Location"/>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('country')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label class="col-sm-2 control-label" for="country">Country</label>
@@ -69,14 +67,12 @@
                 <input type="text" id="country" name="country" th:field="*{country}" class="form-control"
                        placeholder="Country"/>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div th:class="${#fields.hasErrors('year')} ? 'form-group has-error has-feedback' : 'form-group'">
             <label class="col-sm-2 control-label" for="year">Year</label>
             <div class="col-sm-2">
                 <input type="text" id="year" name="year" th:field="*{year}" class="form-control" placeholder="Year"/>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
             <div class="col-sm-8"></div>
         </div>
         <div th:class="${#fields.hasErrors('likelihood')} ? 'form-group has-error has-feedback' : 'form-group'">
@@ -89,7 +85,6 @@
                             th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
                 </select>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
             <div class="col-sm-8"></div>
         </div>
         <div th:class="${#fields.hasErrors('confirmations')} ? 'form-group has-error has-feedback' : 'form-group'">
@@ -101,7 +96,6 @@
                     </option>
                 </select>
             </div>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
             <div class="col-sm-8"></div>
         </div>
         <div class="form-group">
