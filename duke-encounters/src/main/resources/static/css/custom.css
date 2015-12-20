@@ -40,3 +40,12 @@ ul.unstyled {
     list-style: none;
     padding: 0;
 }
+
+#encountersAndConfirmations {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+div.panel-text {
+    margin-top: 25px;
+}

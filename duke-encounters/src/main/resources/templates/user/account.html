@@ -72,103 +72,68 @@
         </div>
     </div>
 
-    <div class="row" id="failure">
+    <div class="row" id="operationResults">
         <div class="col-12">
             <p th:if="${confirmationFailure}" class="alert alert-danger" th:text="${confirmationFailure}"></p>
+            <p th:if="${dataUpdated}" class="alert alert-success" th:text="${dataUpdated}"></p>
+            <p th:if="${dataNotUpdated}" class="alert alert-danger" th:text="${dataNotUpdated}"></p>
         </div>
     </div>
 
     <div class="row" id="actions">
         <div class="col-12">
-            <h2>My Actions</h2>
-
-            <div th:if="${dataUpdated}" class="alert alert-success" role="alert" th:text="${dataUpdated}"></div>
-            <div th:if="${dataNotUpdated}" class="alert alert-danger" role="alert" th:text="${dataNotUpdated}"></div>
-
-            <a th:href="@{/encounter/create}" class="btn btn-default btn" aria-label="Add new Encounter">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </a>
-            <a th:href="@{/account/edit}" class="btn btn-default btn" aria-label="Edit Userdata">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            </a>
-            <a th:href="@{/account/password/edit}" class="btn btn-default btn" aria-label="Change Password">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
+            <a th:href="@{/account/edit}" class="btn btn-success">Edit Userdata</a>
+            <a th:href="@{/account/password/edit}" class="btn btn-success">Change Password</a>
         </div>
     </div>
 
-    <div class="row" id="encounter">
-        <div class="col-12">
-            <h2>My Encounters</h2>
+    <div class="row" id="encountersAndConfirmations">
+        <div class="col-sm-6 feature">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2 class="panel-title">My Encounters</h2>
+                </div>
 
-            <div class="col-sm-8">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="encounter : ${encounters}">
-                        <td th:text="${encounter.event}"></td>
-                        <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-                        <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
-                        <td>
-                            <a th:href="@{/encounters/{id}(id=${encounter.id},action='edit')}"
-                               class="btn btn-default btn-sm" aria-label="Edit Encounter">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
+                <div class="list-group">
+                    <a th:href="@{|/encounters/${encounter.id}|}" th:each="encounter : ${encounters}"
+                       class="list-group-item">
+                        <span class="badge" th:text="${encounter.confirmations.size()}"></span>
+                        <h4 class="list-group-item-heading">
+                            <span th:text="${encounter.event} + ' ('+ ${#calendars.format(encounter.date,'MM/dd/yyyy')} + ')'"></span>
+                        </h4>
+                        <p class="list-group-item-text">
+                            <span th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></span>
+                        </p>
+                    </a>
+                </div>
 
-                            <form action="#" th:action="@{/encounter/delete}" method="post">
-                                <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
-                                <button type="submit" class="btn btn-default btn-sm" aria-label="Delete Encounter">
-                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="panel-text">
+                    <a th:href="@{/encounter/create}" class="btn btn-success btn-block">Add Encounter</a>
+                </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
-    </div>
+        <div class="col-sm-6 feature">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2 class="panel-title">My Confirmations</h2>
+                </div>
 
-    <div class="row" id="confirmations">
-        <div class="col-12">
-            <h2>My Confirmations</h2>
+                <div class="list-group">
+                    <a th:href="@{|/encounters/${confirmation.encounter.id}|}" th:each="confirmation : ${confirmations}"
+                       class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                            <span th:text="${confirmation.encounter.event} + ' ('+ ${#calendars.format(confirmation.date,'MM/dd/yyyy')} + ')'"></span>
+                        </h4>
+                        <p class="list-group-item-text">
+                            <span th:text="${confirmation.encounter.location} + ' ('+ ${confirmation.encounter.country} + ')'"></span>
+                        </p>
+                    </a>
+                </div>
 
-            <div class="col-sm-8">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="confirmation : ${confirmations}">
-                        <td th:text="${confirmation.encounter.event}"></td>
-                        <td th:text="${confirmation.encounter.location} + ' ('+ ${confirmation.encounter.country} + ')'"></td>
-                        <td th:text="${#calendars.format(confirmation.date,'yyyy-MM-dd')}"></td>
-                        <td>
-                            <form th:action="@{/confirmations/revoke}" method="post">
-                                <input type="hidden" th:value="${confirmation.id}" th:name="confirmationId"/>
-                                <button type="submit" class="btn btn-default btn-sm" aria-label="Revoke Confirmation">
-                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="panel-text">
+                    <a th:href="@{/encounters}" class="btn btn-success btn-block">Add Confirmation</a>
+                </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
     </div>
 </div>

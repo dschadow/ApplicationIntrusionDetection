@@ -91,6 +91,17 @@
                     <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
                     <td th:text="${encounter.likelihood}"></td>
                     <td th:text="${encounter.comment}"></td>
+                    <!-- owner can delete
+                    <td>
+                        <form action="#" th:action="@{/encounter/delete}" method="post">
+                            <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    aria-label="Delete Encounter">
+                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </td>
+                    -->
                 </tr>
                 </tbody>
             </table>
@@ -104,6 +115,15 @@
             <p th:each="confirmation,iterStat : ${encounter.confirmations}">
                 <span th:text="${confirmation.user} + ' (' + ${#calendars.format(confirmation.date,'yyyy-MM-dd')} + ')'"></span><br/>
             </p>
+            <!-- owner can delete
+            <p class="list-group-item-text">
+            <form th:action="@{/confirmations/revoke}" method="post">
+                <input type="hidden" th:value="${confirmation.id}" th:name="confirmationId"/>
+                <button type="submit" class="btn btn-danger btn-sm pull-right" aria-label="Revoke Confirmation">
+                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                </button>
+            </form>
+            -->
         </div>
     </div>
 
