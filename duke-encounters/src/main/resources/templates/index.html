@@ -81,12 +81,14 @@
                     </h1>
 
                     <p class="lead">This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
-                        AppSensor</a> for Application Intrusion Detection. The application is developed by <a
-                            href="https://blog.dominikschadow.de" target="_blank">Dominik Schadow</a>, source code is
-                        available on
+                        AppSensor</a> for Application Intrusion Detection. It is using a <a
+                            href="http://www.h2database.com" target="_blank">h2</a> in-memory database to temporarily
+                        persist all information. Keep in mind that all entered information will be lost when restarting
+                        the application. The application is developed by <a href="http://www.dominikschadow.de"
+                                                                            target="_blank">Dominik Schadow</a>, source
+                        code is available on
                         <a href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>.
-                        This application is using an in-memory database to temporarily persist all information. Keep in
-                        mind that all entered information therefore will be lost when restarting the application.</p>
+                    </p>
                 </div>
             </div>
         </div>
@@ -133,7 +135,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-3 duke"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png" target="_blank"><img
+        <div class="col-sm-3 duke"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"
+                                      target="_blank"><img
                 th:src="@{img/duke-guitar.png}"
                 alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a>
         </div>
