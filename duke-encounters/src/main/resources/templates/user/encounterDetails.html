@@ -66,9 +66,7 @@
 
     <div class="row" id="welcome">
         <div class="col-12">
-            <h1>Encounter Details
-                <small th:text="${encounter.event}"></small>
-            </h1>
+            <h1 th:text="${encounter.event}"></h1>
         </div>
     </div>
 
@@ -81,16 +79,14 @@
                     <th>Country</th>
                     <th>Date</th>
                     <th>Likelihood</th>
-                    <th>Comment</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td th:text="${encounter.location}"></td>
                     <td th:text="${encounter.country}"></td>
-                    <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                    <td th:text="${#calendars.format(encounter.date,'MM/dd/yyyy')}"></td>
                     <td th:text="${encounter.likelihood}"></td>
-                    <td th:text="${encounter.comment}"></td>
                     <!-- owner can delete
                     <td>
                         <form action="#" th:action="@{/encounter/delete}" method="post">
@@ -105,6 +101,12 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div th:if="${!encounter.comment.isEmpty()}">
+                <h3>Comment</h3>
+
+                <p th:text="${encounter.comment}"></p>
+            </div>
         </div>
     </div>
 
@@ -113,8 +115,11 @@
             <h2>Confirmations</h2>
 
             <p th:each="confirmation,iterStat : ${encounter.confirmations}">
-                <span th:text="${confirmation.user} + ' (' + ${#calendars.format(confirmation.date,'yyyy-MM-dd')} + ')'"></span><br/>
+                <span th:text="${confirmation.user} + ' (' + ${#calendars.format(confirmation.date,'MM/dd/yyyy')} + ')'"></span><br/>
             </p>
+
+            <p th:if="${encounter.confirmations.isEmpty()}">Encounter not confirmed</p>
+
             <!-- owner can delete
             <p class="list-group-item-text">
             <form th:action="@{/confirmations/revoke}" method="post">
@@ -127,9 +132,9 @@
         </div>
     </div>
 
-    <div class="row" id="back">
+    <div class="row" id="actions" style="margin-bottom: 20px;">
         <div class="col-12">
-            <p><a th:href="@{/encounters}">Back to encounters</a></p>
+            <a th:href="@{/encounters}" class="btn btn-success">Back</a>
         </div>
     </div>
 </div>
