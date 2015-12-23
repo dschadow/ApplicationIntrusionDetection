@@ -49,3 +49,10 @@ ul.unstyled {
 div.panel-text {
     margin-top: 25px;
 }
+
+.btn-success, .btn-success.active, .btn-success:active, .btn-success:hover, .btn-success.focus, .btn-success:focus, .btn-success:active:hover,
+.btn-success.active:hover, .btn-success:active:focus, .btn-success.active:focus, .btn-success:active.focus, .btn-success.active.focus,
+.btn-success.disabled:hover, .btn-success[disabled]:hover, .btn-success.disabled:focus, .btn-success[disabled]:focus,
+.btn-success.disabled.focus, .btn-success[disabled].focus {
+    background-color: #337ab7;
+}
