@@ -44,7 +44,8 @@ public class DukeEncountersUser {
     @NotBlank(message = "Your username is required")
     @Column(nullable = false)
     private String username;
-    @Email(message = "Your email address is required")
+    @NotBlank(message = "Your email address is required")
+    @Email
     @Column(nullable = false)
     private String email;
     @Length(min = 10, max = 1024, message = "A password is required and must contain between 10 and 60 characters")
