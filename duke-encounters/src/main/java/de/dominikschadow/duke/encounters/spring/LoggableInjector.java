@@ -31,12 +31,12 @@ import org.springframework.util.ReflectionUtils;
 @Service
 public class LoggableInjector implements BeanPostProcessor {
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
         return bean;
     }
 
     @Override
-    public Object postProcessBeforeInitialization(final Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(final Object bean, String beanName) {
         ReflectionUtils.doWithFields(bean.getClass(), field -> {
             ReflectionUtils.makeAccessible(field);
             if (field.getAnnotation(Loggable.class) != null) {
