@@ -111,7 +111,7 @@
                                                                              th:text="${encounter.event}"></a></td>
                             <td th:if="${#httpServletRequest.remoteUser == null}" th:text="${encounter.event}"></td>
                             <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-                            <td th:text="${#calendars.format(encounter.date,'yyyy-MM-dd')}"></td>
+                            <td th:text="${#calendars.format(encounter.date,'MM/dd/yyyy')}"></td>
                             <td>
                         <span th:each="confirmation,iterStat : ${encounter.confirmations}">
                             <span th:text="${confirmation.user}"></span>
