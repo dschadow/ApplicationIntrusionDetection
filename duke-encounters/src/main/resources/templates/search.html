@@ -83,8 +83,7 @@
     <div class="row" id="searchForm">
         <div class="col-12">
             <form class="form-horizontal" action="#" th:action="@{/encounters}" th:object="${searchFilter}"
-                  method="post"
-                  role="form">
+                  method="post" role="form">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
                         Validation error
