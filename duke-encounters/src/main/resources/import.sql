@@ -27,7 +27,7 @@ INSERT INTO users (id, firstname, lastname, email, username, password, registrat
 INSERT INTO users (id, firstname, lastname, email, username, password, registration_date, level, enabled) VALUES (12, 'admin', '', 'admin@admin.de', 'admin', '$2a$10$VwZT7zd.Cx/dEeVvUCwP3.TW9Dax69Y.TM1DVavSMmbE8IlJyNWIe', '2015-01-01 08:08:08', 'ADMIN', TRUE);
 
 -- ENCOUNTERS
-INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', '', '1996-05-31', 5);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (1, 'JavaOne 1996', 'San Francisco', 'USA', 'The first JavaOne!', '1996-05-31', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (2, 'JavaOne 1997', 'San Francisco', 'USA', '', '1997-04-04', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (3, 'JavaOne 1998', 'San Francisco', 'USA', '', '1998-03-01', 5);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (4, 'JavaOne 1999', 'San Francisco', 'USA', '', '1999-10-01', 5);
@@ -46,7 +46,7 @@ INSERT INTO encounters (id, event, location, country, comment, date, user_id) VA
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (17, 'JavaOne 2012', 'San Francisco', 'USA', '', '2012-10-01', 1);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (18, 'JavaOne 2013', 'San Francisco', 'USA', '', '2013-09-22', 2);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (19, 'JavaOne 2014', 'San Francisco', 'USA', '', '2014-09-30', 1);
-INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (20, 'JavaOne 2015', 'San Francisco', 'USA', '', '2015-10-26', 11);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (20, 'JavaOne 2015', 'San Francisco', 'USA', '20 years of Java!', '2015-10-26', 11);
 
 -- CONFIRMATIONS
 INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (1, 2, 19, '2014-09-30');
