@@ -82,46 +82,57 @@
 
     <div class="row" id="register">
         <div class="col-12">
-            <form action="#" th:action="@{/register}" th:object="${dukeEncountersUser}" method="post" role="form">
+            <form class="form-horizontal" action="#" th:action="@{/register}" th:object="${dukeEncountersUser}"
+                  method="post" role="form">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
                         Validation error
                     </p>
                 </div>
+
                 <div th:class="${#fields.hasErrors('firstname')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="firstname">Firstname</label>
-                    <input type="text" autofocus="autofocus" id="firstname" name="firstname" th:field="*{firstname}"
-                           class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="firstname">Firstname</label>
+                    <div class="col-sm-10">
+                        <input type="text" autofocus="autofocus" id="firstname" name="firstname" th:field="*{firstname}"
+                               class="form-control"/>
+                    </div>
                 </div>
                 <div th:class="${#fields.hasErrors('lastname')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="lastname">Lastname</label>
-                    <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="lastname">Lastname</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control"/>
+                    </div>
                 </div>
                 <div th:class="${#fields.hasErrors('username')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" th:field="*{username}" class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="username">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="username" name="username" th:field="*{username}" class="form-control"/>
+                    </div>
                 </div>
                 <div th:class="${#fields.hasErrors('email')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" th:field="*{email}" class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="email">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="email" name="email" th:field="*{email}" class="form-control"/>
+                    </div>
                 </div>
                 <div th:class="${#fields.hasErrors('password')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" th:field="*{password}" class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="password">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="password" name="password" th:field="*{password}"
+                               class="form-control"/>
+                    </div>
                 </div>
                 <div th:class="${#fields.hasErrors('confirmPassword')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label for="confirmPassword">Confirm password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}"
-                           class="form-control"/>
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <label class="col-sm-2 control-label" for="confirmPassword">Confirm password</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}"
+                               class="form-control"/>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Create User</button>
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success pull-right">Create User</button>
+                    </div>
                 </div>
             </form>
         </div>
