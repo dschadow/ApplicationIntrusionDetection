@@ -54,15 +54,15 @@ public class PasswordChangeValidator implements Validator {
 
         if (!userService.confirmPassword(passwordChange.getCurrentPassword())) {
             errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants
-                    .PASSWORD_NOT_CORRECT_ERROR_MESSAGE);
+                    .NOT_CORRECT_PASSWORD_ERROR_MESSAGE);
         }
 
         if (StringUtils.length(passwordChange.getNewPassword()) < 10) {
-            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_UNSAFE_ERROR_MESSAGE);
+            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.UNSAFE_PASSWORD_ERROR_MESSAGE);
         }
 
         if (!passwordChange.getNewPassword().equals(passwordChange.getNewPasswordConfirmation())) {
-            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORD_MATCH_ERROR_MESSAGE);
+            errors.rejectValue("newPassword", Constants.PASSWORD_ERROR_CODE, Constants.PASSWORDS_DONT_MATCH_ERROR_MESSAGE);
         }
     }
 }

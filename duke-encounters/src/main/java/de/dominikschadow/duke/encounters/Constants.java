@@ -34,16 +34,16 @@ public class Constants {
     /**
      * Error message for not matching passwords (password and confirmation), value is {@value}.
      */
-    public static final String PASSWORD_MATCH_ERROR_MESSAGE = "The entered passwords don't match";
+    public static final String PASSWORDS_DONT_MATCH_ERROR_MESSAGE = "The entered passwords don't match";
     /**
      * Error message for an unsafe password, value is {@value}.
      */
-    public static final String PASSWORD_UNSAFE_ERROR_MESSAGE = "The entered is not safe, it must contain at least 10 " +
+    public static final String UNSAFE_PASSWORD_ERROR_MESSAGE = "The entered is not safe, it must contain at least 10 " +
             "characters";
     /**
      * Error message if the current password is not correct, value is {@value}.
      */
-    public static final String PASSWORD_NOT_CORRECT_ERROR_MESSAGE = "Your current password is not correct.";
+    public static final String NOT_CORRECT_PASSWORD_ERROR_MESSAGE = "Your current password is not correct.";
     /**
      * Error message for an invalid value, value is {@value}.
      */
