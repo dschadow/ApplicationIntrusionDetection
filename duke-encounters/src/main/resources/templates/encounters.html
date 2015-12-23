@@ -76,8 +76,8 @@
         <div class="col-12">
             <h1>Encounters</h1>
 
-            <p class="lead">View the <strong>Duke Encounters</strong> that match your search criteria. You can add a new
-                encounter or confirm an existing one.</p>
+            <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a
+                    href="/encounter/create">Create</a> a new one.</p>
 
             <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">Participating requires that you log into
                 the application. Event and user details are only visible after login.</p>
@@ -88,9 +88,6 @@
         <div class="col-12">
             <div th:if="${encounterFailure}" class="alert alert-warning" role="alert"
                  th:text="${encounterFailure}"></div>
-
-            <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a
-                    href="/encounter/create">Create</a> a new one.</p>
 
             <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong>
                 returned the following results:</p>
