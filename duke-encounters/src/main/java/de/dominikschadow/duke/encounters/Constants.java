@@ -24,31 +24,6 @@ package de.dominikschadow.duke.encounters;
  */
 public class Constants {
     /**
-     * Error message for XSS payload, value is {@value}.
-     */
-    public static final String XSS_ERROR_MESSAGE = "This application is XSS bulletproof!";
-    /**
-     * Error message for SQL injection payload, value is {@value}.
-     */
-    public static final String SQLI_ERROR_MESSAGE = "This application is SQL Injection bulletproof!";
-    /**
-     * Error message for not matching passwords (password and confirmation), value is {@value}.
-     */
-    public static final String PASSWORDS_DONT_MATCH_ERROR_MESSAGE = "The entered passwords don't match";
-    /**
-     * Error message for an unsafe password, value is {@value}.
-     */
-    public static final String UNSAFE_PASSWORD_ERROR_MESSAGE = "The entered is not safe, it must contain at least 10 " +
-            "characters";
-    /**
-     * Error message if the current password is not correct, value is {@value}.
-     */
-    public static final String NOT_CORRECT_PASSWORD_ERROR_MESSAGE = "Your current password is not correct.";
-    /**
-     * Error message for an invalid value, value is {@value}.
-     */
-    public static final String INVALID_VALUE_ERROR_MESSAGE = "This is not a valid value";
-    /**
      * XSS error code, value is {@value}.
      */
     public static final String XSS_ERROR_CODE = "xss.attempt";
@@ -57,16 +32,24 @@ public class Constants {
      */
     public static final String SQLI_ERROR_CODE = "sqli.attempt";
     /**
-     * General error code, value is {@value}.
+     * Invalid value error code, value is {@value}.
      */
-    public static final String ATTACK_ERROR_CODE = "attack.attempt";
+    public static final String ATTACK_ERROR_CODE = "invalid.value";
     /**
      * Passwords don't match error code, value is {@value}.
      */
-    public static final String PASSWORD_ERROR_CODE = "error.password";
+    public static final String PASSWORDS_DONT_MATCH_ERROR_CODE = "password.nomatch";
+    /**
+     * The new password is not safe, value is {@value}.
+     */
+    public static final String UNSAFE_PASSWORD_ERROR_CODE = "password.unsafe";
+    /**
+     * The current password is not correct, value is {@value}.
+     */
+    public static final String CURRENT_PASSWORD_NOT_CORRECT_ERROR_CODE = "password.incorrect";
     /**
      * Like for SQL queries, value is {@value}.
-      */
+     */
     public static final String LIKE = "%";
 
     private Constants() {

@@ -24,8 +24,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.validation.Validator;
+import java.util.Locale;
 
 /**
  * Spring configuration file.
@@ -49,5 +52,12 @@ public class WebConfig {
     public DetectionSystem detectionSystem(AppSensorClient appSensorClient) {
         return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
                 .getClientApplicationIdentificationHeaderValue());
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.US);
+        return slr;
     }
 }

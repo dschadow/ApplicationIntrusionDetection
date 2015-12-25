@@ -72,26 +72,26 @@ public class SearchFilterValidator implements Validator {
 
         if (securityValidationService.hasXssPayload(filter.getEvent())) {
             fireXssEvent();
-            errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("event", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
             fireSqlIEvent();
-            errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("event", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(filter.getLocation())) {
             fireXssEvent();
-            errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("location", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
             fireSqlIEvent();
-            errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("location", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(filter.getCountry())) {
             fireXssEvent();
-            errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("country", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
             fireSqlIEvent();
-            errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
         }
 
         if (filter.getYear() < 1995) {
@@ -106,14 +106,14 @@ public class SearchFilterValidator implements Validator {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
                     filter.getLikelihood());
             fireInvalidValueEvent();
-            errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE, Constants.INVALID_VALUE_ERROR_MESSAGE);
+            errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE);
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
             fireInvalidValueEvent();
-            errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE, Constants.INVALID_VALUE_ERROR_MESSAGE);
+            errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE);
         }
     }
 

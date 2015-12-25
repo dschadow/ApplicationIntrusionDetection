@@ -66,34 +66,34 @@ public class EncounterValidator implements Validator {
 
         if (securityValidationService.hasXssPayload(encounter.getEvent())) {
             fireXssEvent();
-            errors.rejectValue("event", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("event", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(encounter.getEvent())) {
             fireSqlIEvent();
-            errors.rejectValue("event", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("event", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(encounter.getLocation())) {
             fireXssEvent();
-            errors.rejectValue("location", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("location", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(encounter.getLocation())) {
             fireSqlIEvent();
-            errors.rejectValue("location", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("location", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(encounter.getCountry())) {
             fireXssEvent();
-            errors.rejectValue("country", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("country", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(encounter.getCountry())) {
             fireSqlIEvent();
-            errors.rejectValue("country", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(encounter.getComment())) {
             fireXssEvent();
-            errors.rejectValue("comment", Constants.XSS_ERROR_CODE, Constants.XSS_ERROR_MESSAGE);
+            errors.rejectValue("comment", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(encounter.getComment())) {
             fireSqlIEvent();
-            errors.rejectValue("comment", Constants.SQLI_ERROR_CODE, Constants.SQLI_ERROR_MESSAGE);
+            errors.rejectValue("comment", Constants.SQLI_ERROR_CODE);
         }
     }
 
