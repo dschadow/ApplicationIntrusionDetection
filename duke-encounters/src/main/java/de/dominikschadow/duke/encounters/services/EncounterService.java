@@ -111,11 +111,15 @@ public class EncounterService {
         }
         specifications.add(EncounterSpecification.encounterByCountry(country));
 
-        int year = 1995;
-        if (filter.getYear() > 0) {
-            year = filter.getYear();
+        try {
+            int year = Integer.parseInt(filter.getYear());
+
+            if (year > 1995) {
+                specifications.add(EncounterSpecification.encounterAfterYear(year));
+            }
+        } catch (NumberFormatException ex) {
+            logger.info("{} is not a valid year", filter.getYear());
         }
-        specifications.add(EncounterSpecification.encounterAfterYear(year));
 
         //specifications.add(EncounterSpecification.encounterByLikelihood(Likelihood.fromString(filter.getLikelihood
         // ())));
@@ -123,7 +127,7 @@ public class EncounterService {
         //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
         return repository.findAll(where(specifications.get(0)).and(specifications.get
-                (1)).and(specifications.get(2)).and(specifications.get(3)));
+                (1)).and(specifications.get(2)));
     }
 
     public Encounter getEncounterById(@NotNull long id) {

@@ -28,7 +28,7 @@ public class SearchFilter {
     private String event;
     private String location;
     private String country;
-    private int year = 1995;
+    private String year;
     private String likelihood;
     private int confirmations;
 
@@ -56,11 +56,11 @@ public class SearchFilter {
         this.country = country;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -98,7 +98,7 @@ public class SearchFilter {
             searchFilterString.append(getCountry());
             searchFilterString.append(", ");
         }
-        if (getYear() > 0) {
+        if (!Strings.isNullOrEmpty(getYear())) {
             searchFilterString.append("Year: ");
             searchFilterString.append(getYear());
             searchFilterString.append(", ");

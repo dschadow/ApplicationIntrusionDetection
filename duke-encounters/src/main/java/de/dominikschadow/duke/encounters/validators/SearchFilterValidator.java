@@ -94,10 +94,24 @@ public class SearchFilterValidator implements Validator {
             errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
         }
 
-        if (filter.getYear() < 1995) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo", filter
-                    .getYear());
-            errors.rejectValue("year", "warning", "Java did not exist before 1995");
+        if (securityValidationService.hasXssPayload(filter.getYear())) {
+            fireXssEvent();
+            errors.rejectValue("year", Constants.XSS_ERROR_CODE);
+        } else if (securityValidationService.hasSqlIPayload(filter.getYear())) {
+            fireSqlIEvent();
+            errors.rejectValue("year", Constants.SQLI_ERROR_CODE);
+        } else {
+            try {
+                int year = Integer.parseInt(filter.getYear());
+
+                if (year < 1995) {
+                    logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo", filter
+                            .getYear());
+                    errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
+                }
+            } catch (NumberFormatException ex) {
+                errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
+            }
         }
 
         try {

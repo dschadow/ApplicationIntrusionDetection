@@ -36,6 +36,10 @@ public class Constants {
      */
     public static final String ATTACK_ERROR_CODE = "invalid.value";
     /**
+     * Invalid year error code, value is {@value}.
+     */
+    public static final String INVALID_YEAR_ERROR_CODE = "invalid.year";
+    /**
      * Passwords don't match error code, value is {@value}.
      */
     public static final String PASSWORDS_DONT_MATCH_ERROR_CODE = "password.nomatch";
