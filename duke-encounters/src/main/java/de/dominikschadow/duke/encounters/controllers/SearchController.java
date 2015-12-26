@@ -78,7 +78,7 @@ public class SearchController {
         modelMap.put("encounters", encounters);
         modelMap.put("searchFilter", searchFilter);
 
-        return new ModelAndView("encounter", modelMap);
+        return new ModelAndView("encounters", modelMap);
     }
 
     @InitBinder
