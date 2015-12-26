@@ -57,7 +57,7 @@ public class ConfirmationController {
     @Autowired
     private EventManager ids;
 
-    @RequestMapping(value = "/confirmations/add", method = POST)
+    @RequestMapping(value = "/confirmation/add", method = POST)
     public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
 
@@ -90,7 +90,7 @@ public class ConfirmationController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/confirmations/revoke", method = POST)
+    @RequestMapping(value = "/confirmation/revoke", method = POST)
     public ModelAndView revokeConfirmation(long confirmationId) {
         String username = userService.getUsername();
 

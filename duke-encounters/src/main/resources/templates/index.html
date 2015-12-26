@@ -26,7 +26,7 @@
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/encounter">Encounters</a></li>
                     <li><a href="/search">Search</a></li>
                 </ul>
 
@@ -51,10 +51,10 @@
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                            <li><a href="/encounter?type=own"><span class="glyphicon glyphicon-camera"></span> My
                                 Encounters</a>
                             </li>
-                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                            <li><a href="/confirmation?type=own"><span class="glyphicon glyphicon-tags"></span> My
                                 Confirmations</a>
                             </li>
                             <li class="divider"></li>
@@ -96,9 +96,9 @@
         <div class="col-12">
             <h2>Latest Encounters</h2>
 
-            <p class="lead"><a href="encounters">View all</a> encounters or <a href="search">search</a> for the ones you
+            <p class="lead"><a href="/encounter">View all</a> encounters or <a href="/search">search</a> for the ones you
                 are interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a
-                        href="register">register</a> or <a href="login">login</a> to contribute.</span>
+                        href="/register">register</a> or <a href="/login">login</a> to contribute.</span>
             </p>
         </div>
     </div>
@@ -117,7 +117,7 @@
                 </li>
             </ul>
             <div th:if="${#httpServletRequest.remoteUser}" class="list-group">
-                <a th:href="@{|/encounters/${encounter.id}|}" th:each="encounter : ${encounters}"
+                <a th:href="@{|/encounter/${encounter.id}|}" th:each="encounter : ${encounters}"
                    class="list-group-item">
                     <span class="badge" th:text="${encounter.confirmations.size()}"></span>
                     <h4 class="list-group-item-heading">
@@ -154,7 +154,7 @@
                 <h6>Navigation</h6>
                 <ul class="unstyled">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/encounter">Encounter</a></li>
                     <li><a href="/search">Search</a></li>
                     <li><a href="/account">Account</a></li>
                 </ul>

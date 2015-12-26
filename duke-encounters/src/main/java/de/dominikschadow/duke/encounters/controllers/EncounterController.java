@@ -68,7 +68,7 @@ public class EncounterController {
     @Autowired
     private EventManager ids;
 
-    @RequestMapping(value = "/encounters", method = GET)
+    @RequestMapping(value = "/encounter", method = GET)
     public String allEncounters(Model model) {
         List<Encounter> encounters = encounterService.getAllEncounters();
         model.addAttribute("encounters", encounters);
@@ -113,7 +113,7 @@ public class EncounterController {
         return new ModelAndView("redirect:/account");
     }
 
-    @RequestMapping(value = "/encounters/{id}", method = GET)
+    @RequestMapping(value = "/encounter/{id}", method = GET)
     public String encounterById(@PathVariable("id") long encounterId, Model model, RedirectAttributes
             redirectAttributes) {
         String username = userService.getUsername();
@@ -125,7 +125,7 @@ public class EncounterController {
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure");
 
-            return "redirect:/encounters";
+            return "redirect:/encounter";
         }
 
         Encounter encounter = encounterService.getEncounterById(encounterId);
@@ -137,7 +137,7 @@ public class EncounterController {
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure");
 
-            return "redirect:/encounters";
+            return "redirect:/encounter";
         }
 
         model.addAttribute("encounter", encounter);

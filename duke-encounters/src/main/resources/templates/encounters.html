@@ -26,7 +26,7 @@
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/encounters">Encounters</a></li>
+                    <li class="active"><a href="/encounter">Encounters</a></li>
                     <li><a href="/search">Search</a></li>
                 </ul>
 
@@ -51,10 +51,10 @@
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                            <li><a href="/encounter?type=own"><span class="glyphicon glyphicon-camera"></span> My
                                 Encounters</a>
                             </li>
-                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                            <li><a href="/confirmation?type=own"><span class="glyphicon glyphicon-tags"></span> My
                                 Confirmations</a>
                             </li>
                             <li class="divider"></li>
@@ -111,7 +111,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="encounter : ${encounters}">
-                            <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounters/${encounter.id}|}"
+                            <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounter/${encounter.id}|}"
                                                                              th:text="${encounter.event}"></a></td>
                             <td th:if="${#httpServletRequest.remoteUser == null}" th:text="${encounter.event}"></td>
                             <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
@@ -124,7 +124,7 @@
                             </td>
                             <td th:text="${encounter.likelihood}"></td>
                             <td th:if="${#httpServletRequest.remoteUser}">
-                                <form th:action="@{/confirmations/add}" method="post">
+                                <form th:action="@{/confirmation/add}" method="post">
                                     <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
                                     <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
                                         <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
@@ -157,7 +157,7 @@
                 <h6>Navigation</h6>
                 <ul class="unstyled">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/encounters">Encounters</a></li>
+                    <li><a href="/encounter">Encounter</a></li>
                     <li><a href="/search">Search</a></li>
                     <li><a href="/account">Account</a></li>
                 </ul>
