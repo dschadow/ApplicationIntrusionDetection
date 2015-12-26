@@ -80,8 +80,8 @@
             <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a
                     href="/encounter/create">Create</a> a new one.</p>
 
-            <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">Participating requires that you log into
-                the application. Event and user details are only visible after login.</p>
+            <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">Event and confirmation details are only
+                visible after <a href="/login">login</a>.</p>
         </div>
     </div>
 
