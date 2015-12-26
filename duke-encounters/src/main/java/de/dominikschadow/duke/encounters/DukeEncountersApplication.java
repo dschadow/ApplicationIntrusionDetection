@@ -20,6 +20,11 @@ package de.dominikschadow.duke.encounters;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Main class to start the embedded web server and the Duke Encounters application.
+ *
+ * @author Dominik Schadow
+ */
 @SpringBootApplication
 public class DukeEncountersApplication {
     public static void main(String[] args) {
