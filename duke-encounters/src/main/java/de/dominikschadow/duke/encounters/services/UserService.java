@@ -66,7 +66,6 @@ public class UserService {
      */
     public DukeEncountersUser createUser(@NotNull DukeEncountersUser newUser) {
         logger.info("Creating user with username {}", newUser.getEmail());
-
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
 
         newUser.setEnabled(true);
@@ -74,11 +73,6 @@ public class UserService {
         newUser.setRegistrationDate(new Date());
         newUser.setAuthority(authority);
         newUser.setPassword(hashPassword(newUser.getPassword()));
-
-        if (userRepository.findByUsername(newUser.getUsername()) != null) {
-            logger.error("User with username {} already exists", newUser.getUsername());
-            return null;
-        }
 
         DukeEncountersUser user = userRepository.save(newUser);
 
@@ -94,6 +88,10 @@ public class UserService {
 
     public boolean confirmPassword(@NotNull String password) {
         return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
+    }
+
+    public DukeEncountersUser findUser(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public String getUsername() {

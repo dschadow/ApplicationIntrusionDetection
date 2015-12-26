@@ -52,6 +52,10 @@ public class Constants {
      */
     public static final String CURRENT_PASSWORD_NOT_CORRECT_ERROR_CODE = "password.incorrect";
     /**
+     * The entered username already exists, value is {@value}.
+     */
+    public static final String USERNAME_ALREADY_EXISTS = "username.exists";
+    /**
      * Like for SQL queries, value is {@value}.
      */
     public static final String LIKE = "%";

@@ -21,10 +21,12 @@ import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -42,6 +44,8 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  */
 @Named
 public class DukeEncountersUserValidator implements Validator {
+    @Loggable
+    private Logger logger;
     @Autowired
     private SpringValidatorAdapter validator;
     @Autowired
@@ -98,6 +102,11 @@ public class DukeEncountersUserValidator implements Validator {
 
         if (!user.getPassword().equals(user.getConfirmPassword())) {
             errors.rejectValue("password", Constants.PASSWORDS_DONT_MATCH_ERROR_CODE);
+        }
+
+        if (userService.findUser(user.getUsername()) != null) {
+            logger.error("User with username {} already exists", user.getUsername());
+            errors.rejectValue("username", Constants.USERNAME_ALREADY_EXISTS);
         }
     }
 
