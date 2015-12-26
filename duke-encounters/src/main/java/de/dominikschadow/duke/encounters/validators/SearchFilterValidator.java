@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.validators;
 
+import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
@@ -101,16 +102,18 @@ public class SearchFilterValidator implements Validator {
             fireSqlIEvent();
             errors.rejectValue("year", Constants.SQLI_ERROR_CODE);
         } else {
-            try {
-                int year = Integer.parseInt(filter.getYear());
+            if (!Strings.isNullOrEmpty(filter.getYear())) {
+                try {
+                    int year = Integer.parseInt(filter.getYear());
 
-                if (year < 1995) {
-                    logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo", filter
-                            .getYear());
+                    if (year < 1995) {
+                        logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
+                                filter.getYear());
+                        errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
+                    }
+                } catch (NumberFormatException ex) {
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
                 }
-            } catch (NumberFormatException ex) {
-                errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
             }
         }
 
