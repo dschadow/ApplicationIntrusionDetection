@@ -113,7 +113,7 @@ public class AccountController {
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
-        redirectAttributes.addFlashAttribute("dataUpdated");
+        redirectAttributes.addFlashAttribute("dataUpdated", true);
 
         return new ModelAndView("redirect:/account");
     }
@@ -135,9 +135,9 @@ public class AccountController {
 
             logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
-            redirectAttributes.addFlashAttribute("dataUpdated");
+            redirectAttributes.addFlashAttribute("dataUpdated", true);
         } else {
-            redirectAttributes.addFlashAttribute("dataNotUpdated");
+            redirectAttributes.addFlashAttribute("dataNotUpdated", true);
         }
 
         return new ModelAndView("redirect:/account");

@@ -123,7 +123,7 @@ public class EncounterController {
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();
-            redirectAttributes.addFlashAttribute("encounterFailure");
+            redirectAttributes.addFlashAttribute("encounterFailure", true);
 
             return "redirect:/encounter";
         }
@@ -135,7 +135,7 @@ public class EncounterController {
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();
-            redirectAttributes.addFlashAttribute("encounterFailure");
+            redirectAttributes.addFlashAttribute("encounterFailure", true);
 
             return "redirect:/encounter";
         }

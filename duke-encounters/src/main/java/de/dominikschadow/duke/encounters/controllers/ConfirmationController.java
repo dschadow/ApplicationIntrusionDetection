@@ -61,33 +61,25 @@ public class ConfirmationController {
     public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/account");
-
         if (encounterService.isOwnEncounter(encounterId, username)) {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     username, encounterId);
 
             fireConfirmationErrorEvent();
-            redirectAttributes.addFlashAttribute("ownEncounter");
-
-            return modelAndView;
-        }
-
-        if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
+            redirectAttributes.addFlashAttribute("ownEncounter", true);
+        } else if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
             logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
                     "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
-            redirectAttributes.addFlashAttribute("secondConfirm");
+            redirectAttributes.addFlashAttribute("secondConfirm", true);
+        } else {
+            confirmationService.addConfirmation(username, encounterId);
 
-            return modelAndView;
+            logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
         }
 
-        confirmationService.addConfirmation(username, encounterId);
-
-        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
-
-        return modelAndView;
+        return new ModelAndView("redirect:/account");
     }
 
     @RequestMapping(value = "/confirmation/revoke", method = POST)
