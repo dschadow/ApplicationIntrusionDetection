@@ -66,6 +66,13 @@ public class SearchController {
         return "search";
     }
 
+    /**
+     * Search the encounters based on the given search filter.
+     *
+     * @param searchFilter The search filter identifying encounters
+     * @param result BindingResult
+     * @return ModelAndView with encounters URL and a model map
+     */
     @RequestMapping(value = "/encounter", method = POST)
     public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
         if (result.hasErrors()) {
