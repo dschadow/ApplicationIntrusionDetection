@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -79,8 +81,7 @@ public class PasswordController {
      * @return Account page
      */
     @RequestMapping(value = "/account/password/update", method = POST)
-    public ModelAndView updatePassword(@ModelAttribute PasswordChange update, RedirectAttributes
-            redirectAttributes, BindingResult result) {
+    public ModelAndView updatePassword(@Valid PasswordChange update, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
         }
