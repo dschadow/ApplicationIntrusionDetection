@@ -92,7 +92,7 @@ public class PasswordController {
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
 
-        redirectAttributes.addFlashAttribute("dataUpdated", "Password successfully changed.");
+        redirectAttributes.addFlashAttribute("dataUpdated");
 
         return new ModelAndView("redirect:/account");
     }

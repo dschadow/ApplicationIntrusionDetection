@@ -85,11 +85,14 @@
         </div>
     </div>
 
+    <div class="row" id="operationResults">
+        <div class="col-12">
+            <p th:if="${encounterFailure}" class="alert alert-danger">The requested encounter does not exist</p>
+        </div>
+    </div>
+
     <div class="row" id="encounters">
         <div class="col-12">
-            <div th:if="${encounterFailure}" class="alert alert-warning" role="alert"
-                 th:text="${encounterFailure}"></div>
-
             <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong>
                 returned the following results:</p>
 

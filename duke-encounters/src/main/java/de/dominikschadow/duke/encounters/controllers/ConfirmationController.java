@@ -68,8 +68,7 @@ public class ConfirmationController {
                     username, encounterId);
 
             fireConfirmationErrorEvent();
-            redirectAttributes.addFlashAttribute("confirmationFailure", "This is your own encounter and cannot be " +
-                    "confirmed by yourself.");
+            redirectAttributes.addFlashAttribute("ownEncounter");
 
             return modelAndView;
         }
@@ -79,8 +78,7 @@ public class ConfirmationController {
                     "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
-            redirectAttributes.addFlashAttribute("confirmationFailure", "You have already confirmed this encounter " +
-                    "and cannot confirm it again.");
+            redirectAttributes.addFlashAttribute("secondConfirm");
 
             return modelAndView;
         }

@@ -81,6 +81,13 @@
         </div>
     </div>
 
+    <div class="row" id="operationResults">
+        <div class="col-12">
+            <p th:if="${userCreated}" class="alert alert-success">User <strong th:text="${userCreated}"></strong>
+                successfully created, you can now use it to log in</p>
+        </div>
+    </div>
+
     <div class="row" id="login">
         <div class="col-12">
             <form class="form-horizontal" action="#" th:action="@{/login}" method="post" role="form">

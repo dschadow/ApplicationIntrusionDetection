@@ -123,7 +123,7 @@ public class EncounterController {
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();
-            redirectAttributes.addFlashAttribute("encounterFailure", "The requested encounter does not exist.");
+            redirectAttributes.addFlashAttribute("encounterFailure");
 
             return "redirect:/encounters";
         }
@@ -135,7 +135,7 @@ public class EncounterController {
                     username, encounterId);
 
             fireInvalidUrlParameterEvent();
-            redirectAttributes.addFlashAttribute("encounterFailure", "The requested encounter does not exist.");
+            redirectAttributes.addFlashAttribute("encounterFailure");
 
             return "redirect:/encounters";
         }

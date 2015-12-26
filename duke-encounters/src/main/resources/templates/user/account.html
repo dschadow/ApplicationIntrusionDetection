@@ -74,9 +74,12 @@
 
     <div class="row" id="operationResults">
         <div class="col-12">
-            <p th:if="${confirmationFailure}" class="alert alert-danger" th:text="${confirmationFailure}"></p>
-            <p th:if="${dataUpdated}" class="alert alert-success" th:text="${dataUpdated}"></p>
-            <p th:if="${dataNotUpdated}" class="alert alert-danger" th:text="${dataNotUpdated}"></p>
+            <p th:if="${ownEncounter}" class="alert alert-danger">This is your own encounter and cannot be
+                confirmed by yourself</p>
+            <p th:if="${secondConfirm}" class="alert alert-danger">You have already confirmed this encounter and cannot
+                confirm it again</p>
+            <p th:if="${dataUpdated}" class="alert alert-success">Data successfully updated</p>
+            <p th:if="${dataNotUpdated}" class="alert alert-danger">Data update failed</p>
         </div>
     </div>
 

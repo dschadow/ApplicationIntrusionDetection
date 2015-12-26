@@ -17,13 +17,13 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -113,7 +113,7 @@ public class AccountController {
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
-        redirectAttributes.addFlashAttribute("dataUpdated", "User data successfully updated.");
+        redirectAttributes.addFlashAttribute("dataUpdated");
 
         return new ModelAndView("redirect:/account");
     }
@@ -135,9 +135,9 @@ public class AccountController {
 
             logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
-            redirectAttributes.addFlashAttribute("dataUpdated", "Account data successfully updated.");
+            redirectAttributes.addFlashAttribute("dataUpdated");
         } else {
-            redirectAttributes.addFlashAttribute("dataNotUpdated", "Failed to update account data.");
+            redirectAttributes.addFlashAttribute("dataNotUpdated");
         }
 
         return new ModelAndView("redirect:/account");
@@ -171,8 +171,7 @@ public class AccountController {
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
         ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("userCreated", "User " + newUser.getUsername() + " successfully created, you can now " +
-                "use your new user to log in.");
+        modelAndView.addObject("userCreated", newUser.getUsername());
 
         return modelAndView;
     }
