@@ -7,10 +7,6 @@ body {
     margin-left: 20px;
 }
 
-#searchEncounterField {
-    width: 200px;
-}
-
 .well .page-header {
     margin-top: 0;
     margin-bottom: 0;
@@ -55,4 +51,12 @@ div.panel-text {
 .btn-success.disabled:hover, .btn-success[disabled]:hover, .btn-success.disabled:focus, .btn-success[disabled]:focus,
 .btn-success.disabled.focus, .btn-success[disabled].focus {
     background-color: #337ab7;
+}
+
+#searchEncounterField {
+    width: 200px;
+}
+
+#actions {
+    margin-bottom: 20px;
 }
