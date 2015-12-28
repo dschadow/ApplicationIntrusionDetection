@@ -101,19 +101,17 @@ public class SearchFilterValidator implements Validator {
         } else if (securityValidationService.hasSqlIPayload(filter.getYear())) {
             fireSqlIEvent();
             errors.rejectValue("year", Constants.SQLI_ERROR_CODE);
-        } else {
-            if (!Strings.isNullOrEmpty(filter.getYear())) {
-                try {
-                    int year = Integer.parseInt(filter.getYear());
+        } else if (!Strings.isNullOrEmpty(filter.getYear())) {
+            try {
+                int year = Integer.parseInt(filter.getYear());
 
-                    if (year < 1995) {
-                        logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
-                                filter.getYear());
-                        errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
-                    }
-                } catch (NumberFormatException ex) {
+                if (year < 1995) {
+                    logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
+                            filter.getYear());
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
                 }
+            } catch (NumberFormatException ex) {
+                errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
             }
         }
 
