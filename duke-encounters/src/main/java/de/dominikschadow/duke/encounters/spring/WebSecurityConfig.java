@@ -29,6 +29,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import javax.sql.DataSource;
 
@@ -66,7 +67,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .securityContext()
-                .securityContextRepository(securityContextRepository);
+                .securityContextRepository(securityContextRepository)
+                .and()
+            .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy","default-src 'self'"));
         // @formatter:on
     }
 
