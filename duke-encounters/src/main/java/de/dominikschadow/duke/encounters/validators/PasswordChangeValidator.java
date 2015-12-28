@@ -53,7 +53,7 @@ public class PasswordChangeValidator implements Validator {
         PasswordChange passwordChange = (PasswordChange) target;
 
         if (!userService.confirmPassword(passwordChange.getCurrentPassword())) {
-            errors.rejectValue("newPassword", Constants.CURRENT_PASSWORD_NOT_CORRECT_ERROR_CODE);
+            errors.rejectValue("currentPassword", Constants.CURRENT_PASSWORD_NOT_CORRECT_ERROR_CODE);
         }
 
         if (StringUtils.length(passwordChange.getNewPassword()) < 10) {
