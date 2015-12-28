@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.spring;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
