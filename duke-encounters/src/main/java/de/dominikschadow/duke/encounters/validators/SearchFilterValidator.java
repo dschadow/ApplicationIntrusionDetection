@@ -111,6 +111,7 @@ public class SearchFilterValidator implements Validator {
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
                 }
             } catch (NumberFormatException ex) {
+                logger.error(ex.getMessage(), ex);
                 errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
             }
         }
