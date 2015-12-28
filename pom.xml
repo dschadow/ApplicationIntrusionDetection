@@ -38,7 +38,9 @@
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection</connection>
+        <connection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</connection>
+        <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
+        <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
     </scm>
 
     <repositories>
