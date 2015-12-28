@@ -38,6 +38,7 @@ public class Authority {
     private String authority;
 
     public Authority() {
+        // required for JPA
     }
 
     public Authority(String username, String authority) {
