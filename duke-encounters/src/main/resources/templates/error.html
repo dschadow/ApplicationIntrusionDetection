@@ -7,19 +7,23 @@
     <title>Duke Encounters - Error</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
 </head>
-<body role="document">
-<div class="jumbotron">
-    <div class="container">
-        <h2>Something horrible just happened...</h2>
+<body>
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-12">
+            <h1>Something horrible just happened...</h1>
+
+            <p class="lead" th:text="${errorCode}"></p>
+
+            <p class="lead" th:text="${errorMessage}"></p>
+        </div>
     </div>
-</div>
 
-<div class="container">
-    <h1 th:text="${errorCode}"></h1>
-
-    <p th:text="${errorMessage}"></p>
-
-    <p class="lead"><a href="/">Return home</a></p>
+    <div class="row" id="actions">
+        <div class="col-12">
+            <a href="/" class="btn btn-success">Return home</a>
+        </div>
+    </div>
 </div>
 
 </body>
