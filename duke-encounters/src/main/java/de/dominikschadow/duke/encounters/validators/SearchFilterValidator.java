@@ -45,7 +45,7 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.*;
  * @author Dominik Schadow
  */
 @Named
-public class SearchFilterValidator implements Validator {
+public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
     @Loggable
     private Logger logger;
 
@@ -71,29 +71,7 @@ public class SearchFilterValidator implements Validator {
 
         SearchFilter filter = (SearchFilter) target;
 
-        if (securityValidationService.hasXssPayload(filter.getEvent())) {
-            fireXssEvent();
-            errors.rejectValue("event", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(filter.getEvent())) {
-            fireSqlIEvent();
-            errors.rejectValue("event", Constants.SQLI_ERROR_CODE);
-        }
-
-        if (securityValidationService.hasXssPayload(filter.getLocation())) {
-            fireXssEvent();
-            errors.rejectValue("location", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(filter.getLocation())) {
-            fireSqlIEvent();
-            errors.rejectValue("location", Constants.SQLI_ERROR_CODE);
-        }
-
-        if (securityValidationService.hasXssPayload(filter.getCountry())) {
-            fireXssEvent();
-            errors.rejectValue("country", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(filter.getCountry())) {
-            fireSqlIEvent();
-            errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
-        }
+        errors = validateBaseData(filter.getEvent(), filter.getLocation(), filter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(filter.getYear())) {
             fireXssEvent();
@@ -135,16 +113,6 @@ public class SearchFilterValidator implements Validator {
 
     private void fireInvalidValueEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(ACCESS_CONTROL, "ACE2-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
-    }
-
-    private void fireXssEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
-    }
-
-    private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

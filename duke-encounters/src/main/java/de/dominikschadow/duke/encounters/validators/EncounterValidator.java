@@ -20,11 +20,6 @@ package de.dominikschadow.duke.encounters.validators;
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
-import de.dominikschadow.duke.encounters.services.UserService;
-import org.owasp.appsensor.core.DetectionPoint;
-import org.owasp.appsensor.core.DetectionSystem;
-import org.owasp.appsensor.core.Event;
-import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -32,26 +27,17 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
-import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
-import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
-
 /**
  * Validates an encounter: checks required fields and scans for basic Cross-Site Scripting and SQL Injection payload.
  *
  * @author Dominik Schadow
  */
 @Named
-public class EncounterValidator implements Validator {
+public class EncounterValidator extends BaseEncounterValidator implements Validator {
     @Autowired
     private SpringValidatorAdapter validator;
     @Autowired
-    private EventManager ids;
-    @Autowired
-    private UserService userService;
-    @Autowired
     private SecurityValidationService securityValidationService;
-    @Autowired
-    private DetectionSystem detectionSystem;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -64,29 +50,7 @@ public class EncounterValidator implements Validator {
 
         Encounter encounter = (Encounter) target;
 
-        if (securityValidationService.hasXssPayload(encounter.getEvent())) {
-            fireXssEvent();
-            errors.rejectValue("event", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(encounter.getEvent())) {
-            fireSqlIEvent();
-            errors.rejectValue("event", Constants.SQLI_ERROR_CODE);
-        }
-
-        if (securityValidationService.hasXssPayload(encounter.getLocation())) {
-            fireXssEvent();
-            errors.rejectValue("location", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(encounter.getLocation())) {
-            fireSqlIEvent();
-            errors.rejectValue("location", Constants.SQLI_ERROR_CODE);
-        }
-
-        if (securityValidationService.hasXssPayload(encounter.getCountry())) {
-            fireXssEvent();
-            errors.rejectValue("country", Constants.XSS_ERROR_CODE);
-        } else if (securityValidationService.hasSqlIPayload(encounter.getCountry())) {
-            fireSqlIEvent();
-            errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
-        }
+        errors = validateBaseData(encounter.getEvent(), encounter.getLocation(), encounter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(encounter.getComment())) {
             fireXssEvent();
@@ -95,15 +59,5 @@ public class EncounterValidator implements Validator {
             fireSqlIEvent();
             errors.rejectValue("comment", Constants.SQLI_ERROR_CODE);
         }
-    }
-
-    private void fireXssEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
-    }
-
-    private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }
