@@ -47,9 +47,9 @@ public class Encounter {
     @Column(nullable = false)
     private String country;
     private String comment;
-    @NotNull(message = "A date in the format YYYY-MM-DD is required for each encounter")
+    @NotNull(message = "A date in the format MM/dd/yyyy is required for each encounter")
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

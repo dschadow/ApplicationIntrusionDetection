@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class Confirmation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "encounter_id", nullable = false)
     private Encounter encounter;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date date;
 
     public long getId() {
