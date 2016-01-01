@@ -20,6 +20,7 @@
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
         <boxfuse.version>1.15.4.831</boxfuse.version>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <prerequisites>
@@ -183,6 +184,11 @@
                     <configuration>
                         <skip>true</skip>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>2.7.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
