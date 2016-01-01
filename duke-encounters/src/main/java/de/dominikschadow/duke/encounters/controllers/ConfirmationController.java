@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
+import de.dominikschadow.duke.encounters.domain.Confirmation;
+import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
@@ -29,11 +31,16 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -56,6 +63,14 @@ public class ConfirmationController {
     private DetectionSystem detectionSystem;
     @Autowired
     private EventManager ids;
+
+    @RequestMapping(value = "/confirmation", method = GET)
+    public String getConfirmations(Model model, @RequestParam(name = "type", required = false) String type) {
+        List<Confirmation> confirmations = confirmationService.getConfirmations(type);
+        model.addAttribute("confirmations", confirmations);
+
+        return "user/confirmations";
+    }
 
     @RequestMapping(value = "/confirmation/add", method = POST)
     public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {

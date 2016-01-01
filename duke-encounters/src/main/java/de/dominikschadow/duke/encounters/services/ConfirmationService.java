@@ -18,6 +18,7 @@
 package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.domain.Confirmation;
+import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
 import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.security.logging.SecurityMarkers;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * CRUD service for all confirmation related operations.
@@ -85,5 +87,23 @@ public class ConfirmationService {
 
     public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
+    }
+
+    public List<Confirmation> getConfirmations(String type) {
+        List<Confirmation> confirmations;
+
+        if (Objects.equals("own", type)) {
+            String username = userService.getUsername();
+
+            logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
+
+            confirmations = repository.findAllByUsername(username);
+        } else {
+            confirmations = repository.findAll();
+        }
+
+        logger.info("Query returned {} confirmations", confirmations.size());
+
+        return confirmations;
     }
 }
