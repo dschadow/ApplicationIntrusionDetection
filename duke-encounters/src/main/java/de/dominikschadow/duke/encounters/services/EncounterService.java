@@ -174,4 +174,12 @@ public class EncounterService {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-002");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
+
+    public List<Encounter> getEncountersByEvent(String event) {
+        List<Encounter> encounters = repository.findByEventContaining(event);
+
+        logger.info("Query for event {} returned {} encounters", event, encounters.size());
+
+        return encounters;
+    }
 }

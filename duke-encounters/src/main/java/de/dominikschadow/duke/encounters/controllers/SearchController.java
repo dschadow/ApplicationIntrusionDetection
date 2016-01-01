@@ -30,6 +30,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -64,6 +65,22 @@ public class SearchController {
     @RequestMapping(value = "/search", method = GET)
     public String searchEncounters(@ModelAttribute SearchFilter searchFilter) {
         return "search";
+    }
+
+    /**
+     * Uses the input text to search for the encounter event.
+     *
+     * @param event The events name
+     * @return ModelAndView with encounters URL and a model map
+     */
+    @RequestMapping(value = "/search", method = POST)
+    public ModelAndView searchEncounterByEvent(@RequestParam("quickSearch") String event) {
+        List<Encounter> encounters = encounterService.getEncountersByEvent(event);
+
+        Map<String, Object> modelMap = new LinkedHashMap<>();
+        modelMap.put("encounters", encounters);
+
+        return new ModelAndView("encounters", modelMap);
     }
 
     /**
