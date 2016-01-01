@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Duke Encounters - Encounters</title>
+    <title>Duke Encounters - Confirmations</title>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <link rel="stylesheet" th:href="@{/css/custom.css}"/>
 </head>
@@ -26,7 +26,7 @@
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/encounter">Encounters</a></li>
+                    <li><a href="/encounter">Encounters</a></li>
                     <li><a href="/search">Search</a></li>
                 </ul>
 
@@ -38,16 +38,7 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
-                                class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="/register">Register</a></li>
-                        </ul>
-                    </li>
-                    <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                                 class="caret"></span></a>
@@ -62,7 +53,7 @@
                             <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
                         </ul>
                     </li>
-                    <li th:if="${#httpServletRequest.remoteUser}">
+                    <li>
                         <form th:action="@{/logout}" method="post">
                             <button type="submit" class="btn btn-default btn-dropdown-logout">
                                 <span class="glyphicon glyphicon-off"></span> Log out
@@ -76,27 +67,20 @@
 
     <div class="row" id="welcome">
         <div class="col-12">
-            <h1>Encounters</h1>
+            <h1>Confirmations</h1>
 
-            <p class="lead" th:if="${#httpServletRequest.remoteUser}">Encounter not listed yet? <a
-                    href="/encounter/create">Create</a> a new one.</p>
-
-            <p class="lead" th:if="${#httpServletRequest.remoteUser == null}">Event and confirmation details are only
-                visible after <a href="/login">login</a>.</p>
+            <p class="lead">Confirmation not listed yet? <a href="/encounter">Confirm</a> an encounter.</p>
         </div>
     </div>
 
     <div class="row" id="operationResults">
         <div class="col-12">
-            <p th:if="${encounterFailure}" class="alert alert-danger">The requested encounter does not exist</p>
+            <p th:if="${confirmationFailure}" class="alert alert-danger">The requested confirmation does not exist</p>
         </div>
     </div>
 
-    <div class="row" id="encounters">
+    <div class="row" id="confirmations">
         <div class="col-12">
-            <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong>
-                returned the following results:</p>
-
             <div class="row">
                 <div class="col-md-12">
                     <table class="table">
@@ -105,30 +89,23 @@
                             <th>Event</th>
                             <th>Location</th>
                             <th>Date</th>
-                            <th>Confirmed by</th>
-                            <th>Likelihood</th>
-                            <th th:if="${#httpServletRequest.remoteUser}">Confirm</th>
+                            <th>Confirmation Date</th>
+                            <th>Revoke</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="encounter : ${encounters}">
-                            <td th:if="${#httpServletRequest.remoteUser}"><a th:href="@{|/encounter/${encounter.id}|}"
-                                                                             th:text="${encounter.event}"></a></td>
-                            <td th:if="${#httpServletRequest.remoteUser == null}" th:text="${encounter.event}"></td>
-                            <td th:text="${encounter.location} + ' ('+ ${encounter.country} + ')'"></td>
-                            <td th:text="${#calendars.format(encounter.date,'MM/dd/yyyy')}"></td>
+                        <tr th:each="confirmation : ${confirmations}">
+                            <td><a th:href="@{|/encounter/${confirmation.encounter.id}|}"
+                                   th:text="${confirmation.encounter.event}"></a></td>
+                            <td th:text="${confirmation.encounter.location} + ' ('+ ${confirmation.encounter.country} + ')'"></td>
+                            <td th:text="${#calendars.format(confirmation.encounter.date,'MM/dd/yyyy')}"></td>
+                            <td th:text="${#calendars.format(confirmation.date,'MM/dd/yyyy')}"></td>
                             <td>
-                        <span th:each="confirmation,iterStat : ${encounter.confirmations}">
-                            <span th:text="${confirmation.user}"></span>
-                            <span th:text="${!iterStat.last}? '|'"></span>
-                        </span>
-                            </td>
-                            <td th:text="${encounter.likelihood}"></td>
-                            <td th:if="${#httpServletRequest.remoteUser}">
-                                <form th:action="@{/confirmation/add}" method="post">
-                                    <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
-                                    <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">
-                                        <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                                <form th:action="@{/confirmation/revoke}" method="post">
+                                    <input type="hidden" th:value="${confirmation.id}" th:name="confirmationId"/>
+                                    <button type="submit" class="btn btn-default btn-sm"
+                                            aria-label="Revoke Confirmation">
+                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                                     </button>
                                 </form>
                             </td>
