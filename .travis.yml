@@ -1,9 +1,6 @@
-sudo: true
 language: java
 jdk: oraclejdk8
-before_install:
-  - pip install --user codecov
-after_success:
-  - codecov
 install:  mvn versions:set
 script: mvn deploy
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
