@@ -28,6 +28,7 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
+import org.owasp.appsensor.core.util.StringUtils;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -78,14 +80,6 @@ public class EncounterService {
         if (encounters.size() > latestEncounterAmount) {
             fireSqlIEvent();
         }
-
-        return encounters;
-    }
-
-    public List<Encounter> getAllEncounters() {
-        List<Encounter> encounters = repository.findAll();
-
-        logger.info("Query for all encounters returned {} encounters", encounters.size());
 
         return encounters;
     }
@@ -179,6 +173,24 @@ public class EncounterService {
         List<Encounter> encounters = repository.findByEventContaining(event);
 
         logger.info("Query for event {} returned {} encounters", event, encounters.size());
+
+        return encounters;
+    }
+
+    public List<Encounter> getEncounters(String type) {
+        List<Encounter> encounters;
+
+        if (Objects.equals("own", type)) {
+            String username = userService.getUsername();
+
+            logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
+
+            encounters = repository.findAllByUsername(username);
+        } else {
+            encounters = repository.findAll();
+        }
+
+        logger.info("Query returned {} encounters", encounters.size());
 
         return encounters;
     }

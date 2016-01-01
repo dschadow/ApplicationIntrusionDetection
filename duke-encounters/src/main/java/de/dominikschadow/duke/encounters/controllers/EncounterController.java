@@ -33,10 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,8 +66,8 @@ public class EncounterController {
     private EventManager ids;
 
     @RequestMapping(value = "/encounter", method = GET)
-    public String allEncounters(Model model) {
-        List<Encounter> encounters = encounterService.getAllEncounters();
+    public String getEncounters(Model model, @RequestParam(name = "type", required = false) String type) {
+        List<Encounter> encounters = encounterService.getEncounters(type);
         model.addAttribute("encounters", encounters);
 
         return "encounters";
