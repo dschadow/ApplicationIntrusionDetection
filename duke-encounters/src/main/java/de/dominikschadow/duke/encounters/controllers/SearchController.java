@@ -17,10 +17,10 @@
  */
 package de.dominikschadow.duke.encounters.controllers;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
+import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +51,14 @@ public class SearchController {
     @Loggable
     private Logger logger;
 
-    @Autowired
     private EncounterService encounterService;
+    private SearchFilterValidator validator;
+
     @Autowired
-    private SearchFilterValidator searchFilterValidator;
+    public SearchController(EncounterService encounterService, SearchFilterValidator validator) {
+        this.encounterService = encounterService;
+        this.validator = validator;
+    }
 
     /**
      * Shows the search form.
@@ -87,7 +91,7 @@ public class SearchController {
      * Search the encounters based on the given search filter.
      *
      * @param searchFilter The search filter identifying encounters
-     * @param result BindingResult
+     * @param result       BindingResult
      * @return ModelAndView with encounters URL and a model map
      */
     @RequestMapping(value = "/encounter", method = POST)
@@ -107,6 +111,6 @@ public class SearchController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(searchFilterValidator);
+        binder.setValidator(validator);
     }
 }

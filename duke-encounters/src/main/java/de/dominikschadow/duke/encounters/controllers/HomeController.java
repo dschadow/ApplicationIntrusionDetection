@@ -35,8 +35,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class HomeController {
-    @Autowired
     private EncounterService encounterService;
+
+    @Autowired
+    public HomeController(EncounterService encounterService) {
+        this.encounterService = encounterService;
+    }
 
     /**
      * Queries for the latest encounters, adds them to the model and returns the index page.

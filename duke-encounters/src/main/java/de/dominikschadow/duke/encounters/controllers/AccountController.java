@@ -54,14 +54,18 @@ public class AccountController {
     @Loggable
     private Logger logger;
 
-    @Autowired
     private EncounterService encounterService;
-    @Autowired
     private ConfirmationService confirmationService;
-    @Autowired
     private UserService userService;
+    private DukeEncountersUserValidator validator;
+
     @Autowired
-    private DukeEncountersUserValidator dukeEncountersUserValidator;
+    public AccountController(EncounterService encounterService, ConfirmationService confirmationService, UserService userService, DukeEncountersUserValidator validator) {
+        this.encounterService = encounterService;
+        this.confirmationService = confirmationService;
+        this.userService = userService;
+        this.validator = validator;
+    }
 
     @RequestMapping(value = "/account", method = GET)
     public String showMyAccount(Model model) {
@@ -178,6 +182,6 @@ public class AccountController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(dukeEncountersUserValidator);
+        binder.setValidator(validator);
     }
 }

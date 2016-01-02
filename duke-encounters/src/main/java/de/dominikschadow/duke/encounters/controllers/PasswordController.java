@@ -49,10 +49,14 @@ public class PasswordController {
     @Loggable
     private Logger logger;
 
-    @Autowired
     private UserService userService;
+    private PasswordChangeValidator validator;
+
     @Autowired
-    private PasswordChangeValidator passwordChangeValidator;
+    public PasswordController(UserService userService, PasswordChangeValidator validator) {
+        this.userService = userService;
+        this.validator = validator;
+    }
 
     /**
      * Loads the change password page.
@@ -100,6 +104,6 @@ public class PasswordController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(passwordChangeValidator);
+        binder.setValidator(validator);
     }
 }

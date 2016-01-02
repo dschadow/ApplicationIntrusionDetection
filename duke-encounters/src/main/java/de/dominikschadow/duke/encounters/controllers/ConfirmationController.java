@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.domain.Confirmation;
-import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
@@ -53,16 +52,20 @@ public class ConfirmationController {
     @Loggable
     private Logger logger;
 
-    @Autowired
     private ConfirmationService confirmationService;
-    @Autowired
     private EncounterService encounterService;
-    @Autowired
     private UserService userService;
-    @Autowired
     private DetectionSystem detectionSystem;
-    @Autowired
     private EventManager ids;
+
+    @Autowired
+    public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
+        this.confirmationService = confirmationService;
+        this.encounterService = encounterService;
+        this.userService = userService;
+        this.detectionSystem = detectionSystem;
+        this.ids = ids;
+    }
 
     @RequestMapping(value = "/confirmation", method = GET)
     public String getConfirmations(Model model, @RequestParam(name = "type", required = false) String type) {

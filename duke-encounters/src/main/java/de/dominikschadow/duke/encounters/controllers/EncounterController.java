@@ -54,16 +54,20 @@ public class EncounterController {
     @Loggable
     private Logger logger;
 
-    @Autowired
     private EncounterService encounterService;
-    @Autowired
     private EncounterValidator encounterValidator;
-    @Autowired
     private UserService userService;
-    @Autowired
     private DetectionSystem detectionSystem;
-    @Autowired
     private EventManager ids;
+
+    @Autowired
+    public EncounterController(EncounterService encounterService, EncounterValidator encounterValidator, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
+        this.encounterService = encounterService;
+        this.encounterValidator = encounterValidator;
+        this.userService = userService;
+        this.detectionSystem = detectionSystem;
+        this.ids = ids;
+    }
 
     @RequestMapping(value = "/encounter", method = GET)
     public String getEncounters(Model model, @RequestParam(name = "type", required = false) String type) {
