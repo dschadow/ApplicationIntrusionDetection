@@ -18,8 +18,6 @@
 package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.DukeEncountersApplication;
-import de.dominikschadow.duke.encounters.spring.WebConfig;
-import de.dominikschadow.duke.encounters.spring.WebSecurityTestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ import static org.junit.Assert.assertNotEquals;
  * @author Dominik Schadow
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration({DukeEncountersApplication.class, WebConfig.class, WebSecurityTestConfig.class})
+@SpringApplicationConfiguration({DukeEncountersApplication.class})
 public class UserServiceTests {
     @Autowired
     private UserService userService;
