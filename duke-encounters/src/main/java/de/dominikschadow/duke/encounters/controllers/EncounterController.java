@@ -55,15 +55,15 @@ public class EncounterController {
     private Logger logger;
 
     private EncounterService encounterService;
-    private EncounterValidator encounterValidator;
+    private EncounterValidator validator;
     private UserService userService;
     private DetectionSystem detectionSystem;
     private EventManager ids;
 
     @Autowired
-    public EncounterController(EncounterService encounterService, EncounterValidator encounterValidator, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
+    public EncounterController(EncounterService encounterService, EncounterValidator validator, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
         this.encounterService = encounterService;
-        this.encounterValidator = encounterValidator;
+        this.validator = validator;
         this.userService = userService;
         this.detectionSystem = detectionSystem;
         this.ids = ids;
@@ -153,6 +153,6 @@ public class EncounterController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(encounterValidator);
+        binder.setValidator(validator);
     }
 }
