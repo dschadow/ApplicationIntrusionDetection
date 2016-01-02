@@ -98,7 +98,7 @@ public class EncounterController {
         logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
                 newEncounter);
 
-        return new ModelAndView("redirect:/account");
+        return new ModelAndView("redirect:/encounter");
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
