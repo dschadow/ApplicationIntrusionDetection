@@ -29,20 +29,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 /**
- * Tests the [@link EncounterController} class.
+ * Tests the [@link SearchController} class.
  *
  * @author Dominik Schadow
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(DukeEncountersApplication.class)
 @WebAppConfiguration
-public class EncounterControllerTests {
+public class SearchControllerTests {
     @Autowired
     private WebApplicationContext webContext;
 
@@ -54,30 +54,20 @@ public class EncounterControllerTests {
     }
 
     @Test
-    public void listEncounters() throws Exception {
-        mockMvc.perform(get("/encounters"))
+    public void searchEncounter() throws Exception {
+        mockMvc.perform(get("/search"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("encounters"))
-                .andExpect(model().attributeExists("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(20)));
+                .andExpect(view().name("search"));
     }
 /*
     @Test
-    public void searchEncounter() throws Exception {
-        SearchFilter searchFilter = new SearchFilter();
-        searchFilter.setEvent("JavaOne 2015");
-        searchFilter.setLocation("San Francisco");
-        searchFilter.setCountry("USA");
-
-        mockMvc.perform(post("/encounters")
+    public void quickSearchEncounter() throws Exception {
+        mockMvc.perform(post("/search")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("event", "JavaOne 2015")
-                .param("location", "San Francisco")
-                .param("country", "USA"))
+                .param("quickSearch", "JavaOne 2015"))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Location", "/encounters"))
-                .andExpect(model().attribute("encounters", hasSize(1)))
-                .andExpect(model().attribute("searchFilter", contains(samePropertyValuesAs(searchFilter))));
+                .andExpect(header().string("Location", "/search"))
+                .andExpect(model().attribute("encounters", hasSize(1)));
     }
 */
 }
