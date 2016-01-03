@@ -1,66 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Duke Encounters - Account</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/custom.css}"/>
-</head>
+<head th:include="partials :: head"></head>
 <body>
 
 <div class="container" id="main">
     <nav class="navbar-inverse navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#mainNavigation" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
-            </div>
+            <div th:replace="partials :: navbar-header"></div>
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="/encounters">Encounter</a></li>
+                    <li><a href="/encounters">Encounters</a></li>
                     <li><a href="/search">Search</a></li>
                 </ul>
 
-                <form action="#" th:action="@{/search}" method="post" class="navbar-form navbar-left" role="search">
-                    <input type="text" class="form-control" placeholder="Search Encounter" id="quickSearch"
-                           name="quickSearch"/>
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </form>
+                <form th:replace="partials :: navbar-search-form"></form>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
-                                class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
-                                Encounters</a>
-                            </li>
-                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
-                                Confirmations</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="btn btn-default btn-dropdown-logout">
-                                <span class="glyphicon glyphicon-off"></span> Log out
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+                <ul th:replace="partials :: navbar-menu"></ul>
             </div>
         </div>
     </nav>
@@ -142,42 +98,8 @@
     </div>
 </div>
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h6>Duke Encounters</h6>
-                <p>The leading online platform for Java Duke spotting.</p>
-            </div>
-            <div class="col-sm-4">
-                <h6>About</h6>
-                <p>This demo web application is developed by <a href="http://www.dominikschadow.de" target="_blank">Dominik
-                    Schadow</a>, source code is available on <a
-                        href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>.
-                </p>
-            </div>
-            <div class="col-sm-2">
-                <h6>Navigation</h6>
-                <ul class="unstyled">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/encounters">Encounter</a></li>
-                    <li><a href="/search">Search</a></li>
-                    <li><a href="/account">Account</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-2">
-                <h6>Follow me</h6>
-                <ul class="unstyled">
-                    <li><a href="http://www.dominikschadow.de" target="_blank">Blog</a></li>
-                    <li><a href="https://twitter.com/dschadow" target="_blank">Twitter</a></li>
-                    <li><a href="https://github.com/dschadow" target="_blank">GitHub</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+<footer th:include="partials :: footer"></footer>
 
-<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
-<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<div th:replace="partials :: scripts"></div>
 </body>
 </html>
