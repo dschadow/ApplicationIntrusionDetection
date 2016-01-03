@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2015 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
  *
- * This file is part of the Java Security project.
+ * This file is part of the Application Intrusion Detection project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
