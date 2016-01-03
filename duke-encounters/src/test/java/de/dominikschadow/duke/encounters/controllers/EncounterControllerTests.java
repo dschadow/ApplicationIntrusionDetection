@@ -10,10 +10,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Tests the [@link EncounterController} class.
@@ -36,10 +37,10 @@ public class EncounterControllerTests {
 
     @Test
     public void encountersPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/encounters"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("encounters"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("encounters"))
-                .andExpect(MockMvcResultMatchers.model().attribute("encounters", Matchers.hasSize(20)));
+        mockMvc.perform(get("/encounters"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("encounters"))
+                .andExpect(model().attributeExists("encounters"))
+                .andExpect(model().attribute("encounters", Matchers.hasSize(20)));
     }
 }
