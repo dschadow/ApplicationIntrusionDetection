@@ -19,6 +19,7 @@ package de.dominikschadow.duke.encounters.services;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
+import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
@@ -28,7 +29,6 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.owasp.appsensor.core.util.StringUtils;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,10 +124,19 @@ public class EncounterService {
                 (1)).and(specifications.get(2)));
     }
 
-    public Encounter getEncounterById(@NotNull long id) {
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", id);
+    public Encounter getEncounterById(@NotNull long encounterId) {
+        String username = userService.getUsername();
 
-        return repository.findOne(id);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
+
+        Encounter encounter = repository.findOne(encounterId);
+
+        if (encounter == null) {
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
+                    username, encounterId);
+        }
+
+        return encounter;
     }
 
     public List<Encounter> getEncountersByUsername(@NotNull String username) {
@@ -138,18 +147,27 @@ public class EncounterService {
         return encounters;
     }
 
-    public void deleteEncounter(@NotNull String username, @NotNull long encounterId) {
+    public void deleteEncounter(@NotNull long encounterId) {
+        String username = userService.getUsername();
+
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
+
         repository.delete(encounterId);
 
         logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
-    public Encounter createEncounter(@NotNull Encounter newEncounter, @NotNull String username) {
-        newEncounter.setUser(userService.getDukeEncountersUser());
+    public Encounter createEncounter(@NotNull Encounter newEncounter) {
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", user.getUsername(),
+                newEncounter);
+
+        newEncounter.setUser(user);
 
         Encounter encounter = repository.save(newEncounter);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", username, newEncounter);
+        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
 
         return encounter;
     }

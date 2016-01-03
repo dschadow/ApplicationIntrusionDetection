@@ -26,7 +26,6 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,28 +87,14 @@ public class EncounterController {
             return new ModelAndView("user/createEncounter", "formErrors", result.getAllErrors());
         }
 
-        String username = userService.getUsername();
-
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", username,
-                encounter);
-
-        Encounter newEncounter = encounterService.createEncounter(encounter, username);
-
-        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
-                newEncounter);
+        encounterService.createEncounter(encounter);
 
         return new ModelAndView("redirect:/encounters");
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
     public ModelAndView deleteEncounter(long encounterId) {
-        String username = userService.getUsername();
-
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
-
-        encounterService.deleteEncounter(username, encounterId);
-
-        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} deleted encounter {}", username, encounterId);
+        encounterService.deleteEncounter(encounterId);
 
         return new ModelAndView("redirect:/account");
     }
@@ -117,24 +102,9 @@ public class EncounterController {
     @RequestMapping(value = "/encounter/{id}", method = GET)
     public String encounterById(@PathVariable("id") long encounterId, Model model, RedirectAttributes
             redirectAttributes) {
-        String username = userService.getUsername();
-
-        if (encounterId < 1) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter with negative id {}",
-                    username, encounterId);
-
-            fireInvalidUrlParameterEvent();
-            redirectAttributes.addFlashAttribute("encounterFailure", true);
-
-            return "redirect:/encounters";
-        }
-
         Encounter encounter = encounterService.getEncounterById(encounterId);
 
         if (encounter == null) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
-                    username, encounterId);
-
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure", true);
 
