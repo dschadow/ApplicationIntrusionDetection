@@ -69,7 +69,7 @@ public class EncounterController {
         this.ids = ids;
     }
 
-    @RequestMapping(value = "/encounter", method = GET)
+    @RequestMapping(value = "/encounters", method = GET)
     public String getEncounters(Model model, @RequestParam(name = "type", required = false) String type) {
         List<Encounter> encounters = encounterService.getEncounters(type);
         model.addAttribute("encounters", encounters);
@@ -98,7 +98,7 @@ public class EncounterController {
         logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} created encounter {}", username,
                 newEncounter);
 
-        return new ModelAndView("redirect:/encounter");
+        return new ModelAndView("redirect:/encounters");
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
@@ -126,7 +126,7 @@ public class EncounterController {
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure", true);
 
-            return "redirect:/encounter";
+            return "redirect:/encounters";
         }
 
         Encounter encounter = encounterService.getEncounterById(encounterId);
@@ -138,7 +138,7 @@ public class EncounterController {
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure", true);
 
-            return "redirect:/encounter";
+            return "redirect:/encounters";
         }
 
         model.addAttribute("encounter", encounter);

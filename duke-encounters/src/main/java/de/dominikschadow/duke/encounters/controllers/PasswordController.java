@@ -64,7 +64,7 @@ public class PasswordController {
      * @param passwordChange The PasswordChange model attribute
      * @return The page to navigate to, including userlevel information
      */
-    @RequestMapping(value = "/account/password/edit", method = GET)
+    @RequestMapping(value = "/account/password", method = GET)
     public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
         String username = userService.getUsername();
 
@@ -84,7 +84,7 @@ public class PasswordController {
      * @param update The new password
      * @return Account page
      */
-    @RequestMapping(value = "/account/password/update", method = POST)
+    @RequestMapping(value = "/account/password", method = POST)
     public ModelAndView updatePassword(@Valid PasswordChange update, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());

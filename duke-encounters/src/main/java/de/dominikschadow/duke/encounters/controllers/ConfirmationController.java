@@ -67,7 +67,7 @@ public class ConfirmationController {
         this.ids = ids;
     }
 
-    @RequestMapping(value = "/confirmation", method = GET)
+    @RequestMapping(value = "/confirmations", method = GET)
     public String getConfirmations(Model model, @RequestParam(name = "type", required = false) String type) {
         List<Confirmation> confirmations = confirmationService.getConfirmations(type);
         model.addAttribute("confirmations", confirmations);

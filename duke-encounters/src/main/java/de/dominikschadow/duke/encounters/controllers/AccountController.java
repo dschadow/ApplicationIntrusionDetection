@@ -85,7 +85,7 @@ public class AccountController {
         return "user/account";
     }
 
-    @RequestMapping(value = "/account/edit", method = GET)
+    @RequestMapping(value = "/account/userdata", method = GET)
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
@@ -106,7 +106,7 @@ public class AccountController {
      * @param updatedUser The updated user
      * @return Account page
      */
-    @RequestMapping(value = "/account/userdata/update", method = POST)
+    @RequestMapping(value = "/account/userdata", method = POST)
     public ModelAndView updateUser(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
@@ -128,7 +128,7 @@ public class AccountController {
      * @param updatedUser The updated user
      * @return Account page
      */
-    @RequestMapping(value = "/account/accountdata/update", method = POST)
+    @RequestMapping(value = "/account/accountdata", method = POST)
     public ModelAndView updateAccount(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         if (userService.confirmPassword(updatedUser.getPassword())) {

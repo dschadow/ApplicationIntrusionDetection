@@ -26,7 +26,7 @@
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="/encounter">Encounters</a></li>
+                    <li><a href="/encounters">Encounter</a></li>
                     <li><a href="/search">Search</a></li>
                 </ul>
 
@@ -43,10 +43,10 @@
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/encounter?type=own"><span class="glyphicon glyphicon-camera"></span> My
+                            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
                                 Encounters</a>
                             </li>
-                            <li><a href="/confirmation?type=own"><span class="glyphicon glyphicon-tags"></span> My
+                            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
                                 Confirmations</a>
                             </li>
                             <li class="divider"></li>
@@ -135,7 +135,7 @@
 
     <div class="row" id="actions">
         <div class="col-12">
-            <a th:href="@{/encounter}" class="btn btn-success">Encounters</a>
+            <a th:href="@{/encounters}" class="btn btn-success">Encounters</a>
         </div>
     </div>
 </div>
@@ -158,7 +158,7 @@
                 <h6>Navigation</h6>
                 <ul class="unstyled">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/encounter">Encounter</a></li>
+                    <li><a href="/encounters">Encounter</a></li>
                     <li><a href="/search">Search</a></li>
                     <li><a href="/account">Account</a></li>
                 </ul>

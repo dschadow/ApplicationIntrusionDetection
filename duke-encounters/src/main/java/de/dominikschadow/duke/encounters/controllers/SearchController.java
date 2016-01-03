@@ -94,7 +94,7 @@ public class SearchController {
      * @param result       BindingResult
      * @return ModelAndView with encounters URL and a model map
      */
-    @RequestMapping(value = "/encounter", method = POST)
+    @RequestMapping(value = "/encounters", method = POST)
     public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("search", "formErrors", result.getAllErrors());
