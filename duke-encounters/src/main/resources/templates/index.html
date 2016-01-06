@@ -10,8 +10,8 @@
 
             <div class="collapse navbar-collapse" id="mainNavigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="/encounters">Encounters</a></li>
-                    <li><a href="/search">Search</a></li>
+                    <li><a th:href="@{/encounters}">Encounters</a></li>
+                    <li><a th:href="@{/search}">Search</a></li>
                 </ul>
 
                 <form th:replace="partials :: navbar-search-form"></form>
@@ -44,10 +44,10 @@
         <div class="col-12">
             <h2>Latest Encounters</h2>
 
-            <p class="lead"><a href="/encounters">View all</a> encounters or <a href="/search">search</a> for the ones
+            <p class="lead"><a th:href="@{/encounters}">View all</a> encounters or <a th:href="@{/search}">search</a> for the ones
                 you
                 are interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a
-                        href="/register">register</a> or <a href="/login">login</a> to contribute.</span>
+                        th:href="@{/register}">register</a> or <a th:href="@{/login}">login</a> to contribute.</span>
             </p>
         </div>
     </div>

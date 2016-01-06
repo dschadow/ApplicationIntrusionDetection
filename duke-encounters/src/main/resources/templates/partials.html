@@ -5,8 +5,8 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/custom.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
 </head>
 
 
@@ -19,7 +19,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="/"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
+    <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/duke-small.png}" alt="Duke Encounters Home"/></a>
 </div>
 
 
@@ -39,8 +39,8 @@
            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                 class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a th:href="@{/register}">Register</a></li>
         </ul>
     </li>
     <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
@@ -48,14 +48,14 @@
            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                 class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="/encounters?type=own"><span class="glyphicon glyphicon-camera"></span> My
+            <li><a th:href="@{/encounters?type=own}"><span class="glyphicon glyphicon-camera"></span> My
                 Encounters</a>
             </li>
-            <li><a href="/confirmations?type=own"><span class="glyphicon glyphicon-tags"></span> My
+            <li><a th:href="@{/confirmations?type=own}"><span class="glyphicon glyphicon-tags"></span> My
                 Confirmations</a>
             </li>
             <li class="divider"></li>
-            <li><a href="/account"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
+            <li><a th:href="@{/account}"><span class="glyphicon glyphicon-wrench"></span> My Profile</a></li>
         </ul>
     </li>
     <li th:if="${#httpServletRequest.remoteUser}">
@@ -85,10 +85,10 @@
             <div class="col-sm-2">
                 <h6>Navigation</h6>
                 <ul class="unstyled">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/encounters">Encounters</a></li>
-                    <li><a href="/search">Search</a></li>
-                    <li><a href="/account">Account</a></li>
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/encounters}">Encounters</a></li>
+                    <li><a th:href="@{/search}">Search</a></li>
+                    <li><a th:href="@{/account}">Account</a></li>
                 </ul>
             </div>
             <div class="col-sm-2">
@@ -106,8 +106,8 @@
 
 
 <div th:fragment="scripts">
-    <script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
 </div>
 
 </html>
