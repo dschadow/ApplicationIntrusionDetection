@@ -29,9 +29,9 @@
                         <small>The leading online platform for Java Duke spotting</small>
                     </h1>
 
-                    <p class="lead">This sample web application is using <a href="http://appsensor.org" target="_blank">OWASP
+                    <p class="lead">This sample web application is using <a th:href="@{http://appsensor.org}" target="_blank">OWASP
                         AppSensor</a> for Application Intrusion Detection. It is using a <a
-                            href="http://www.h2database.com" target="_blank">h2</a> in-memory database to temporarily
+                            th:href="@{http://www.h2database.com}" target="_blank">h2</a> in-memory database to temporarily
                         persist all information. Keep in mind that all entered information will be lost when restarting
                         the application.
                     </p>
@@ -78,7 +78,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-5 duke"><a href="https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"
+        <div class="col-sm-5 duke"><a th:href="@{https://commons.wikimedia.org/wiki/File:Duke-Guitar.png}"
                                       target="_blank"><img
                 th:src="@{img/duke-guitar.png}"
                 alt="Duke by Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Duke-Guitar.png"/></a>

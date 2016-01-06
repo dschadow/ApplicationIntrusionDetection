@@ -35,7 +35,7 @@
 
 <ul th:fragment="navbar-menu" class="nav navbar-nav navbar-right">
     <li th:if="${#httpServletRequest.remoteUser == null}" class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        <a th:href="@{#}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                 class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -44,14 +44,14 @@
         </ul>
     </li>
     <li th:if="${#httpServletRequest.remoteUser}" class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        <a th:href="@{#}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> My Account <span
                 class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a th:href="@{/encounters?type=own}"><span class="glyphicon glyphicon-camera"></span> My
+            <li><a th:href="@{/encounters(type=own)}"><span class="glyphicon glyphicon-camera"></span> My
                 Encounters</a>
             </li>
-            <li><a th:href="@{/confirmations?type=own}"><span class="glyphicon glyphicon-tags"></span> My
+            <li><a th:href="@{/confirmations(type=own)}"><span class="glyphicon glyphicon-tags"></span> My
                 Confirmations</a>
             </li>
             <li class="divider"></li>
@@ -78,9 +78,9 @@
             </div>
             <div class="col-sm-4">
                 <h6>About</h6>
-                <p>This demo web application is developed by <a href="http://www.dominikschadow.de" target="_blank">Dominik
+                <p>This demo web application is developed by <a th:href="@{http://www.dominikschadow.de}" target="_blank">Dominik
                     Schadow</a>, source code is available on <a
-                        href="https://github.com/dschadow/ApplicationIntrusionDetection" target="_blank">GitHub</a>.</p>
+                        th:href="@{https://github.com/dschadow/ApplicationIntrusionDetection}" target="_blank">GitHub</a>.</p>
             </div>
             <div class="col-sm-2">
                 <h6>Navigation</h6>
@@ -94,9 +94,9 @@
             <div class="col-sm-2">
                 <h6>Follow me</h6>
                 <ul class="unstyled">
-                    <li><a href="http://www.dominikschadow.de" target="_blank">Blog</a></li>
-                    <li><a href="https://twitter.com/dschadow" target="_blank">Twitter</a></li>
-                    <li><a href="https://github.com/dschadow" target="_blank">GitHub</a></li>
+                    <li><a th:href="@{http://www.dominikschadow.de}" target="_blank">Blog</a></li>
+                    <li><a th:href="@{https://twitter.com/dschadow}" target="_blank">Twitter</a></li>
+                    <li><a th:href="@{https://github.com/dschadow}" target="_blank">GitHub</a></li>
                 </ul>
             </div>
         </div>
