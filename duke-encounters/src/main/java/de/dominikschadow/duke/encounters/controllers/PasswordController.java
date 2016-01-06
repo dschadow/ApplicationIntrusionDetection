@@ -68,7 +68,7 @@ public class PasswordController {
     public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
         String username = userService.getUsername();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
 
         ModelAndView modelAndView = new ModelAndView("user/changePassword");
 
@@ -95,7 +95,7 @@ public class PasswordController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 

@@ -76,7 +76,7 @@ public class UserService {
 
         DukeEncountersUser user = userRepository.save(newUser);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getAuthority().getAuthority());
 
         return user;

@@ -71,7 +71,7 @@ public class AccountController {
     public String showMyAccount(Model model) {
         String username = userService.getUsername();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
 
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
@@ -89,7 +89,7 @@ public class AccountController {
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
         ModelAndView modelAndView = new ModelAndView("user/editAccount");
 
@@ -115,7 +115,7 @@ public class AccountController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 
@@ -137,7 +137,7 @@ public class AccountController {
 
             DukeEncountersUser storedUser = userService.updateUser(user);
 
-            logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+            logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
 
             redirectAttributes.addFlashAttribute("dataUpdated", true);
         } else {
@@ -172,7 +172,7 @@ public class AccountController {
 
         DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("userCreated", newUser.getUsername());

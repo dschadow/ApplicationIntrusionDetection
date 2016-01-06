@@ -82,7 +82,7 @@ public class ConfirmationService {
     public void deleteConfirmation(@NotNull String username, @NotNull long confirmationId) {
         repository.delete(confirmationId);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
     public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {
@@ -95,7 +95,7 @@ public class ConfirmationService {
         if (Objects.equals("own", type)) {
             String username = userService.getUsername();
 
-            logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
+            logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
 
             confirmations = repository.findAllByUsername(username);
         } else {

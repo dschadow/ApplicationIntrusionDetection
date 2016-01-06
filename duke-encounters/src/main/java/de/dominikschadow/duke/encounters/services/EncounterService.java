@@ -127,7 +127,7 @@ public class EncounterService {
     public Encounter getEncounterById(@NotNull long encounterId) {
         String username = userService.getUsername();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
 
         Encounter encounter = repository.findOne(encounterId);
 
@@ -150,24 +150,24 @@ public class EncounterService {
     public void deleteEncounter(@NotNull long encounterId) {
         String username = userService.getUsername();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
         repository.delete(encounterId);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
     public Encounter createEncounter(@NotNull Encounter newEncounter) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", user.getUsername(),
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", user.getUsername(),
                 newEncounter);
 
         newEncounter.setUser(user);
 
         Encounter encounter = repository.save(newEncounter);
 
-        logger.info(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
 
         return encounter;
     }
@@ -201,7 +201,7 @@ public class EncounterService {
         if (Objects.equals("own", type)) {
             String username = userService.getUsername();
 
-            logger.info(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
+            logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
 
             encounters = repository.findAllByUsername(username);
         } else {
