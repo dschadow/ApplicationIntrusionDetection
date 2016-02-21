@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "encounters.latest.amount",
+      "type": "java.lang.Integer",
+      "description": "Number of encounters the latest encounters list should show."
+    }
+  ]
+}
