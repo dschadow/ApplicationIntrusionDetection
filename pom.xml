@@ -8,8 +8,7 @@
     <packaging>pom</packaging>
     <name>Application Intrusion Detection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
-    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.
-    </description>
+    <description>This repository contains application intrusion detection sample projects based on OWASP AppSensor.</description>
 
     <organization>
         <name>Dominik Schadow</name>
@@ -30,7 +29,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.2.RELEASE</version>
+        <version>1.3.3.RELEASE</version>
     </parent>
 
     <issueManagement>
