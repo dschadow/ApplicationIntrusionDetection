@@ -1,6 +1,7 @@
 *.iml
 *.log
 *.lck
+.idea
 */target*
 .settings*
 .metadata*
