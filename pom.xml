@@ -122,17 +122,6 @@
                 <artifactId>jquery</artifactId>
                 <version>1.11.3</version>
             </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-java</artifactId>
-                <version>2.50.1</version>
-            </dependency>
-            <!-- required for Selenium -->
-            <dependency>
-                <groupId>xml-apis</groupId>
-                <artifactId>xml-apis</artifactId>
-                <version>1.4.01</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
