@@ -23,13 +23,13 @@ import de.dominikschadow.duke.encounters.domain.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -37,7 +37,7 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
-import static org.owasp.appsensor.core.DetectionPoint.Category.*;
+import static org.owasp.appsensor.core.DetectionPoint.Category.ACCESS_CONTROL;
 
 /**
  * Validates a search filter: scans for basic Cross-Site Scripting and SQL Injection payload.
@@ -46,8 +46,7 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.*;
  */
 @Named
 public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
 
     @Autowired
     private SpringValidatorAdapter validator;

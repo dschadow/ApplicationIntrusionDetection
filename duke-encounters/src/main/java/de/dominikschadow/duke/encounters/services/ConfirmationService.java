@@ -18,11 +18,10 @@
 package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.domain.Confirmation;
-import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +37,7 @@ import java.util.Objects;
  */
 @Service
 public class ConfirmationService {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(ConfirmationService.class);
 
     private final ConfirmationRepository repository;
     private final UserService userService;

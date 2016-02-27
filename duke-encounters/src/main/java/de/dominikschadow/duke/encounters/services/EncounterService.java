@@ -24,13 +24,13 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.repositories.EncounterRepository;
 import de.dominikschadow.duke.encounters.repositories.EncounterSpecification;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -54,8 +54,7 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  */
 @Service
 public class EncounterService {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(EncounterService.class);
 
     private final EncounterRepository repository;
     private final UserService userService;

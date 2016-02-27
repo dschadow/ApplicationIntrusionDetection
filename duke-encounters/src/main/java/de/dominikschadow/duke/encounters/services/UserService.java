@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.duke.encounters.services;
 
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Level;
@@ -26,6 +25,7 @@ import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,8 +43,7 @@ import java.util.Date;
  */
 @Service
 public class UserService {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;

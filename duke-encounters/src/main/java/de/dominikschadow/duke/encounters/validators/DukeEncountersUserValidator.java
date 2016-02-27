@@ -21,12 +21,12 @@ import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.services.SecurityValidationService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -44,8 +44,8 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  */
 @Named
 public class DukeEncountersUserValidator implements Validator {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(DukeEncountersUserValidator.class);
+
     @Autowired
     private SpringValidatorAdapter validator;
     @Autowired

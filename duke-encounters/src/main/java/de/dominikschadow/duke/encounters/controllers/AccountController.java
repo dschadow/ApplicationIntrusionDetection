@@ -23,10 +23,10 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,8 +51,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class AccountController {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private EncounterService encounterService;
     private ConfirmationService confirmationService;

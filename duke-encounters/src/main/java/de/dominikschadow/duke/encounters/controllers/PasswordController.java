@@ -20,10 +20,10 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
-import de.dominikschadow.duke.encounters.spring.Loggable;
 import de.dominikschadow.duke.encounters.validators.PasswordChangeValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -46,8 +46,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class PasswordController {
-    @Loggable
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
 
     private UserService userService;
     private PasswordChangeValidator validator;

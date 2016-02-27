@@ -51,26 +51,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/account")
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-            .securityContext()
+                .securityContext()
                 .securityContextRepository(securityContextRepository)
                 .and()
-            .headers()
-                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy","default-src 'self'"));
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "default-src 'self'"));
         // @formatter:on
     }
 
@@ -89,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // @formatter:off
         web
-            .ignoring()
+                .ignoring()
                 .antMatchers("/img/**", "/webjars/**");
         // @formatter:on
     }
@@ -98,9 +98,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth
-            .jdbcAuthentication()
+                .jdbcAuthentication()
                 .dataSource(dataSource)
-            .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder());
         // @formatter:on
     }
 
