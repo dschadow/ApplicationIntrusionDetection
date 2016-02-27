@@ -51,24 +51,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("USER", "ADMIN")
-                .and()
+            .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/account")
                 .permitAll()
-                .and()
+            .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
-                .and()
+            .and()
                 .securityContext()
                 .securityContextRepository(securityContextRepository)
-                .and()
+            .and()
                 .headers()
                 .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "default-src 'self'"));
         // @formatter:on
@@ -89,8 +89,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // @formatter:off
         web
-                .ignoring()
-                .antMatchers("/img/**", "/webjars/**");
+            .ignoring()
+            .antMatchers("/img/**", "/webjars/**");
         // @formatter:on
     }
 
@@ -98,9 +98,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder());
+            .jdbcAuthentication()
+            .dataSource(dataSource)
+            .passwordEncoder(passwordEncoder());
         // @formatter:on
     }
 
