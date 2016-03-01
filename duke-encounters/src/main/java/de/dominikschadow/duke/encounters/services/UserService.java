@@ -19,7 +19,7 @@ package de.dominikschadow.duke.encounters.services;
 
 import de.dominikschadow.duke.encounters.domain.Authority;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
-import de.dominikschadow.duke.encounters.domain.Level;
+import de.dominikschadow.duke.encounters.enums.Level;
 import de.dominikschadow.duke.encounters.repositories.AuthorityRepository;
 import de.dominikschadow.duke.encounters.repositories.UserRepository;
 import org.owasp.appsensor.core.User;

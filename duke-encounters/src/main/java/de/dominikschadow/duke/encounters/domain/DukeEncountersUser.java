@@ -19,6 +19,7 @@ package de.dominikschadow.duke.encounters.domain;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
+import de.dominikschadow.duke.encounters.enums.Level;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

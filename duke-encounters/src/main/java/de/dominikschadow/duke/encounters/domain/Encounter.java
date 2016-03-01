@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.duke.encounters.domain;
 
+import de.dominikschadow.duke.encounters.enums.Likelihood;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -18,7 +18,7 @@
 package de.dominikschadow.duke.encounters.repositories;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
-import de.dominikschadow.duke.encounters.domain.Likelihood;
+import de.dominikschadow.duke.encounters.enums.Likelihood;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Calendar;
