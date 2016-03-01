@@ -71,10 +71,10 @@
                     <label class="col-sm-2 control-label" for="likelihood">Likelihood</label>
                     <div class="col-sm-2">
                         <select class="form-control" id="likelihood" name="likelihood">
-                            <option th:each="value : ${T(de.dominikschadow.duke.encounters.domain.Likelihood).values()}"
-                                    th:value="${value}"
-                                    th:text="${value.name}"
-                                    th:selected="${value == T(de.dominikschadow.duke.encounters.domain.Likelihood).ALL}"></option>
+                            <option th:each="likelihood : ${T(de.dominikschadow.duke.encounters.enums.Likelihood).values()}"
+                                    th:value="${likelihood}"
+                                    th:text="${likelihood.name}"
+                                    th:selected="${likelihood == T(de.dominikschadow.duke.encounters.enums.Likelihood).ALL}"></option>
                         </select>
                     </div>
                     <div class="col-sm-8"></div>
