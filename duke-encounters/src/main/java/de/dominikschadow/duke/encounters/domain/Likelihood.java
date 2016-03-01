@@ -40,11 +40,6 @@ public enum Likelihood {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return getName();
-    }
-
     public static Likelihood fromString(String value) {
         if (!Strings.isNullOrEmpty(value)) {
             for (Likelihood l : Likelihood.values()) {

@@ -122,7 +122,7 @@ public class Encounter {
     }
 
     public String getLikelihood() {
-        return Likelihood.getLikelihood(getConfirmations()).toString();
+        return Likelihood.getLikelihood(getConfirmations()).getName();
     }
 
     @Override
