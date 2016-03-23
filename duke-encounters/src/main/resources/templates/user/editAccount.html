@@ -45,8 +45,8 @@
 
             <form class="form-horizontal" action="#" th:action="@{/account/userdata}" th:object="${user}"
                   method="post" role="form">
-                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                    <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
+                <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.allErrors()}" th:text="${err}">
                         Validation error
                     </p>
                 </div>
@@ -83,11 +83,12 @@
 
             <form class="form-horizontal" action="#" th:action="@{/account/accountdata}" th:object="${user}"
                   method="post" role="form">
-                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                    <p th:each="error : ${#fields.errors('*')}" th:text="${error}">
+                <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.allErrors()}" th:text="${err}">
                         Validation error
                     </p>
                 </div>
+
                 <div th:class="${#fields.hasErrors('lastname')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="email">Email</label>
                     <div class="col-sm-10">
