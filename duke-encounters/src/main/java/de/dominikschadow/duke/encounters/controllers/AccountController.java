@@ -28,6 +28,7 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -67,6 +68,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account", method = GET)
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public String showMyAccount(Model model) {
         String username = userService.getUsername();
 
@@ -85,6 +87,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/userdata", method = GET)
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
@@ -106,6 +109,7 @@ public class AccountController {
      * @return Account page
      */
     @RequestMapping(value = "/account/userdata", method = POST)
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ModelAndView updateUser(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
@@ -128,6 +132,7 @@ public class AccountController {
      * @return Account page
      */
     @RequestMapping(value = "/account/accountdata", method = POST)
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ModelAndView updateAccount(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         if (userService.confirmPassword(updatedUser.getPassword())) {
