@@ -18,11 +18,13 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.DukeEncountersApplication;
+import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,8 +32,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -69,15 +73,14 @@ public class EncounterControllerTests {
         searchFilter.setLocation("San Francisco");
         searchFilter.setCountry("USA");
 
-        mvc.perform(post("/encounters")
+        mvc.perform(post("/encounters").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("event", "JavaOne 2015")
                 .param("location", "San Francisco")
                 .param("country", "USA"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Location", "/encounters"))
-                .andExpect(model().attribute("encounters", hasSize(1)))
-                .andExpect(model().attribute("searchFilter", contains(samePropertyValuesAs(searchFilter))));
+                .andExpect(model().attribute("encounters", hasSize(1)));
     }
 */
 }
