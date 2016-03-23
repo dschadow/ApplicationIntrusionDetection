@@ -23,8 +23,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+/**
+ * Tests the application itself and tries to startup the application context.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = DukeEncountersApplication.class)
+@SpringApplicationConfiguration(DukeEncountersApplication.class)
 @WebAppConfiguration
 public class DukeEncountersApplicationTests {
     @Test
