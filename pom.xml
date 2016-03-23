@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.18.6.922</boxfuse.version>
+        <boxfuse.version>1.18.7.938</boxfuse.version>
         <sonar.language>java</sonar.language>
     </properties>
 
