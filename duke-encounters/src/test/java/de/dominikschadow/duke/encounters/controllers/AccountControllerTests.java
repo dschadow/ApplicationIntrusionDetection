@@ -44,24 +44,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class AccountControllerTests {
     @Autowired
-    private WebApplicationContext webContext;
+    private WebApplicationContext context;
 
-    private MockMvc mockMvc;
+    private MockMvc mvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).apply(springSecurity()).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 
     @Test
     @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "DUMMY")
     public void verifyAccountAuthorizeNOK() throws Exception {
-        mockMvc.perform(get("/account")).andExpect(status().isForbidden());
+        mvc.perform(get("/account")).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
     public void verifyAccountAuthorizeOK() throws Exception {
-        mockMvc.perform(get("/account")).andExpect(status().isOk());
+        mvc.perform(get("/account")).andExpect(status().isOk());
     }
 }

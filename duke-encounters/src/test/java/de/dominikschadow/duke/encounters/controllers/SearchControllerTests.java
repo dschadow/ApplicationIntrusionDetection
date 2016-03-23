@@ -44,25 +44,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class SearchControllerTests {
     @Autowired
-    private WebApplicationContext webContext;
+    private WebApplicationContext context;
 
-    private MockMvc mockMvc;
+    private MockMvc mvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).apply(springSecurity()).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 
     @Test
     public void searchEncounter() throws Exception {
-        mockMvc.perform(get("/search"))
+        mvc.perform(get("/search"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("search"));
     }
 /*
     @Test
     public void quickSearchEncounter() throws Exception {
-        mockMvc.perform(post("/search")
+        mvc.perform(post("/search")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("quickSearch", "JavaOne 2015"))
                 .andExpect(status().isOk())

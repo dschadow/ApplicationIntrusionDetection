@@ -44,18 +44,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class EncounterControllerTests {
     @Autowired
-    private WebApplicationContext webContext;
+    private WebApplicationContext context;
 
-    private MockMvc mockMvc;
+    private MockMvc mvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).apply(springSecurity()).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 
     @Test
     public void listEncounters() throws Exception {
-        mockMvc.perform(get("/encounters"))
+        mvc.perform(get("/encounters"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
                 .andExpect(model().attributeExists("encounters"))
@@ -69,7 +69,7 @@ public class EncounterControllerTests {
         searchFilter.setLocation("San Francisco");
         searchFilter.setCountry("USA");
 
-        mockMvc.perform(post("/encounters")
+        mvc.perform(post("/encounters")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("event", "JavaOne 2015")
                 .param("location", "San Francisco")
