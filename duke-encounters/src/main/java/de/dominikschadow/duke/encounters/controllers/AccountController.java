@@ -68,7 +68,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account", method = GET)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String showMyAccount(Model model) {
         String username = userService.getUsername();
 
@@ -87,7 +87,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/userdata", method = GET)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
@@ -109,7 +109,7 @@ public class AccountController {
      * @return Account page
      */
     @RequestMapping(value = "/account/userdata", method = POST)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updateUser(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
@@ -132,7 +132,7 @@ public class AccountController {
      * @return Account page
      */
     @RequestMapping(value = "/account/accountdata", method = POST)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updateAccount(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
             redirectAttributes) {
         if (userService.confirmPassword(updatedUser.getPassword())) {

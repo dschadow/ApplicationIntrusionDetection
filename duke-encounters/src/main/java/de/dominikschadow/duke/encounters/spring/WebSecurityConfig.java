@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
             .and()
                 .formLogin()
                 .loginPage("/login")
@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         web
             .ignoring()
-            .antMatchers("/img/**", "/webjars/**");
+                .antMatchers("/css/**", "/img/**", "/webjars/**");
         // @formatter:on
     }
 
@@ -101,8 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         auth
             .jdbcAuthentication()
-            .dataSource(dataSource)
-            .passwordEncoder(passwordEncoder());
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder());
         // @formatter:on
     }
 

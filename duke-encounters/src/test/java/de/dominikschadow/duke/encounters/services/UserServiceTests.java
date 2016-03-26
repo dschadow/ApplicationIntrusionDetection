@@ -40,8 +40,8 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
     private List<String> passwords = Arrays.asList("arthur@dent.com", "ford@prefect.com", "zaphod@beeblebrox.com",
-            "marvin@marvin.com", "humma@kavula.com", "questular@rontok.com", "deep@thought.com", "tricia@mcmillan" +
-                    ".com", "slartibartfast@slartibartfast.com", "jin@jenz.com", "gag@halfrunt.com");
+            "marvin@marvin.com", "humma@kavula.com", "questular@rontok.com", "deep@thought.com", "tricia@mcmillan.com",
+            "slartibartfast@slartibartfast.com", "jin@jenz.com", "gag@halfrunt.com", "duke@encounters.com");
 
     @Test
     public void hashPassword() {
