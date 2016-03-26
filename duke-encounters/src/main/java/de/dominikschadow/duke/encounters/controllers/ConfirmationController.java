@@ -29,6 +29,7 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +68,7 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "/confirmations", method = GET)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String getConfirmations(Model model, @RequestParam(name = "type", required = false) String type) {
         List<Confirmation> confirmations = confirmationService.getConfirmations(type);
         model.addAttribute("confirmations", confirmations);
@@ -75,6 +77,7 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "/confirmation/add", method = POST)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
 
@@ -100,6 +103,7 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "/confirmation/revoke", method = POST)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView revokeConfirmation(long confirmationId) {
         String username = userService.getUsername();
 

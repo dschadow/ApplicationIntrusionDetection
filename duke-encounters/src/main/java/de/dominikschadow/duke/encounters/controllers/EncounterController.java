@@ -26,6 +26,7 @@ import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -72,6 +73,7 @@ public class EncounterController {
     }
 
     @RequestMapping(value = "/encounter/create", method = GET)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String createEncounter(@ModelAttribute Encounter encounter) {
         return "user/createEncounter";
     }
@@ -88,6 +90,7 @@ public class EncounterController {
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView deleteEncounter(long encounterId) {
         encounterService.deleteEncounter(encounterId);
 
@@ -95,6 +98,7 @@ public class EncounterController {
     }
 
     @RequestMapping(value = "/encounter/{id}", method = GET)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String encounterById(@PathVariable("id") long encounterId, Model model, RedirectAttributes
             redirectAttributes) {
         Encounter encounter = encounterService.getEncounterById(encounterId);

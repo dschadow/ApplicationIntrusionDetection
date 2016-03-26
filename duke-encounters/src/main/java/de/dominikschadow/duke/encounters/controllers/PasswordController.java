@@ -25,6 +25,7 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -61,9 +62,10 @@ public class PasswordController {
      * Loads the change password page.
      *
      * @param passwordChange The PasswordChange model attribute
-     * @return The page to navigate to, including userlevel information
+     * @return The page to navigate to, including user level information
      */
     @RequestMapping(value = "/account/password", method = GET)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
         String username = userService.getUsername();
 
@@ -84,6 +86,7 @@ public class PasswordController {
      * @return Account page
      */
     @RequestMapping(value = "/account/password", method = POST)
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updatePassword(@Valid PasswordChange update, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
