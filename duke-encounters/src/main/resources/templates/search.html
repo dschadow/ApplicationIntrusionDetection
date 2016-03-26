@@ -74,7 +74,7 @@
                             <option th:each="likelihood : ${T(de.dominikschadow.duke.encounters.enums.Likelihood).values()}"
                                     th:value="${likelihood}"
                                     th:text="${likelihood.name}"
-                                    th:selected="${likelihood == T(de.dominikschadow.duke.encounters.enums.Likelihood).ALL}"></option>
+                                    th:selected="${likelihood == T(de.dominikschadow.duke.encounters.enums.Likelihood).ANY}"></option>
                         </select>
                     </div>
                     <div class="col-sm-8"></div>

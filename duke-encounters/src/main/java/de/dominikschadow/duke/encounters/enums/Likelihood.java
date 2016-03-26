@@ -29,7 +29,7 @@ import java.util.Objects;
  * @author Dominik Schadow
  */
 public enum Likelihood {
-    ALL("*"), NOT_CONFIRMED("not confirmed"), PLAUSIBLE("plausible"), CONFIRMED("confirmed");
+    ANY("*"), NOT_CONFIRMED("not confirmed"), PLAUSIBLE("plausible"), CONFIRMED("confirmed");
 
     private final String name;
 
