@@ -23,16 +23,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Tests the [@link SearchController} class.
@@ -59,15 +62,14 @@ public class SearchControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("search"));
     }
-/*
+
     @Test
     public void quickSearchEncounter() throws Exception {
-        mvc.perform(post("/search")
+        mvc.perform(post("/search").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("quickSearch", "JavaOne 2015"))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Location", "/search"))
+                .andExpect(view().name("encounters"))
                 .andExpect(model().attribute("encounters", hasSize(1)));
     }
-*/
 }
