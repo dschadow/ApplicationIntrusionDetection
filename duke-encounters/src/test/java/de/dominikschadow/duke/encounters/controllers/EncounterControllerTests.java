@@ -18,7 +18,6 @@
 package de.dominikschadow.duke.encounters.controllers;
 
 import de.dominikschadow.duke.encounters.DukeEncountersApplication;
-import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,22 +64,17 @@ public class EncounterControllerTests {
                 .andExpect(model().attributeExists("encounters"))
                 .andExpect(model().attribute("encounters", hasSize(20)));
     }
-/*
+
     @Test
     public void searchEncounter() throws Exception {
-        SearchFilter searchFilter = new SearchFilter();
-        searchFilter.setEvent("JavaOne 2015");
-        searchFilter.setLocation("San Francisco");
-        searchFilter.setCountry("USA");
-
         mvc.perform(post("/encounters").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("event", "JavaOne 2015")
                 .param("location", "San Francisco")
+                .param("likelihood", "ANY")
                 .param("country", "USA"))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Location", "/encounters"))
+                .andExpect(view().name("encounters"))
                 .andExpect(model().attribute("encounters", hasSize(1)));
     }
-*/
 }
