@@ -44,7 +44,7 @@ public enum Likelihood {
     public static Likelihood fromString(String value) {
         if (!Strings.isNullOrEmpty(value)) {
             for (Likelihood l : Likelihood.values()) {
-                if (value.equalsIgnoreCase(l.getName())) {
+                if (value.equals(l.toString())) {
                     return l;
                 }
             }
