@@ -19,8 +19,6 @@ spring:
 # GitHub
 github:
   client:
-    clientId: 9d2e5189e85bbb3276ed
-    clientSecret: b9b265f1894aaced97c4ebeac5e49a7a174ea21e
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
