@@ -3,10 +3,11 @@
 <head th:fragment="head">
     <title>Duke Encounters</title>
     <meta charset="utf-8"/>
+    <base href="/"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css"/>
 </head>
 
 
@@ -104,8 +105,8 @@
 
 
 <div th:fragment="scripts">
-    <script th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </div>
 
 </html>
