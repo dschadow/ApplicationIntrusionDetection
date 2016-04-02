@@ -52,14 +52,14 @@
                 </div>
 
                 <div th:class="${#fields.hasErrors('lastname')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label class="col-sm-2 control-label" for="firstname">Firstname</label>
+                    <label class="col-sm-2 control-label" for="firstname">First name</label>
                     <div class="col-sm-10">
                         <input type="text" autofocus="autofocus" id="firstname" name="firstname" th:field="*{firstname}"
                                class="form-control" placeholder="Firstname"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('lastname')} ? 'form-group has-error has-feedback' : 'form-group'">
-                    <label class="col-sm-2 control-label" for="lastname">Lastname</label>
+                    <label class="col-sm-2 control-label" for="lastname">Last name</label>
                     <div class="col-sm-10">
                         <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control"
                                placeholder="Lastname"/>
