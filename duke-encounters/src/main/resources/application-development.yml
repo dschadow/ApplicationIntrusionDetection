@@ -1,0 +1,28 @@
+# Session
+server:
+  session:
+    timeout: 3600
+
+# Actuator
+management:
+  context-path: /admin
+  security:
+    enabled: false
+
+security:
+  basic:
+    enabled: false
+
+info:
+  application:
+    metadata: Duke Encounters Development
+
+# Logging
+logging:
+  path: /var/logs/
+  file: duke-encounters:log
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.thymeleaf: WARN

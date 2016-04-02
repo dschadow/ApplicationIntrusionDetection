@@ -1,0 +1,47 @@
+# Duke Encounters
+encounters:
+  latest:
+    amount: 10
+
+# Session
+server:
+  session:
+    timeout: 1800
+
+spring:
+  resources:
+    chain:
+      enabled: true
+  mvc:
+    favicon:
+      enabled: false
+
+# Actuator
+management:
+  context-path: /admin
+  security:
+    enabled: true
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+
+info:
+  application:
+    metadata: Duke Encounters
+    artifactId: ${project.artifactId}
+    groupId: ${project.groupId}
+    version: ${project.version}
+
+# Logging
+logging:
+  path: /var/logs/
+  file: duke-encounters:log
+  level:
+    root: WARN
+    org.springframework: ERROR
+    org.hibernate: ERROR
+    org.thymeleaf: ERROR
