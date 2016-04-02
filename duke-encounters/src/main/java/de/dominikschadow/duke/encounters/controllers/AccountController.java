@@ -103,7 +103,7 @@ public class AccountController {
     }
 
     /**
-     * Updates the users firstname and lastname and stores it in the database.
+     * Updates the users first name and last name and stores it in the database.
      *
      * @param updatedUser The updated user
      * @return Account page
