@@ -7,27 +7,11 @@ This repository is all about Application Intrusion Detection.
 
 As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse, launch the app within an immutable image and open the web application in your browser at **http://127.0.0.1:8080**.
 
-And of course you can use [Docker](https://www.docker.com) to create an image via
-	
-	docker build -t duke-encounters .
-	
-launch the container via
-
-	docker run -p 8080:8080 -t duke-encounters
-
-and open the web application in your browser at **http://[CONTAINER-IP]:8080**.
+And of course you can use [Docker](https://www.docker.com) to create an image via `docker build -t duke-encounters .`, launch the container via `docker run -p 8080:8080 -t duke-encounters` and open the web application in your browser at **http://[CONTAINER-IP]:8080**.
 
 Available users are listed in the [src/main/resources/data.sql](https://github.com/dschadow/ApplicationIntrusionDetection/blob/master/duke-encounters/src/main/resources/data.sql) file. Username and password are always identical.
 
-The GitHub login requires the setup of an application in your GitHub account and to provide the valid 
-
-    github.client.clientId
-    
-and
-    
-    github.client.clientSecret
-
-as runtime parameters.
+The GitHub login requires the setup of an application in your GitHub account and to provide the valid `github.client.clientId` and `github.client.clientSecret` as runtime parameters.
 
 ##Meta
 [![Build Status](https://travis-ci.org/dschadow/ApplicationIntrusionDetection.svg)](https://travis-ci.org/dschadow/ApplicationIntrusionDetection)
