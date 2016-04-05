@@ -24,6 +24,6 @@ logging:
   level:
     root: INFO
     org.springframework: WARN
-    org.springframework.security: DEBUG
+    org.springframework.security: INFO
     org.hibernate: WARN
     org.thymeleaf: WARN
