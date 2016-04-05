@@ -20,6 +20,7 @@ package de.dominikschadow.duke.encounters.controllers;
 import de.dominikschadow.duke.encounters.domain.Confirmation;
 import de.dominikschadow.duke.encounters.domain.DukeEncountersUser;
 import de.dominikschadow.duke.encounters.domain.Encounter;
+import de.dominikschadow.duke.encounters.enums.Level;
 import de.dominikschadow.duke.encounters.services.ConfirmationService;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
@@ -80,8 +81,14 @@ public class AccountController {
         List<Confirmation> confirmations = confirmationService.getConfirmationsByUsername(username);
         model.addAttribute("confirmations", confirmations);
 
+        String userLevel = Level.ROOKIE.getName();
+
         DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
-        model.addAttribute("userlevel", dukeEncountersUser.getLevel().getName());
+        if (dukeEncountersUser != null && dukeEncountersUser.getLevel() != null) {
+            userLevel = dukeEncountersUser.getLevel().getName();
+        }
+
+        model.addAttribute("userlevel", userLevel);
 
         return "user/account";
     }
