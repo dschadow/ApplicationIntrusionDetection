@@ -21,8 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Searches for different attack strings with incomplete (and simple!) blacklists. Detects Cross-Site Scripting (XSS)
@@ -32,16 +30,17 @@ import java.util.List;
  */
 @Service
 public class SecurityValidationService {
-    private static final List<String> XSS_BLACKLIST = Arrays.asList("<script>", "javascript", "onload", "eval",
-            "document.cookie");
-    private static final List<String> SQL_BLACKLIST = Arrays.asList("drop", "insert", "update", "delete", "union",
-            "select", "exec", "fetch", "or '1'='1", "or 1=1");
-
     public boolean hasXssPayload(@NotNull String payload) {
-        return XSS_BLACKLIST.contains(StringUtils.lowerCase(payload));
+        return StringUtils.containsIgnoreCase(payload, "<") || StringUtils.containsIgnoreCase(payload, "javascript")
+                || StringUtils.containsIgnoreCase(payload, "onload") || StringUtils.containsIgnoreCase(payload, "eval")
+                || StringUtils.containsIgnoreCase(payload, "document.cookie");
     }
 
     public boolean hasSqlIPayload(@NotNull String payload) {
-        return SQL_BLACKLIST.contains(StringUtils.lowerCase(payload));
+        return StringUtils.containsIgnoreCase(payload, "drop") || StringUtils.containsIgnoreCase(payload, "insert")
+                || StringUtils.containsIgnoreCase(payload, "update") || StringUtils.containsIgnoreCase(payload,
+                "delete") || StringUtils.containsIgnoreCase(payload, "union") || StringUtils.containsIgnoreCase(payload, "select")
+                || StringUtils.containsIgnoreCase(payload, "exec") || StringUtils.containsIgnoreCase(payload, "fetch")
+                || StringUtils.containsIgnoreCase(payload, "' or '1'='1") || StringUtils.containsIgnoreCase(payload, "' or 1=1");
     }
 }
