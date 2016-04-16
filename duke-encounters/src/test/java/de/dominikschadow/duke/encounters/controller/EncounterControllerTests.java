@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.duke.encounters.controllers;
+package de.dominikschadow.duke.encounters.controller;
 
 import de.dominikschadow.duke.encounters.DukeEncountersApplication;
 import org.junit.Before;
@@ -23,26 +23,29 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Tests the [@link AccountController} class.
+ * Tests the [@link EncounterController} class.
  *
  * @author Dominik Schadow
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(DukeEncountersApplication.class)
 @WebAppConfiguration
-public class AccountControllerTests {
+public class EncounterControllerTests {
     @Autowired
     private WebApplicationContext context;
 
@@ -54,14 +57,24 @@ public class AccountControllerTests {
     }
 
     @Test
-    @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "DUMMY")
-    public void verifyAccountAuthorizeNOK() throws Exception {
-        mvc.perform(get("/account")).andExpect(status().isForbidden());
+    public void listEncounters() throws Exception {
+        mvc.perform(get("/encounters"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("encounters"))
+                .andExpect(model().attributeExists("encounters"))
+                .andExpect(model().attribute("encounters", hasSize(20)));
     }
 
     @Test
-    @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
-    public void verifyAccountAuthorizeOK() throws Exception {
-        mvc.perform(get("/account")).andExpect(status().isOk());
+    public void searchEncounter() throws Exception {
+        mvc.perform(post("/encounters").with(csrf())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("event", "JavaOne 2015")
+                .param("location", "San Francisco")
+                .param("likelihood", "ANY")
+                .param("country", "USA"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("encounters"))
+                .andExpect(model().attribute("encounters", hasSize(1)));
     }
 }
