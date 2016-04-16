@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.duke.encounters.spring;
+package de.dominikschadow.duke.encounters.config;
 
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionSystem;
