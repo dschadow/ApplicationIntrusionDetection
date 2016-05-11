@@ -20,6 +20,7 @@
         <appsensor.version>2.2.0</appsensor.version>
         <boxfuse.version>1.18.7.938</boxfuse.version>
         <sonar.language>java</sonar.language>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <prerequisites>
@@ -176,7 +177,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.4.6</version>
+                    <version>0.4.9</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
