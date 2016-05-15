@@ -60,7 +60,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableOAuth2Client
 @EnableAuthorizationServer
 @Order(6)
@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Autowired
-    OAuth2ClientContext oauth2ClientContext;
+    private OAuth2ClientContext oauth2ClientContext;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -93,6 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll()
+            .and()
+                .rememberMe()
             .and()
                 .securityContext()
                 .securityContextRepository(securityContextRepository)
