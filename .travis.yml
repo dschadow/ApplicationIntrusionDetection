@@ -1,8 +1,6 @@
 sudo: false
 language: java
-env:
-  global:
-    JAVA_OPTS=-Xmx2g
+before_install: echo "MAVEN_OPTS='-Xmx2048m -XX:MaxPermSize=512m'" > ~/.mavenrc
 jdk: oraclejdk8
 branches:
   only:
