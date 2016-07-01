@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.19.12.1000</boxfuse.version>
+        <boxfuse.version>1.20.0.1018</boxfuse.version>
         <sonar.language>java</sonar.language>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -111,7 +111,7 @@
             <dependency>
                 <groupId>org.owasp</groupId>
                 <artifactId>security-logging-logback</artifactId>
-                <version>1.1.0</version>
+                <version>1.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
