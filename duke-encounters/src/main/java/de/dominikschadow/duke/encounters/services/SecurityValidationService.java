@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
 @Service
 public class SecurityValidationService {
     public boolean hasXssPayload(@NotNull String payload) {
-        return StringUtils.containsIgnoreCase(payload, "<") || StringUtils.containsIgnoreCase(payload, "javascript")
+        return StringUtils.contains(payload, "<") || StringUtils.containsIgnoreCase(payload, "script")
                 || StringUtils.containsIgnoreCase(payload, "onload") || StringUtils.containsIgnoreCase(payload, "eval")
                 || StringUtils.containsIgnoreCase(payload, "document.cookie");
     }
