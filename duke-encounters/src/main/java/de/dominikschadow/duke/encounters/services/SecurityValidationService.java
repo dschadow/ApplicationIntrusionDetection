@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 
 /**
- * Searches for different attack strings with incomplete (and simple!) blacklists. Detects Cross-Site Scripting (XSS)
+ * Searches for different attack strings with incomplete (and simple!) blacklists. Detects some Cross-Site Scripting (XSS)
  * and SQL Injection attacks.
  *
  * @author Dominik Schadow
@@ -31,16 +31,21 @@ import javax.validation.constraints.NotNull;
 @Service
 public class SecurityValidationService {
     public boolean hasXssPayload(@NotNull String payload) {
-        return StringUtils.contains(payload, "<") || StringUtils.containsIgnoreCase(payload, "script")
-                || StringUtils.containsIgnoreCase(payload, "onload") || StringUtils.containsIgnoreCase(payload, "eval")
-                || StringUtils.containsIgnoreCase(payload, "document.cookie");
+        return containsAnyIgnoreCase(payload, "<", "script", "onload", "eval", "document.cookie");
     }
 
     public boolean hasSqlIPayload(@NotNull String payload) {
-        return StringUtils.containsIgnoreCase(payload, "drop") || StringUtils.containsIgnoreCase(payload, "insert")
-                || StringUtils.containsIgnoreCase(payload, "update") || StringUtils.containsIgnoreCase(payload,
-                "delete") || StringUtils.containsIgnoreCase(payload, "union") || StringUtils.containsIgnoreCase(payload, "select")
-                || StringUtils.containsIgnoreCase(payload, "exec") || StringUtils.containsIgnoreCase(payload, "fetch")
-                || StringUtils.containsIgnoreCase(payload, "' or '1'='1") || StringUtils.containsIgnoreCase(payload, "' or 1=1");
+        return containsAnyIgnoreCase(payload, "drop", "insert", "update", "delete", "union", "select", "exec", "fetch",
+                "' or '1'='1", "' or 1=1");
+    }
+
+    private boolean containsAnyIgnoreCase(String payload, String... searchStrings) {
+        for (String searchString : searchStrings) {
+            if (StringUtils.containsIgnoreCase(payload, searchString)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
