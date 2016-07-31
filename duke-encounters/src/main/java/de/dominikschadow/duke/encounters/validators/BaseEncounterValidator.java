@@ -27,6 +27,7 @@ import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
@@ -38,13 +39,15 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  */
 public abstract class BaseEncounterValidator implements Validator {
     @Autowired
-    private SecurityValidationService securityValidationService;
+    protected SpringValidatorAdapter validator;
     @Autowired
-    private EventManager ids;
+    protected SecurityValidationService securityValidationService;
     @Autowired
-    private UserService userService;
+    protected EventManager ids;
     @Autowired
-    private DetectionSystem detectionSystem;
+    protected UserService userService;
+    @Autowired
+    protected DetectionSystem detectionSystem;
 
     protected Errors validateBaseData(String event, String location, String country, Errors errors) {
         if (securityValidationService.hasXssPayload(event)) {
