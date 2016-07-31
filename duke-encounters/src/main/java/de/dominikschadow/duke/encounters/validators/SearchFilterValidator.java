@@ -48,16 +48,21 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.ACCESS_CONTROL;
 public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
 
+    private final SpringValidatorAdapter validator;
+    private final EventManager ids;
+    private final UserService userService;
+    private final SecurityValidationService securityValidationService;
+    private final DetectionSystem detectionSystem;
+
     @Autowired
-    private SpringValidatorAdapter validator;
-    @Autowired
-    private EventManager ids;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SecurityValidationService securityValidationService;
-    @Autowired
-    private DetectionSystem detectionSystem;
+    public SearchFilterValidator(SpringValidatorAdapter validator, EventManager ids, UserService userService,
+                                 SecurityValidationService securityValidationService, DetectionSystem detectionSystem) {
+        this.validator = validator;
+        this.ids = ids;
+        this.userService = userService;
+        this.securityValidationService = securityValidationService;
+        this.detectionSystem = detectionSystem;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

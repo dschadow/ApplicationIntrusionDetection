@@ -34,10 +34,14 @@ import javax.inject.Named;
  */
 @Named
 public class EncounterValidator extends BaseEncounterValidator implements Validator {
+    private final SpringValidatorAdapter validator;
+    private final SecurityValidationService securityValidationService;
+
     @Autowired
-    private SpringValidatorAdapter validator;
-    @Autowired
-    private SecurityValidationService securityValidationService;
+    public EncounterValidator(SpringValidatorAdapter validator, SecurityValidationService securityValidationService) {
+        this.validator = validator;
+        this.securityValidationService = securityValidationService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

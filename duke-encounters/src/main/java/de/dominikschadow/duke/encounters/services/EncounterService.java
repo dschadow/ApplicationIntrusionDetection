@@ -58,17 +58,18 @@ public class EncounterService {
 
     private final EncounterRepository repository;
     private final UserService userService;
-    @Autowired
-    private EventManager ids;
-    @Autowired
-    private DetectionSystem detectionSystem;
+    private final EventManager ids;
+    private final DetectionSystem detectionSystem;
     private final int latestEncounterAmount;
 
     @Autowired
     public EncounterService(EncounterRepository repository, UserService userService,
+                            EventManager ids, DetectionSystem detectionSystem,
                             @Value("${encounters.latest.amount}") int latestEncounterAmount) {
         this.repository = repository;
         this.userService = userService;
+        this.ids = ids;
+        this.detectionSystem = detectionSystem;
         this.latestEncounterAmount = latestEncounterAmount;
     }
 
