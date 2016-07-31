@@ -44,8 +44,6 @@
             <p class="lead" th:if="${searchFilter != null}">Your search for <strong th:text="${searchFilter}"></strong>
                 returned the following results:</p>
 
-            <span th:if="${param.type != null}" th:text="${'requestParam: ' + param.type[0]}"></span>
-
             <div class="row">
                 <div class="col-md-12">
                     <table class="table">
