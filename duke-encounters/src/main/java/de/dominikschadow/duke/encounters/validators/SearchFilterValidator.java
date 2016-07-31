@@ -19,14 +19,10 @@ package de.dominikschadow.duke.encounters.validators;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.duke.encounters.Constants;
-import de.dominikschadow.duke.encounters.enums.Likelihood;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
-import de.dominikschadow.duke.encounters.services.SecurityValidationService;
-import de.dominikschadow.duke.encounters.services.UserService;
+import de.dominikschadow.duke.encounters.enums.Likelihood;
 import org.owasp.appsensor.core.DetectionPoint;
-import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
-import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,17 +43,6 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.ACCESS_CONTROL;
 @Named
 public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
-
-    @Autowired
-    private SpringValidatorAdapter validator;
-    @Autowired
-    private EventManager ids;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SecurityValidationService securityValidationService;
-    @Autowired
-    private DetectionSystem detectionSystem;
 
     @Override
     public boolean supports(Class<?> clazz) {

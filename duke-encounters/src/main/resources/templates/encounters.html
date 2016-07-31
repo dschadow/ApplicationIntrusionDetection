@@ -54,7 +54,7 @@
                             <th>Date</th>
                             <th>Confirmed by</th>
                             <th>Likelihood</th>
-                            <th th:if="${#httpServletRequest.remoteUser}">Confirm</th>
+                            <th th:if="${confirmable}">Confirm</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,7 +71,7 @@
                         </span>
                             </td>
                             <td th:text="${encounter.likelihood}"></td>
-                            <td th:if="${#httpServletRequest.remoteUser}">
+                            <td th:if="${confirmable}">
                                 <form th:action="@{/confirmation/add}" method="post">
                                     <input type="hidden" th:value="${encounter.id}" th:name="encounterId"/>
                                     <button type="submit" class="btn btn-default btn-sm" aria-label="Confirm Encounter">

@@ -19,11 +19,8 @@ package de.dominikschadow.duke.encounters.validators;
 
 import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.Encounter;
-import de.dominikschadow.duke.encounters.services.SecurityValidationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
@@ -34,11 +31,6 @@ import javax.inject.Named;
  */
 @Named
 public class EncounterValidator extends BaseEncounterValidator implements Validator {
-    @Autowired
-    private SpringValidatorAdapter validator;
-    @Autowired
-    private SecurityValidationService securityValidationService;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return Encounter.class.equals(clazz);

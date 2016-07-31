@@ -36,10 +36,14 @@ import javax.inject.Named;
  */
 @Named
 public class PasswordChangeValidator implements Validator {
+    private final SpringValidatorAdapter validator;
+    private final UserService userService;
+
     @Autowired
-    private SpringValidatorAdapter validator;
-    @Autowired
-    private UserService userService;
+    public PasswordChangeValidator(SpringValidatorAdapter validator, UserService userService) {
+        this.validator = validator;
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

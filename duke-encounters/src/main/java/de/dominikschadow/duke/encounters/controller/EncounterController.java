@@ -21,6 +21,7 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.services.UserService;
 import de.dominikschadow.duke.encounters.validators.EncounterValidator;
+import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -66,8 +67,11 @@ public class EncounterController {
 
     @RequestMapping(value = "/encounters", method = GET)
     public String getEncounters(Model model, @RequestParam(name = "type", required = false) String type) {
+        boolean confirmable = !StringUtils.equals(userService.getUser().getUsername(), "anonymousUser") && !StringUtils.equals("own", type);
+
         List<Encounter> encounters = encounterService.getEncounters(type);
         model.addAttribute("encounters", encounters);
+        model.addAttribute("confirmable", confirmable);
 
         return "encounters";
     }
@@ -79,14 +83,17 @@ public class EncounterController {
     }
 
     @RequestMapping(value = "/encounter/create", method = POST)
-    public ModelAndView saveEncounter(@Valid Encounter encounter, BindingResult result) {
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public String saveEncounter(@Valid Encounter encounter, Model model, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("user/createEncounter", "formErrors", result.getAllErrors());
+            model.addAttribute("formErrors", result.getAllErrors());
+            return "user/createEncounter";
         }
 
         encounterService.createEncounter(encounter);
+        model.addAttribute("confirmable", true);
 
-        return new ModelAndView("redirect:/encounters");
+        return "redirect:/encounters";
     }
 
     @RequestMapping(value = "/encounter/delete", method = POST)
@@ -106,6 +113,7 @@ public class EncounterController {
         if (encounter == null) {
             fireInvalidUrlParameterEvent();
             redirectAttributes.addFlashAttribute("encounterFailure", true);
+            redirectAttributes.addFlashAttribute("confirmable", true);
 
             return "redirect:/encounters";
         }

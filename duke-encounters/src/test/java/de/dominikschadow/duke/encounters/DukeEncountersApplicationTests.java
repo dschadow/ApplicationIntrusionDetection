@@ -19,15 +19,15 @@ package de.dominikschadow.duke.encounters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Tests the application itself and tries to startup the application context.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(DukeEncountersApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = DukeEncountersApplication.class)
 @WebAppConfiguration
 public class DukeEncountersApplicationTests {
     @Test
