@@ -32,7 +32,7 @@ footer {
     padding: 20px;
 }
 
-ul.unstyled {
+.unstyled {
     list-style: none;
     padding: 0;
 }
@@ -42,7 +42,7 @@ ul.unstyled {
     margin-bottom: 25px;
 }
 
-div.panel-text {
+.panel-text {
     margin-top: 25px;
 }
 
