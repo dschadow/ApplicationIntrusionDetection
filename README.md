@@ -1,6 +1,6 @@
 Application Intrusion Detection
 ============
-This repository is all about Application Intrusion Detection. Have a look at my [blog](http://events.dominikschadow.de) for presentations I've given on this topic or watch the (German) [recording](https://jaxenter.de/web-app-security-43952) at W-JAX 2015.
+This repository is all about Application Intrusion Detection. Have a look at my [blog](https://blog.dominikschadow.de/events) for presentations I've given on this topic or watch the (German) [recording](https://jaxenter.de/web-app-security-43952) at W-JAX 2015.
 
 #duke-encounters
 **Duke Encounters** is a complete web application utilizing Application Intrusion Detection based on [OWASP AppSensor](http://appsensor.org). 
