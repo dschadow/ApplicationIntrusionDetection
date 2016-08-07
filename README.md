@@ -24,3 +24,4 @@ as runtime parameters.
 ##Meta
 [![Build Status](https://travis-ci.org/dschadow/ApplicationIntrusionDetection.svg)](https://travis-ci.org/dschadow/ApplicationIntrusionDetection)
 [![Code Climate](https://codeclimate.com/github/dschadow/ApplicationIntrusionDetection/badges/gpa.svg)](https://codeclimate.com/github/dschadow/ApplicationIntrusionDetection)
+[![codecov](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection/branch/master/graph/badge.svg)](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection)
