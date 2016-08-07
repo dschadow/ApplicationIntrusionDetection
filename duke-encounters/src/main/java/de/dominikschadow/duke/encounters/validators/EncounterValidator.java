@@ -42,7 +42,7 @@ public class EncounterValidator extends BaseEncounterValidator implements Valida
 
         Encounter encounter = (Encounter) target;
 
-        errors = validateBaseData(encounter.getEvent(), encounter.getLocation(), encounter.getCountry(), errors);
+        validateBaseData(encounter.getEvent(), encounter.getLocation(), encounter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(encounter.getComment())) {
             fireXssEvent();

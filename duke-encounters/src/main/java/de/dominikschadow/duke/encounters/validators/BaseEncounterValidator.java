@@ -49,7 +49,7 @@ public abstract class BaseEncounterValidator implements Validator {
     @Autowired
     protected DetectionSystem detectionSystem;
 
-    protected Errors validateBaseData(String event, String location, String country, Errors errors) {
+    protected void validateBaseData(String event, String location, String country, Errors errors) {
         if (securityValidationService.hasXssPayload(event)) {
             fireXssEvent();
             errors.rejectValue("event", Constants.XSS_ERROR_CODE);
@@ -73,8 +73,6 @@ public abstract class BaseEncounterValidator implements Validator {
             fireSqlIEvent();
             errors.rejectValue("country", Constants.SQLI_ERROR_CODE);
         }
-
-        return errors;
     }
 
     protected void fireXssEvent() {

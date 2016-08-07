@@ -26,10 +26,8 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
@@ -55,7 +53,7 @@ public class SearchFilterValidator extends BaseEncounterValidator implements Val
 
         SearchFilter filter = (SearchFilter) target;
 
-        errors = validateBaseData(filter.getEvent(), filter.getLocation(), filter.getCountry(), errors);
+        validateBaseData(filter.getEvent(), filter.getLocation(), filter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(filter.getYear())) {
             fireXssEvent();
@@ -81,6 +79,7 @@ public class SearchFilterValidator extends BaseEncounterValidator implements Val
         try {
             Likelihood.fromString(filter.getLikelihood());
         } catch (IllegalArgumentException ex) {
+            logger.error(ex.getMessage(), ex);
             logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
                     filter.getLikelihood());
             fireInvalidValueEvent();
