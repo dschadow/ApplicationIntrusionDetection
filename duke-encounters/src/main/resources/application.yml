@@ -40,10 +40,7 @@ security:
 
 info:
   application:
-    metadata: Duke Encounters
-    artifactId: ${project.artifactId}
-    groupId: ${project.groupId}
-    version: ${project.version}
+    env: Production
 
 # Logging
 logging:

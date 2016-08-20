@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.2.0</appsensor.version>
-        <boxfuse.version>1.21.6.1109</boxfuse.version>
+        <boxfuse.version>1.21.7.1111</boxfuse.version>
         <sonar.language>java</sonar.language>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -31,7 +31,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.0.RELEASE</version>
-    </parent
+        <relativePath/>
+    </parent>
 
     <issueManagement>
         <system>GitHub</system>
