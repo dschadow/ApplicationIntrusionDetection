@@ -36,7 +36,7 @@ import static org.junit.Assert.assertNotEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DukeEncountersApplication.class)
-public class UserServiceTests {
+public class UserServiceTest {
     @Autowired
     private UserService userService;
     private List<String> passwords = Arrays.asList("arthur@dent.com", "ford@prefect.com", "zaphod@beeblebrox.com",
