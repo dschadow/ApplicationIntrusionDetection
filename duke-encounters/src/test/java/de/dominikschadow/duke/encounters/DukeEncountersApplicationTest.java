@@ -29,7 +29,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DukeEncountersApplication.class)
 @WebAppConfiguration
-public class DukeEncountersApplicationTests {
+public class DukeEncountersApplicationTest {
     @Test
     public void contextLoads() {
     }
