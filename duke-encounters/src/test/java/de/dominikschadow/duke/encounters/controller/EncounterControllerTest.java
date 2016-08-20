@@ -38,14 +38,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Tests the [@link SearchController} class.
+ * Tests the [@link EncounterController} class.
  *
  * @author Dominik Schadow
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DukeEncountersApplication.class)
 @WebAppConfiguration
-public class SearchControllerTests {
+public class EncounterControllerTest {
     @Autowired
     private WebApplicationContext context;
 
@@ -57,17 +57,22 @@ public class SearchControllerTests {
     }
 
     @Test
-    public void searchEncounter() throws Exception {
-        mvc.perform(get("/search"))
+    public void listEncounters() throws Exception {
+        mvc.perform(get("/encounters"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("search"));
+                .andExpect(view().name("encounters"))
+                .andExpect(model().attributeExists("encounters"))
+                .andExpect(model().attribute("encounters", hasSize(20)));
     }
 
     @Test
-    public void quickSearchEncounter() throws Exception {
-        mvc.perform(post("/search").with(csrf())
+    public void searchEncounter() throws Exception {
+        mvc.perform(post("/encounters").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("quickSearch", "JavaOne 2015"))
+                .param("event", "JavaOne 2015")
+                .param("location", "San Francisco")
+                .param("likelihood", "ANY")
+                .param("country", "USA"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
                 .andExpect(model().attribute("encounters", hasSize(1)));
