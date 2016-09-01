@@ -49,7 +49,8 @@ public abstract class BaseEncounterValidator implements Validator {
     @Autowired
     protected DetectionSystem detectionSystem;
 
-    protected void validateBaseData(String event, String location, String country, Errors errors) {
+    protected void validateBaseData(final String event, final String location, final String country,
+                                    final Errors errors) {
         if (securityValidationService.hasXssPayload(event)) {
             fireXssEvent();
             errors.rejectValue("event", Constants.XSS_ERROR_CODE);
@@ -75,12 +76,12 @@ public abstract class BaseEncounterValidator implements Validator {
         }
     }
 
-    protected void fireXssEvent() {
+    protected final void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
-    protected void fireSqlIEvent() {
+    protected final void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }

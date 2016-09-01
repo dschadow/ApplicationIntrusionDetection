@@ -63,9 +63,9 @@ public class EncounterService {
     private final int latestEncounterAmount;
 
     @Autowired
-    public EncounterService(EncounterRepository repository, UserService userService,
-                            EventManager ids, DetectionSystem detectionSystem,
-                            @Value("${encounters.latest.amount}") int latestEncounterAmount) {
+    public EncounterService(final EncounterRepository repository, final UserService userService,
+                            final EventManager ids, final DetectionSystem detectionSystem,
+                            @Value("${encounters.latest.amount}") final int latestEncounterAmount) {
         this.repository = repository;
         this.userService = userService;
         this.ids = ids;
@@ -84,7 +84,7 @@ public class EncounterService {
         return encounters;
     }
 
-    public List<Encounter> getEncounters(@NotNull SearchFilter filter) {
+    public List<Encounter> getEncounters(@NotNull final SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
         String event = Constants.LIKE;
@@ -108,7 +108,7 @@ public class EncounterService {
         try {
             int year = Integer.parseInt(filter.getYear());
 
-            if (year > 1995) {
+            if (year > Constants.YEAR_OF_JAVA_CREATION) {
                 specifications.add(EncounterSpecification.encounterAfterYear(year));
             }
         } catch (NumberFormatException ex) {
@@ -120,11 +120,10 @@ public class EncounterService {
 
         //specifications.add(EncounterSpecification.encounterByConfirmations(filter.getConfirmations()));
 
-        return repository.findAll(where(specifications.get(0)).and(specifications.get
-                (1)).and(specifications.get(2)));
+        return repository.findAll(where(specifications.get(0)).and(specifications.get(1)).and(specifications.get(2)));
     }
 
-    public Encounter getEncounterById(@NotNull long encounterId) {
+    public Encounter getEncounterById(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
@@ -139,7 +138,7 @@ public class EncounterService {
         return encounter;
     }
 
-    public List<Encounter> getEncountersByUsername(@NotNull String username) {
+    public List<Encounter> getEncountersByUsername(@NotNull final String username) {
         List<Encounter> encounters = repository.findAllByUsername(username);
 
         logger.info("Query for user {} encounters returned {} encounters", username, encounters.size());
@@ -147,7 +146,7 @@ public class EncounterService {
         return encounters;
     }
 
-    public void deleteEncounter(@NotNull long encounterId) {
+    public void deleteEncounter(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
@@ -157,11 +156,11 @@ public class EncounterService {
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
-    public Encounter createEncounter(@NotNull Encounter newEncounter) {
+    public Encounter createEncounter(@NotNull final Encounter newEncounter) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}", user.getUsername(),
-                newEncounter);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
+                user.getUsername(), newEncounter);
 
         newEncounter.setUser(user);
 
@@ -172,7 +171,7 @@ public class EncounterService {
         return encounter;
     }
 
-    public boolean isOwnEncounter(@NotNull long encounterId, @NotNull String username) {
+    public boolean isOwnEncounter(@NotNull final long encounterId, @NotNull final String username) {
         Encounter encounter = repository.findByIdAndUsername(encounterId, username);
 
         boolean owner = encounter != null;
@@ -187,7 +186,7 @@ public class EncounterService {
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
-    public List<Encounter> getEncountersByEvent(String event) {
+    public List<Encounter> getEncountersByEvent(final String event) {
         List<Encounter> encounters = repository.findByEventContaining(event);
 
         logger.info("Query for event {} returned {} encounters", event, encounters.size());
@@ -195,7 +194,7 @@ public class EncounterService {
         return encounters;
     }
 
-    public List<Encounter> getEncounters(String type) {
+    public List<Encounter> getEncounters(final String type) {
         List<Encounter> encounters;
 
         if (Objects.equals("own", type)) {

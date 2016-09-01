@@ -43,12 +43,12 @@ public class SearchFilterValidator extends BaseEncounterValidator implements Val
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return SearchFilter.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(final Object target, final Errors errors) {
         validator.validate(target, errors);
 
         SearchFilter filter = (SearchFilter) target;
@@ -65,7 +65,7 @@ public class SearchFilterValidator extends BaseEncounterValidator implements Val
             try {
                 int year = Integer.parseInt(filter.getYear());
 
-                if (year < 1995) {
+                if (year < Constants.YEAR_OF_JAVA_CREATION) {
                     logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
                             filter.getYear());
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);

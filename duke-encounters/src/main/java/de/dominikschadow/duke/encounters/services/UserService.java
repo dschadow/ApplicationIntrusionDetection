@@ -50,8 +50,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder
-            passwordEncoder) {
+    public UserService(final UserRepository userRepository, final AuthorityRepository authorityRepository,
+                       final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
@@ -63,7 +63,7 @@ public class UserService {
      * @param newUser The user to create
      * @return The created user with all fields filled
      */
-    public DukeEncountersUser createUser(@NotNull DukeEncountersUser newUser) {
+    public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
         logger.info("Creating user with username {}", newUser.getEmail());
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
 
@@ -81,15 +81,15 @@ public class UserService {
         return user;
     }
 
-    public DukeEncountersUser updateUser(@NotNull DukeEncountersUser dukeEncountersUser) {
+    public DukeEncountersUser updateUser(@NotNull final DukeEncountersUser dukeEncountersUser) {
         return userRepository.save(dukeEncountersUser);
     }
 
-    public boolean confirmPassword(@NotNull String password) {
+    public boolean confirmPassword(@NotNull final String password) {
         return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
     }
 
-    public DukeEncountersUser findUser(String username) {
+    public DukeEncountersUser findUser(final String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -115,7 +115,7 @@ public class UserService {
         return getDukeEncountersUser(getUsername());
     }
 
-    public DukeEncountersUser getDukeEncountersUser(@NotNull String username) {
+    public DukeEncountersUser getDukeEncountersUser(@NotNull final String username) {
         return userRepository.findByUsername(username);
     }
 

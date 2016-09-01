@@ -38,7 +38,7 @@ public class HomeController {
     private EncounterService encounterService;
 
     @Autowired
-    public HomeController(EncounterService encounterService) {
+    public HomeController(final EncounterService encounterService) {
         this.encounterService = encounterService;
     }
 
@@ -49,7 +49,7 @@ public class HomeController {
      * @return Index URL
      */
     @RequestMapping(value = "/", method = GET)
-    public String home(Model model) {
+    public String home(final Model model) {
         List<Encounter> encounters = encounterService.getLatestEncounters();
         model.addAttribute("encounters", encounters);
 

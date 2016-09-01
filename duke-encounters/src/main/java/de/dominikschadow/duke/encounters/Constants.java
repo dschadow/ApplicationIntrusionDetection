@@ -22,7 +22,7 @@ package de.dominikschadow.duke.encounters;
  *
  * @author Dominik Schadow
  */
-public class Constants {
+public final class Constants {
     /**
      * XSS error code, value is {@value}.
      */
@@ -59,6 +59,10 @@ public class Constants {
      * Like for SQL queries, value is {@value}.
      */
     public static final String LIKE = "%";
+    /**
+     * Year of Java creation, any Duke encounter before this year is impossible, value is {@value}.
+     */
+    public static final int YEAR_OF_JAVA_CREATION = 1995;
 
     private Constants() {
     }

@@ -53,7 +53,7 @@ public class PasswordController {
     private PasswordChangeValidator validator;
 
     @Autowired
-    public PasswordController(UserService userService, PasswordChangeValidator validator) {
+    public PasswordController(final UserService userService, final PasswordChangeValidator validator) {
         this.userService = userService;
         this.validator = validator;
     }
@@ -66,7 +66,7 @@ public class PasswordController {
      */
     @RequestMapping(value = "/account/password", method = GET)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView changePassword(@ModelAttribute PasswordChange passwordChange) {
+    public ModelAndView changePassword(@ModelAttribute final PasswordChange passwordChange) {
         String username = userService.getUsername();
 
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
@@ -87,7 +87,8 @@ public class PasswordController {
      */
     @RequestMapping(value = "/account/password", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updatePassword(@Valid PasswordChange update, BindingResult result, RedirectAttributes redirectAttributes) {
+    public ModelAndView updatePassword(@Valid final PasswordChange update, final BindingResult result,
+                                       final RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
         }
@@ -105,7 +106,7 @@ public class PasswordController {
     }
 
     @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+    protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
 }

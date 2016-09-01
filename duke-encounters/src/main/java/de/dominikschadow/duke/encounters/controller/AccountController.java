@@ -61,7 +61,8 @@ public class AccountController {
     private DukeEncountersUserValidator validator;
 
     @Autowired
-    public AccountController(EncounterService encounterService, ConfirmationService confirmationService, UserService userService, DukeEncountersUserValidator validator) {
+    public AccountController(final EncounterService encounterService, final ConfirmationService confirmationService,
+                             final UserService userService, final DukeEncountersUserValidator validator) {
         this.encounterService = encounterService;
         this.confirmationService = confirmationService;
         this.userService = userService;
@@ -70,7 +71,7 @@ public class AccountController {
 
     @RequestMapping(value = "/account", method = GET)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String showMyAccount(Model model) {
+    public String showMyAccount(final Model model) {
         String username = userService.getUsername();
 
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
@@ -112,13 +113,14 @@ public class AccountController {
     /**
      * Updates the users first name and last name and stores it in the database.
      *
-     * @param updatedUser The updated user
+     * @param updatedUser        The updated user
+     * @param redirectAttributes Attributes available after the redirect
      * @return Account page
      */
     @RequestMapping(value = "/account/userdata", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateUser(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
-            redirectAttributes) {
+    public ModelAndView updateUser(@ModelAttribute final DukeEncountersUser updatedUser,
+                                   final RedirectAttributes redirectAttributes) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
         user.setFirstname(updatedUser.getFirstname());
         user.setLastname(updatedUser.getLastname());
@@ -135,13 +137,14 @@ public class AccountController {
     /**
      * Updates the users email and stores it in the database.
      *
-     * @param updatedUser The updated user
+     * @param updatedUser        The updated user
+     * @param redirectAttributes Attributes available after the redirect
      * @return Account page
      */
     @RequestMapping(value = "/account/accountdata", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateAccount(@ModelAttribute DukeEncountersUser updatedUser, RedirectAttributes
-            redirectAttributes) {
+    public ModelAndView updateAccount(@ModelAttribute final DukeEncountersUser updatedUser,
+                                      final RedirectAttributes redirectAttributes) {
         if (userService.confirmPassword(updatedUser.getPassword())) {
             DukeEncountersUser user = userService.getDukeEncountersUser();
             user.setEmail(updatedUser.getEmail());
@@ -165,7 +168,7 @@ public class AccountController {
      * @return Register URL
      */
     @RequestMapping(value = "/register", method = GET)
-    public String register(@ModelAttribute DukeEncountersUser dukeEncountersUser) {
+    public String register(@ModelAttribute final DukeEncountersUser dukeEncountersUser) {
         return "register";
     }
 
@@ -173,10 +176,11 @@ public class AccountController {
      * Creates the new user and stores it in the database.
      *
      * @param dukeEncountersUser The new user to register
+     * @param result The binding result
      * @return Login URL
      */
     @RequestMapping(value = "/register", method = POST)
-    public ModelAndView createUser(@Valid DukeEncountersUser dukeEncountersUser, BindingResult result) {
+    public ModelAndView createUser(@Valid final DukeEncountersUser dukeEncountersUser, final BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("register", "formErrors", result.getAllErrors());
         }
@@ -192,7 +196,7 @@ public class AccountController {
     }
 
     @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+    protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
 }
