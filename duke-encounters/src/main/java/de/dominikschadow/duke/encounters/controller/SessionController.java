@@ -37,7 +37,7 @@ public class SessionController {
      * @return Login URL
      */
     @RequestMapping(value = "/login", method = GET)
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
+    public ModelAndView login(@RequestParam(value = "error", required = false) final String error) {
         ModelAndView model = new ModelAndView("login");
 
         if (error != null) {

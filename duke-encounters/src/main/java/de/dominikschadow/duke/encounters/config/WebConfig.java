@@ -41,12 +41,12 @@ public class WebConfig {
     }
 
     @Bean
-    public SpringValidatorAdapter springValidatorAdapter(Validator jsr303Validator) {
+    public SpringValidatorAdapter springValidatorAdapter(final Validator jsr303Validator) {
         return new SpringValidatorAdapter(jsr303Validator);
     }
 
     @Bean
-    public DetectionSystem detectionSystem(AppSensorClient appSensorClient) {
+    public DetectionSystem detectionSystem(final AppSensorClient appSensorClient) {
         return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
                 .getClientApplicationIdentificationHeaderValue());
     }

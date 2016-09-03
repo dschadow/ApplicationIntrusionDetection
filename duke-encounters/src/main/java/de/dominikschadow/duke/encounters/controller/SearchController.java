@@ -50,7 +50,7 @@ public class SearchController {
     private SearchFilterValidator validator;
 
     @Autowired
-    public SearchController(EncounterService encounterService, SearchFilterValidator validator) {
+    public SearchController(final EncounterService encounterService, final SearchFilterValidator validator) {
         this.encounterService = encounterService;
         this.validator = validator;
     }
@@ -62,7 +62,7 @@ public class SearchController {
      * @return Search URL
      */
     @RequestMapping(value = "/search", method = GET)
-    public String searchEncounters(@ModelAttribute SearchFilter searchFilter) {
+    public String searchEncounters(@ModelAttribute final SearchFilter searchFilter) {
         return "search";
     }
 
@@ -73,7 +73,7 @@ public class SearchController {
      * @return ModelAndView with encounters URL and a model map
      */
     @RequestMapping(value = "/search", method = POST)
-    public ModelAndView searchEncounterByEvent(@RequestParam("quickSearch") String event) {
+    public ModelAndView searchEncounterByEvent(@RequestParam("quickSearch") final String event) {
         List<Encounter> encounters = encounterService.getEncountersByEvent(event);
 
         Map<String, Object> modelMap = new LinkedHashMap<>();
@@ -90,7 +90,7 @@ public class SearchController {
      * @return ModelAndView with encounters URL and a model map
      */
     @RequestMapping(value = "/encounters", method = POST)
-    public ModelAndView searchEncounters(@Valid SearchFilter searchFilter, BindingResult result) {
+    public ModelAndView searchEncounters(@Valid final SearchFilter searchFilter, final BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("search", "formErrors", result.getAllErrors());
         }
@@ -105,7 +105,7 @@ public class SearchController {
     }
 
     @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+    protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
 }

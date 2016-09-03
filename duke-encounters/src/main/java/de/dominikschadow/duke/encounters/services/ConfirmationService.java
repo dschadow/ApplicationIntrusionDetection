@@ -44,13 +44,14 @@ public class ConfirmationService {
     private final EncounterService encounterService;
 
     @Autowired
-    public ConfirmationService(ConfirmationRepository repository, UserService userService, EncounterService encounterService) {
+    public ConfirmationService(final ConfirmationRepository repository, final UserService userService,
+                               final EncounterService encounterService) {
         this.repository = repository;
         this.userService = userService;
         this.encounterService = encounterService;
     }
 
-    public List<Confirmation> getConfirmationsByUsername(@NotNull String username) {
+    public List<Confirmation> getConfirmationsByUsername(@NotNull final String username) {
         List<Confirmation> confirmations = repository.findAllByUsername(username);
 
         logger.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
@@ -58,7 +59,8 @@ public class ConfirmationService {
         return confirmations;
     }
 
-    public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull String username, @NotNull long encounterId) {
+    public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull final String username,
+                                                                @NotNull final long encounterId) {
         Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
         logger.info("Query for user {} confirmations returned {}", username, confirmation);
@@ -66,7 +68,7 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public void addConfirmation(@NotNull String username, @NotNull long encounterId) {
+    public void addConfirmation(@NotNull final String username, @NotNull final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
         newConfirmation.setUser(userService.getDukeEncountersUser(username));
         newConfirmation.setDate(new Date());
@@ -77,17 +79,17 @@ public class ConfirmationService {
         logger.info("Created new confirmation {}", confirmation);
     }
 
-    public void deleteConfirmation(@NotNull String username, @NotNull long confirmationId) {
+    public void deleteConfirmation(@NotNull final String username, @NotNull final long confirmationId) {
         repository.delete(confirmationId);
 
         logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
-    public boolean hasConfirmedEncounter(@NotNull String username, @NotNull long encounterId) {
+    public boolean hasConfirmedEncounter(@NotNull final String username, @NotNull final long encounterId) {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 
-    public List<Confirmation> getConfirmations(String type) {
+    public List<Confirmation> getConfirmations(final String type) {
         List<Confirmation> confirmations;
 
         if (Objects.equals("own", type)) {

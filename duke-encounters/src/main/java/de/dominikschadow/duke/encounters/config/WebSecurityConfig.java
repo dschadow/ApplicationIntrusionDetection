@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientContext oauth2ClientContext;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
         http
             .authorizeRequests()
@@ -107,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+    public FilterRegistrationBean oauth2ClientFilterRegistration(final OAuth2ClientContextFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(filter);
         registration.setOrder(-100);
@@ -128,7 +128,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    private Filter ssoFilter(ClientResources client, String path) {
+    private Filter ssoFilter(final ClientResources client, final String path) {
         OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationFilter =
                 new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
@@ -152,7 +152,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) {
+    public void configure(final WebSecurity web) {
         // @formatter:off
         web
             .ignoring()
@@ -161,7 +161,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth
             .jdbcAuthentication()
@@ -175,7 +175,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AppSensorSecurityContextRepository();
     }
 
-    class ClientResources {
+    static class ClientResources {
         private OAuth2ProtectedResourceDetails client = new AuthorizationCodeResourceDetails();
         private ResourceServerProperties resource = new ResourceServerProperties();
 

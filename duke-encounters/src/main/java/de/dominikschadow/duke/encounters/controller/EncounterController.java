@@ -57,7 +57,9 @@ public class EncounterController {
     private EventManager ids;
 
     @Autowired
-    public EncounterController(EncounterService encounterService, EncounterValidator validator, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
+    public EncounterController(final EncounterService encounterService, final EncounterValidator validator,
+                               final UserService userService, final DetectionSystem detectionSystem,
+                               final EventManager ids) {
         this.encounterService = encounterService;
         this.validator = validator;
         this.userService = userService;
@@ -66,8 +68,9 @@ public class EncounterController {
     }
 
     @RequestMapping(value = "/encounters", method = GET)
-    public String getEncounters(Model model, @RequestParam(name = "type", required = false) String type) {
-        boolean confirmable = !StringUtils.equals(userService.getUser().getUsername(), "anonymousUser") && !StringUtils.equals("own", type);
+    public String getEncounters(final Model model, @RequestParam(name = "type", required = false) final String type) {
+        boolean confirmable = !StringUtils.equals(userService.getUser().getUsername(), "anonymousUser")
+                && !StringUtils.equals("own", type);
 
         List<Encounter> encounters = encounterService.getEncounters(type);
         model.addAttribute("encounters", encounters);
@@ -78,13 +81,13 @@ public class EncounterController {
 
     @RequestMapping(value = "/encounter/create", method = GET)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String createEncounter(@ModelAttribute Encounter encounter) {
+    public String createEncounter(@ModelAttribute final Encounter encounter) {
         return "user/createEncounter";
     }
 
     @RequestMapping(value = "/encounter/create", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String saveEncounter(@Valid Encounter encounter, Model model, BindingResult result) {
+    public String saveEncounter(@Valid final Encounter encounter, final Model model, final BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("formErrors", result.getAllErrors());
             return "user/createEncounter";
@@ -98,7 +101,7 @@ public class EncounterController {
 
     @RequestMapping(value = "/encounter/delete", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView deleteEncounter(long encounterId) {
+    public ModelAndView deleteEncounter(final long encounterId) {
         encounterService.deleteEncounter(encounterId);
 
         return new ModelAndView("redirect:/account");
@@ -106,8 +109,8 @@ public class EncounterController {
 
     @RequestMapping(value = "/encounter/{id}", method = GET)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String encounterById(@PathVariable("id") long encounterId, Model model, RedirectAttributes
-            redirectAttributes) {
+    public String encounterById(@PathVariable("id") final long encounterId, final Model model,
+                                final RedirectAttributes redirectAttributes) {
         Encounter encounter = encounterService.getEncounterById(encounterId);
 
         if (encounter == null) {
@@ -129,7 +132,7 @@ public class EncounterController {
     }
 
     @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+    protected void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
 }

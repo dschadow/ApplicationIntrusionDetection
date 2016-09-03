@@ -41,7 +41,7 @@ public class Authority {
         // required for JPA
     }
 
-    public Authority(String username, String authority) {
+    public Authority(final String username, final String authority) {
         this.username = username;
         this.authority = authority;
     }

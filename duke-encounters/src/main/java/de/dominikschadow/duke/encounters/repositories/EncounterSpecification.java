@@ -30,30 +30,30 @@ import java.util.Date;
  * @author Dominik Schadow
  */
 public class EncounterSpecification {
-    public static Specification<Encounter> encounterAfterYear(int year) {
+    public static Specification<Encounter> encounterAfterYear(final int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         return (root, query, cb) -> cb.greaterThanOrEqualTo(root.<Date>get("date"), calendar.getTime());
     }
 
-    public static Specification<Encounter> encounterByConfirmations(int confirmations) {
+    public static Specification<Encounter> encounterByConfirmations(final int confirmations) {
         // TODO count confirmations
         return (root, query, cb) -> cb.greaterThanOrEqualTo(root.<Integer>get(""), confirmations);
     }
 
-    public static Specification<Encounter> encounterByEvent(String event) {
+    public static Specification<Encounter> encounterByEvent(final String event) {
         return (root, query, cb) -> cb.like(root.<String>get("event"), event);
     }
 
-    public static Specification<Encounter> encounterByLocation(String location) {
+    public static Specification<Encounter> encounterByLocation(final String location) {
         return (root, query, cb) -> cb.like(root.<String>get("location"), location);
     }
 
-    public static Specification<Encounter> encounterByCountry(String country) {
+    public static Specification<Encounter> encounterByCountry(final String country) {
         return (root, query, cb) -> cb.like(root.<String>get("country"), country);
     }
 
-    public static Specification<Encounter> encounterByLikelihood(Likelihood likelihood) {
+    public static Specification<Encounter> encounterByLikelihood(final Likelihood likelihood) {
         return (root, query, cb) -> cb.equal(root.<String>get("likelihood"), likelihood.getName());
     }
 }

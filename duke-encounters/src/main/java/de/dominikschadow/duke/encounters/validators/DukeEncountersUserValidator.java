@@ -53,8 +53,10 @@ public class DukeEncountersUserValidator implements Validator {
     private final DetectionSystem detectionSystem;
 
     @Autowired
-    public DukeEncountersUserValidator(SpringValidatorAdapter validator, EventManager ids, UserService userService,
-                                       SecurityValidationService securityValidationService, DetectionSystem detectionSystem) {
+    public DukeEncountersUserValidator(final SpringValidatorAdapter validator, final EventManager ids,
+                                       final UserService userService,
+                                       final SecurityValidationService securityValidationService,
+                                       final DetectionSystem detectionSystem) {
         this.validator = validator;
         this.ids = ids;
         this.userService = userService;
@@ -63,12 +65,12 @@ public class DukeEncountersUserValidator implements Validator {
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return DukeEncountersUser.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(final Object target, final Errors errors) {
         validator.validate(target, errors);
 
         DukeEncountersUser user = (DukeEncountersUser) target;

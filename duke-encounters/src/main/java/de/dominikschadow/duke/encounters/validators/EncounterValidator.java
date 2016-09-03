@@ -32,12 +32,12 @@ import javax.inject.Named;
 @Named
 public class EncounterValidator extends BaseEncounterValidator implements Validator {
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return Encounter.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(final Object target, final Errors errors) {
         validator.validate(target, errors);
 
         Encounter encounter = (Encounter) target;

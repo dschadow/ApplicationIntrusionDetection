@@ -59,7 +59,9 @@ public class ConfirmationController {
     private EventManager ids;
 
     @Autowired
-    public ConfirmationController(ConfirmationService confirmationService, EncounterService encounterService, UserService userService, DetectionSystem detectionSystem, EventManager ids) {
+    public ConfirmationController(final ConfirmationService confirmationService,
+                                  final EncounterService encounterService, final UserService userService,
+                                  final DetectionSystem detectionSystem, final EventManager ids) {
         this.confirmationService = confirmationService;
         this.encounterService = encounterService;
         this.userService = userService;
@@ -69,7 +71,8 @@ public class ConfirmationController {
 
     @RequestMapping(value = "/confirmations", method = GET)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String getConfirmations(Model model, @RequestParam(name = "type", required = false) String type) {
+    public String getConfirmations(final Model model,
+                                   @RequestParam(name = "type", required = false) final String type) {
         List<Confirmation> confirmations = confirmationService.getConfirmations(type);
         model.addAttribute("confirmations", confirmations);
 
@@ -78,7 +81,7 @@ public class ConfirmationController {
 
     @RequestMapping(value = "/confirmation/add", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView addConfirmation(long encounterId, RedirectAttributes redirectAttributes) {
+    public ModelAndView addConfirmation(final long encounterId, final RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
 
         if (encounterService.isOwnEncounter(encounterId, username)) {
@@ -88,8 +91,8 @@ public class ConfirmationController {
             fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("ownEncounter", true);
         } else if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to " +
-                    "confirm it again", username, encounterId);
+            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to "
+                    + "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("secondConfirm", true);
@@ -104,7 +107,7 @@ public class ConfirmationController {
 
     @RequestMapping(value = "/confirmation/revoke", method = POST)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView revokeConfirmation(long confirmationId) {
+    public ModelAndView revokeConfirmation(final long confirmationId) {
         String username = userService.getUsername();
 
         confirmationService.deleteConfirmation(username, confirmationId);

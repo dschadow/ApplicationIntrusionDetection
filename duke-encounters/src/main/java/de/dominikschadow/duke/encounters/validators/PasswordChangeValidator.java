@@ -40,18 +40,18 @@ public class PasswordChangeValidator implements Validator {
     private final UserService userService;
 
     @Autowired
-    public PasswordChangeValidator(SpringValidatorAdapter validator, UserService userService) {
+    public PasswordChangeValidator(final SpringValidatorAdapter validator, final UserService userService) {
         this.validator = validator;
         this.userService = userService;
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return PasswordChange.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(final Object target, final Errors errors) {
         validator.validate(target, errors);
 
         PasswordChange passwordChange = (PasswordChange) target;
