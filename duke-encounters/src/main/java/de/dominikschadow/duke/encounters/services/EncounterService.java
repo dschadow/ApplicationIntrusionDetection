@@ -73,6 +73,11 @@ public class EncounterService {
         this.latestEncounterAmount = latestEncounterAmount;
     }
 
+    /**
+     * Returns the configured number of latest encounters.
+     *
+     * @return The list of latest encounters
+     */
     public List<Encounter> getLatestEncounters() {
         Pageable latestEncounters = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestEncounters);
@@ -84,6 +89,12 @@ public class EncounterService {
         return encounters;
     }
 
+    /**
+     * Returns the encounters matching the given search filter.
+     *
+     * @param filter The conditions the encounters have to match
+     * @return The list of matching encounters
+     */
     public List<Encounter> getEncounters(@NotNull final SearchFilter filter) {
         List<Specification> specifications = new ArrayList<>();
 
@@ -123,6 +134,12 @@ public class EncounterService {
         return repository.findAll(where(specifications.get(0)).and(specifications.get(1)).and(specifications.get(2)));
     }
 
+    /**
+     * Returns the encounter matching the given id.
+     *
+     * @param encounterId The encounter id to search for
+     * @return The matching encounter or null if no match is available
+     */
     public Encounter getEncounterById(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
@@ -138,6 +155,12 @@ public class EncounterService {
         return encounter;
     }
 
+    /**
+     * Returns all encounters that belong to the given username.
+     *
+     * @param username The username the encounter must belong to
+     * @return The list of encounters for the given user
+     */
     public List<Encounter> getEncountersByUsername(@NotNull final String username) {
         List<Encounter> encounters = repository.findAllByUsername(username);
 
@@ -146,42 +169,13 @@ public class EncounterService {
         return encounters;
     }
 
-    public void deleteEncounter(@NotNull final long encounterId) {
-        String username = userService.getUsername();
-
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
-
-        repository.delete(encounterId);
-
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
-    }
-
-    public Encounter createEncounter(@NotNull final Encounter newEncounter) {
-        DukeEncountersUser user = userService.getDukeEncountersUser();
-
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
-                user.getUsername(), newEncounter);
-
-        newEncounter.setUser(user);
-
-        Encounter encounter = repository.save(newEncounter);
-
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
-
-        return encounter;
-    }
-
-    public boolean isOwnEncounter(@NotNull final long encounterId, @NotNull final String username) {
-        Encounter encounter = repository.findByIdAndUsername(encounterId, username);
-
-        boolean owner = encounter != null;
-
-        logger.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
-
-        return owner;
-    }
-
-    public List<Encounter> getEncountersByEvent(final String event) {
+    /**
+     * Returns all encounters that belong to the given event.
+     *
+     * @param event The event to find all encounters for
+     * @return The list of encounters for the given event
+     */
+    public List<Encounter> getEncountersByEvent(@NotNull final String event) {
         List<Encounter> encounters = repository.findByEventContaining(event);
 
         logger.info("Query for event {} returned {} encounters", event, encounters.size());
@@ -189,6 +183,12 @@ public class EncounterService {
         return encounters;
     }
 
+    /**
+     * Returns all encounters that match the given type.
+     *
+     * @param type The type of encounter
+     * @return The list of encounters matching the given type
+     */
     public List<Encounter> getEncounters(final String type) {
         List<Encounter> encounters;
 
@@ -205,6 +205,59 @@ public class EncounterService {
         logger.info("Query returned {} encounters", encounters.size());
 
         return encounters;
+    }
+
+    /**
+     * Deletes the encounter matching the given encounter id.
+     *
+     * @param encounterId The encounter id to delete
+     */
+    public void deleteEncounter(@NotNull final long encounterId) {
+        String username = userService.getUsername();
+
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
+
+        repository.delete(encounterId);
+
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
+    }
+
+    /**
+     * Creates the encounter matching the given data.
+     *
+     * @param newEncounter The new encounter to create
+     * @return The created encounter including the database id
+     */
+    public Encounter createEncounter(@NotNull final Encounter newEncounter) {
+        DukeEncountersUser user = userService.getDukeEncountersUser();
+
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
+                user.getUsername(), newEncounter);
+
+        newEncounter.setUser(user);
+
+        Encounter encounter = repository.save(newEncounter);
+
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
+
+        return encounter;
+    }
+
+    /**
+     * Checks whether the given encounter id belongs to the given username.
+     *
+     * @param encounterId The encounter id to check
+     * @param username The username the encounter should belong to
+     * @return true if the user is the owner of the encounter, false otherwise
+     */
+    public boolean isOwnEncounter(@NotNull final long encounterId, @NotNull final String username) {
+        Encounter encounter = repository.findByIdAndUsername(encounterId, username);
+
+        boolean owner = encounter != null;
+
+        logger.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
+
+        return owner;
     }
 
     private void fireSqlIEvent() {
