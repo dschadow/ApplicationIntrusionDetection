@@ -181,11 +181,6 @@ public class EncounterService {
         return owner;
     }
 
-    private void fireSqlIEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-002");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
-    }
-
     public List<Encounter> getEncountersByEvent(final String event) {
         List<Encounter> encounters = repository.findByEventContaining(event);
 
@@ -210,5 +205,10 @@ public class EncounterService {
         logger.info("Query returned {} encounters", encounters.size());
 
         return encounters;
+    }
+
+    private void fireSqlIEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-002");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }
