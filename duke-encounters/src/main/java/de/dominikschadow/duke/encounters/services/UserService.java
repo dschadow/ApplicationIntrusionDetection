@@ -26,12 +26,12 @@ import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -49,7 +49,6 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserService(final UserRepository userRepository, final AuthorityRepository authorityRepository,
                        final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -63,6 +62,7 @@ public class UserService {
      * @param newUser The user to create
      * @return The created user with all fields filled
      */
+    @Transactional
     public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
         logger.info("Creating user with username {}", newUser.getEmail());
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
@@ -81,6 +81,7 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public DukeEncountersUser updateUser(@NotNull final DukeEncountersUser dukeEncountersUser) {
         return userRepository.save(dukeEncountersUser);
     }

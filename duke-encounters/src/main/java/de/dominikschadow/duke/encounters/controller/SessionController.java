@@ -18,11 +18,9 @@
 package de.dominikschadow.duke.encounters.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Controller for all session related requests (login, logout, registration).
@@ -36,7 +34,7 @@ public class SessionController {
      *
      * @return Login URL
      */
-    @RequestMapping(value = "/login", method = GET)
+    @GetMapping("/login")
     public ModelAndView login(@RequestParam(value = "error", required = false) final String error) {
         ModelAndView model = new ModelAndView("login");
 

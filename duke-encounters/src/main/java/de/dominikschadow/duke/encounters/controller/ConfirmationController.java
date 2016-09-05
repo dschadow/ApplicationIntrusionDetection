@@ -28,11 +28,11 @@ import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -40,8 +40,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all encounter confirmation related requests.
@@ -58,7 +56,6 @@ public class ConfirmationController {
     private DetectionSystem detectionSystem;
     private EventManager ids;
 
-    @Autowired
     public ConfirmationController(final ConfirmationService confirmationService,
                                   final EncounterService encounterService, final UserService userService,
                                   final DetectionSystem detectionSystem, final EventManager ids) {
@@ -69,7 +66,7 @@ public class ConfirmationController {
         this.ids = ids;
     }
 
-    @RequestMapping(value = "/confirmations", method = GET)
+    @GetMapping("/confirmations")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String getConfirmations(final Model model,
                                    @RequestParam(name = "type", required = false) final String type) {
@@ -79,7 +76,7 @@ public class ConfirmationController {
         return "user/confirmations";
     }
 
-    @RequestMapping(value = "/confirmation/add", method = POST)
+    @PostMapping("/confirmation/add")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView addConfirmation(final long encounterId, final RedirectAttributes redirectAttributes) {
         String username = userService.getUsername();
@@ -105,7 +102,7 @@ public class ConfirmationController {
         return new ModelAndView("redirect:/account");
     }
 
-    @RequestMapping(value = "/confirmation/revoke", method = POST)
+    @PostMapping("/confirmation/revoke")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView revokeConfirmation(final long confirmationId) {
         String username = userService.getUsername();

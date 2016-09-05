@@ -27,7 +27,6 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -52,7 +51,6 @@ public class DukeEncountersUserValidator implements Validator {
     private final SecurityValidationService securityValidationService;
     private final DetectionSystem detectionSystem;
 
-    @Autowired
     public DukeEncountersUserValidator(final SpringValidatorAdapter validator, final EventManager ids,
                                        final UserService userService,
                                        final SecurityValidationService securityValidationService,
