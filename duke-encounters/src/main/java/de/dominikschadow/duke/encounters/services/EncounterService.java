@@ -38,6 +38,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -212,6 +213,7 @@ public class EncounterService {
      *
      * @param encounterId The encounter id to delete
      */
+    @Transactional
     public void deleteEncounter(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
@@ -228,6 +230,7 @@ public class EncounterService {
      * @param newEncounter The new encounter to create
      * @return The created encounter including the database id
      */
+    @Transactional
     public Encounter createEncounter(@NotNull final Encounter newEncounter) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
 

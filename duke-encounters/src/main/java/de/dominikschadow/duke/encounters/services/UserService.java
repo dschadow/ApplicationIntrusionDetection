@@ -32,6 +32,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -63,6 +64,7 @@ public class UserService {
      * @param newUser The user to create
      * @return The created user with all fields filled
      */
+    @Transactional
     public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
         logger.info("Creating user with username {}", newUser.getEmail());
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
@@ -81,6 +83,7 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public DukeEncountersUser updateUser(@NotNull final DukeEncountersUser dukeEncountersUser) {
         return userRepository.save(dukeEncountersUser);
     }
