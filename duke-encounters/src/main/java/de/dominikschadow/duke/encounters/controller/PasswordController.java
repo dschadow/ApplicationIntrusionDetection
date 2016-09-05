@@ -28,16 +28,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle a password change request.
@@ -62,7 +60,7 @@ public class PasswordController {
      * @param passwordChange The PasswordChange model attribute
      * @return The page to navigate to, including user level information
      */
-    @RequestMapping(value = "/account/password", method = GET)
+    @GetMapping("/account/password")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView changePassword(@ModelAttribute final PasswordChange passwordChange) {
         String username = userService.getUsername();
@@ -83,7 +81,7 @@ public class PasswordController {
      * @param update The new password
      * @return Account page
      */
-    @RequestMapping(value = "/account/password", method = POST)
+    @PostMapping("/account/password")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updatePassword(@Valid final PasswordChange update, final BindingResult result,
                                        final RedirectAttributes redirectAttributes) {

@@ -33,17 +33,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all account related requests.
@@ -67,7 +65,7 @@ public class AccountController {
         this.validator = validator;
     }
 
-    @RequestMapping(value = "/account", method = GET)
+    @GetMapping("/account")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String showMyAccount(final Model model) {
         String username = userService.getUsername();
@@ -92,7 +90,7 @@ public class AccountController {
         return "user/account";
     }
 
-    @RequestMapping(value = "/account/userdata", method = GET)
+    @GetMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
@@ -115,7 +113,7 @@ public class AccountController {
      * @param redirectAttributes Attributes available after the redirect
      * @return Account page
      */
-    @RequestMapping(value = "/account/userdata", method = POST)
+    @PostMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updateUser(@ModelAttribute final DukeEncountersUser updatedUser,
                                    final RedirectAttributes redirectAttributes) {
@@ -139,7 +137,7 @@ public class AccountController {
      * @param redirectAttributes Attributes available after the redirect
      * @return Account page
      */
-    @RequestMapping(value = "/account/accountdata", method = POST)
+    @PostMapping("/account/accountdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView updateAccount(@ModelAttribute final DukeEncountersUser updatedUser,
                                       final RedirectAttributes redirectAttributes) {
@@ -165,7 +163,7 @@ public class AccountController {
      * @param dukeEncountersUser The new DukeEncountersUser
      * @return Register URL
      */
-    @RequestMapping(value = "/register", method = GET)
+    @GetMapping("/register")
     public String register(@ModelAttribute final DukeEncountersUser dukeEncountersUser) {
         return "register";
     }
@@ -177,7 +175,7 @@ public class AccountController {
      * @param result The binding result
      * @return Login URL
      */
-    @RequestMapping(value = "/register", method = POST)
+    @PostMapping("/register")
     public ModelAndView createUser(@Valid final DukeEncountersUser dukeEncountersUser, final BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("register", "formErrors", result.getAllErrors());

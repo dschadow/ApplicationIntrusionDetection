@@ -21,11 +21,9 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Controller for the main page.
@@ -46,7 +44,7 @@ public class HomeController {
      * @param model The model attribute container
      * @return Index URL
      */
-    @RequestMapping(value = "/", method = GET)
+    @GetMapping("/")
     public String home(final Model model) {
         List<Encounter> encounters = encounterService.getLatestEncounters();
         model.addAttribute("encounters", encounters);

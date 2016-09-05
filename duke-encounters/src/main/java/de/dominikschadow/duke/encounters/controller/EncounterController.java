@@ -39,8 +39,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Controller to handle all encounter related requests.
@@ -65,7 +63,7 @@ public class EncounterController {
         this.ids = ids;
     }
 
-    @RequestMapping(value = "/encounters", method = GET)
+    @GetMapping("/encounters")
     public String getEncounters(final Model model, @RequestParam(name = "type", required = false) final String type) {
         boolean confirmable = !StringUtils.equals(userService.getUser().getUsername(), "anonymousUser")
                 && !StringUtils.equals("own", type);
@@ -77,13 +75,13 @@ public class EncounterController {
         return "encounters";
     }
 
-    @RequestMapping(value = "/encounter/create", method = GET)
+    @GetMapping("/encounter/create")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String createEncounter(@ModelAttribute final Encounter encounter) {
         return "user/createEncounter";
     }
 
-    @RequestMapping(value = "/encounter/create", method = POST)
+    @PostMapping("/encounter/create")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String saveEncounter(@Valid final Encounter encounter, final Model model, final BindingResult result) {
         if (result.hasErrors()) {
@@ -97,7 +95,7 @@ public class EncounterController {
         return "redirect:/encounters";
     }
 
-    @RequestMapping(value = "/encounter/delete", method = POST)
+    @PostMapping("/encounter/delete")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ModelAndView deleteEncounter(final long encounterId) {
         encounterService.deleteEncounter(encounterId);
@@ -105,7 +103,7 @@ public class EncounterController {
         return new ModelAndView("redirect:/account");
     }
 
-    @RequestMapping(value = "/encounter/{id}", method = GET)
+    @GetMapping("/encounter/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String encounterById(@PathVariable("id") final long encounterId, final Model model,
                                 final RedirectAttributes redirectAttributes) {
