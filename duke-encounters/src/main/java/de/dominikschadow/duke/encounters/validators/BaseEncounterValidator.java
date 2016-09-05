@@ -49,6 +49,14 @@ public abstract class BaseEncounterValidator implements Validator {
     @Autowired
     protected DetectionSystem detectionSystem;
 
+    /**
+     * Validates the base data of an encounter: event, location and country.
+     *
+     * @param event The event the encounter took place
+     * @param location The location the encounter took place
+     * @param country The country the encounter took place
+     * @param errors Validation errors will be added to this object
+     */
     protected void validateBaseData(final String event, final String location, final String country,
                                     final Errors errors) {
         if (securityValidationService.hasXssPayload(event)) {
@@ -76,11 +84,17 @@ public abstract class BaseEncounterValidator implements Validator {
         }
     }
 
+    /**
+     * Fires a new XSS event with the label {@code IE1-001}.
+     */
     protected final void fireXssEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 
+    /**
+     * Fires a new SQL injection event with the label {@code CIE1-001}.
+     */
     protected final void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
