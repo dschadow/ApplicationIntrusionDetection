@@ -22,7 +22,6 @@ import de.dominikschadow.duke.encounters.repositories.ConfirmationRepository;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -43,7 +42,6 @@ public class ConfirmationService {
     private final UserService userService;
     private final EncounterService encounterService;
 
-    @Autowired
     public ConfirmationService(final ConfirmationRepository repository, final UserService userService,
                                final EncounterService encounterService) {
         this.repository = repository;

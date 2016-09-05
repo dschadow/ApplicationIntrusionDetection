@@ -28,7 +28,6 @@ import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +57,6 @@ public class ConfirmationController {
     private DetectionSystem detectionSystem;
     private EventManager ids;
 
-    @Autowired
     public ConfirmationController(final ConfirmationService confirmationService,
                                   final EncounterService encounterService, final UserService userService,
                                   final DetectionSystem detectionSystem, final EventManager ids) {

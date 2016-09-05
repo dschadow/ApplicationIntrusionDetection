@@ -19,7 +19,6 @@ package de.dominikschadow.duke.encounters.controller;
 
 import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +36,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class HomeController {
     private EncounterService encounterService;
 
-    @Autowired
     public HomeController(final EncounterService encounterService) {
         this.encounterService = encounterService;
     }

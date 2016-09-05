@@ -24,7 +24,6 @@ import de.dominikschadow.duke.encounters.validators.PasswordChangeValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -52,7 +51,6 @@ public class PasswordController {
     private UserService userService;
     private PasswordChangeValidator validator;
 
-    @Autowired
     public PasswordController(final UserService userService, final PasswordChangeValidator validator) {
         this.userService = userService;
         this.validator = validator;

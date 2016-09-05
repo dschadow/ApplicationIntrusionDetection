@@ -21,7 +21,6 @@ import de.dominikschadow.duke.encounters.Constants;
 import de.dominikschadow.duke.encounters.domain.PasswordChange;
 import de.dominikschadow.duke.encounters.services.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -39,7 +38,6 @@ public class PasswordChangeValidator implements Validator {
     private final SpringValidatorAdapter validator;
     private final UserService userService;
 
-    @Autowired
     public PasswordChangeValidator(final SpringValidatorAdapter validator, final UserService userService) {
         this.validator = validator;
         this.userService = userService;

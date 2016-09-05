@@ -21,7 +21,6 @@ import de.dominikschadow.duke.encounters.domain.Encounter;
 import de.dominikschadow.duke.encounters.domain.SearchFilter;
 import de.dominikschadow.duke.encounters.services.EncounterService;
 import de.dominikschadow.duke.encounters.validators.SearchFilterValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -49,7 +48,6 @@ public class SearchController {
     private EncounterService encounterService;
     private SearchFilterValidator validator;
 
-    @Autowired
     public SearchController(final EncounterService encounterService, final SearchFilterValidator validator) {
         this.encounterService = encounterService;
         this.validator = validator;

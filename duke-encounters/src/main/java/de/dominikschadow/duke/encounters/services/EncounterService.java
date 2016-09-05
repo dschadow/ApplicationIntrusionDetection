@@ -31,7 +31,6 @@ import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -63,7 +62,6 @@ public class EncounterService {
     private final DetectionSystem detectionSystem;
     private final int latestEncounterAmount;
 
-    @Autowired
     public EncounterService(final EncounterRepository repository, final UserService userService,
                             final EventManager ids, final DetectionSystem detectionSystem,
                             @Value("${encounters.latest.amount}") final int latestEncounterAmount) {

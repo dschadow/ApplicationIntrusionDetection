@@ -28,7 +28,6 @@ import de.dominikschadow.duke.encounters.validators.DukeEncountersUserValidator;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +59,6 @@ public class AccountController {
     private UserService userService;
     private DukeEncountersUserValidator validator;
 
-    @Autowired
     public AccountController(final EncounterService encounterService, final ConfirmationService confirmationService,
                              final UserService userService, final DukeEncountersUserValidator validator) {
         this.encounterService = encounterService;

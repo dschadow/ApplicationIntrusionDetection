@@ -26,7 +26,6 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +55,6 @@ public class EncounterController {
     private DetectionSystem detectionSystem;
     private EventManager ids;
 
-    @Autowired
     public EncounterController(final EncounterService encounterService, final EncounterValidator validator,
                                final UserService userService, final DetectionSystem detectionSystem,
                                final EventManager ids) {
