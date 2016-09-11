@@ -50,10 +50,10 @@ import java.util.List;
 public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-    private EncounterService encounterService;
-    private ConfirmationService confirmationService;
-    private UserService userService;
-    private DukeEncountersUserValidator validator;
+    private final EncounterService encounterService;
+    private final ConfirmationService confirmationService;
+    private final UserService userService;
+    private final DukeEncountersUserValidator validator;
 
     public AccountController(final EncounterService encounterService, final ConfirmationService confirmationService,
                              final UserService userService, final DukeEncountersUserValidator validator) {

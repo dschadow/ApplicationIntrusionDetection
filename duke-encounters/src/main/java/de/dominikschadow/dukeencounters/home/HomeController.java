@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Controller
 public class HomeController {
-    private EncounterService encounterService;
+    private final EncounterService encounterService;
 
     public HomeController(final EncounterService encounterService) {
         this.encounterService = encounterService;

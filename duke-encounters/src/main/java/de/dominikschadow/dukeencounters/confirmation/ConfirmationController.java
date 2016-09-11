@@ -48,11 +48,11 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
 public class ConfirmationController {
     private static final Logger logger = LoggerFactory.getLogger(ConfirmationController.class);
 
-    private ConfirmationService confirmationService;
-    private EncounterService encounterService;
-    private UserService userService;
-    private DetectionSystem detectionSystem;
-    private EventManager ids;
+    private final ConfirmationService confirmationService;
+    private final EncounterService encounterService;
+    private final UserService userService;
+    private final DetectionSystem detectionSystem;
+    private final EventManager ids;
 
     public ConfirmationController(final ConfirmationService confirmationService,
                                   final EncounterService encounterService, final UserService userService,

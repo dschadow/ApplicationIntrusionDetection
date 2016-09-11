@@ -41,8 +41,8 @@ import javax.validation.Valid;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private UserService userService;
-    private DukeEncountersUserValidator validator;
+    private final UserService userService;
+    private final DukeEncountersUserValidator validator;
 
     public UserController(final UserService userService, final DukeEncountersUserValidator validator) {
         this.userService = userService;

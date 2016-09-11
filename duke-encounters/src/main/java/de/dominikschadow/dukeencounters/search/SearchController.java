@@ -37,8 +37,8 @@ import java.util.Map;
  */
 @Controller
 public class SearchController {
-    private EncounterService encounterService;
-    private SearchFilterValidator validator;
+    private final EncounterService encounterService;
+    private final SearchFilterValidator validator;
 
     public SearchController(final EncounterService encounterService, final SearchFilterValidator validator) {
         this.encounterService = encounterService;

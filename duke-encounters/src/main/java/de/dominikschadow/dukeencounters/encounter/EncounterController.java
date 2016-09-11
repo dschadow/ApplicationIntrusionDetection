@@ -44,11 +44,11 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
  */
 @Controller
 public class EncounterController {
-    private EncounterService encounterService;
-    private EncounterValidator validator;
-    private UserService userService;
-    private DetectionSystem detectionSystem;
-    private EventManager ids;
+    private final EncounterService encounterService;
+    private final EncounterValidator validator;
+    private final UserService userService;
+    private final DetectionSystem detectionSystem;
+    private final EventManager ids;
 
     public EncounterController(final EncounterService encounterService, final EncounterValidator validator,
                                final UserService userService, final DetectionSystem detectionSystem,

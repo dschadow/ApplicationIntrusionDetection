@@ -44,8 +44,8 @@ import javax.validation.Valid;
 public class PasswordController {
     private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
 
-    private UserService userService;
-    private PasswordChangeValidator validator;
+    private final UserService userService;
+    private final PasswordChangeValidator validator;
 
     public PasswordController(final UserService userService, final PasswordChangeValidator validator) {
         this.userService = userService;
