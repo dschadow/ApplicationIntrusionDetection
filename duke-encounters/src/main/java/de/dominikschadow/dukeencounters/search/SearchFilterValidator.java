@@ -29,7 +29,6 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
@@ -40,7 +39,7 @@ import javax.inject.Named;
  * @author Dominik Schadow
  */
 @Named
-public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
+public class SearchFilterValidator extends BaseEncounterValidator {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
 
     public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
