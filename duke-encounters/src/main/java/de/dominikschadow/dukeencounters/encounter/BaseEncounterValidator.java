@@ -18,19 +18,17 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.Constants;
-import de.dominikschadow.dukeencounters.user.UserService;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
+import de.dominikschadow.dukeencounters.user.UserService;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
-import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
-import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
+import static org.owasp.appsensor.core.DetectionPoint.Category.*;
 
 /**
  * Base validator class for encounter common properties like event, location and country.
@@ -38,16 +36,20 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  * @author Dominik Schadow
  */
 public abstract class BaseEncounterValidator implements Validator {
-    @Autowired
-    protected SpringValidatorAdapter validator;
-    @Autowired
-    protected SecurityValidationService securityValidationService;
-    @Autowired
-    protected EventManager ids;
-    @Autowired
-    protected UserService userService;
-    @Autowired
-    protected DetectionSystem detectionSystem;
+    protected final SpringValidatorAdapter validator;
+    protected final SecurityValidationService securityValidationService;
+    private final EventManager ids;
+    private final UserService userService;
+    private final DetectionSystem detectionSystem;
+
+    public BaseEncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
+                                  UserService userService, SecurityValidationService securityValidationService) {
+        this.ids = ids;
+        this.detectionSystem = detectionSystem;
+        this.validator = validator;
+        this.userService = userService;
+        this.securityValidationService = securityValidationService;
+    }
 
     /**
      * Validates the base data of an encounter: event, location and country.
@@ -97,6 +99,14 @@ public abstract class BaseEncounterValidator implements Validator {
      */
     protected final void fireSqlIEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
+        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+    }
+
+    /**
+     * Fires a new invalid value event with the label {@code ACE2-001}.
+     */
+    protected final void fireInvalidValueEvent() {
+        DetectionPoint detectionPoint = new DetectionPoint(ACCESS_CONTROL, "ACE2-001");
         ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

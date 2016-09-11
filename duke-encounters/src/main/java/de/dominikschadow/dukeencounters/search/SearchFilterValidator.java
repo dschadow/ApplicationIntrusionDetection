@@ -19,19 +19,20 @@ package de.dominikschadow.dukeencounters.search;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.dukeencounters.Constants;
-import de.dominikschadow.dukeencounters.encounter.Likelihood;
 import de.dominikschadow.dukeencounters.encounter.BaseEncounterValidator;
-import org.owasp.appsensor.core.DetectionPoint;
-import org.owasp.appsensor.core.Event;
+import de.dominikschadow.dukeencounters.encounter.Likelihood;
+import de.dominikschadow.dukeencounters.security.SecurityValidationService;
+import de.dominikschadow.dukeencounters.user.UserService;
+import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
-
-import static org.owasp.appsensor.core.DetectionPoint.Category.ACCESS_CONTROL;
 
 /**
  * Validates a search filter: scans for basic Cross-Site Scripting and SQL Injection payload.
@@ -41,6 +42,11 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.ACCESS_CONTROL;
 @Named
 public class SearchFilterValidator extends BaseEncounterValidator implements Validator {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
+
+    public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
+                              UserService userService, SecurityValidationService securityValidationService) {
+        super(ids, detectionSystem, validator, userService, securityValidationService);
+    }
 
     @Override
     public boolean supports(final Class<?> clazz) {
@@ -92,10 +98,5 @@ public class SearchFilterValidator extends BaseEncounterValidator implements Val
             fireInvalidValueEvent();
             errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE);
         }
-    }
-
-    private void fireInvalidValueEvent() {
-        DetectionPoint detectionPoint = new DetectionPoint(ACCESS_CONTROL, "ACE2-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
     }
 }

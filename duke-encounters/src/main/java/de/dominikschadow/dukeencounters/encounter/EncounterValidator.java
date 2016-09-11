@@ -18,8 +18,13 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.Constants;
+import de.dominikschadow.dukeencounters.security.SecurityValidationService;
+import de.dominikschadow.dukeencounters.user.UserService;
+import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import javax.inject.Named;
 
@@ -30,6 +35,11 @@ import javax.inject.Named;
  */
 @Named
 public class EncounterValidator extends BaseEncounterValidator implements Validator {
+    public EncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
+                              UserService userService, SecurityValidationService securityValidationService) {
+        super(ids, detectionSystem, validator, userService, securityValidationService);
+    }
+
     @Override
     public boolean supports(final Class<?> clazz) {
         return Encounter.class.equals(clazz);
