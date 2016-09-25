@@ -10,7 +10,7 @@ ENV APP_HOME /home/$USER_NAME/app
 RUN useradd -ms /bin/bash $USER_NAME
 RUN mkdir $APP_HOME
 
-ADD target/*.jar $APP_HOME/duke-encounters.jar
+COPY target/*.jar $APP_HOME/duke-encounters.jar
 RUN chown $USER_NAME $APP_HOME/duke-encounters.jar
 
 USER $USER_NAME

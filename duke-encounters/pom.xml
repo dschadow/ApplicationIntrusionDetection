@@ -164,7 +164,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>${project.basedir}</dockerDirectory>
+                    <dockerDirectory>docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
