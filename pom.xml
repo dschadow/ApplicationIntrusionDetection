@@ -128,7 +128,7 @@
     </dependencyManagement>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
