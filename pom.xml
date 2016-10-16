@@ -63,6 +63,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
+            <dependency>
                 <groupId>org.owasp.appsensor</groupId>
                 <artifactId>appsensor-core</artifactId>
                 <version>${appsensor.version}</version>

@@ -1,7 +1,7 @@
 # Duke Encounters
-encounters:
-  latest:
-    amount: 10
+duke:
+  encounters:
+    latest-amount: 10
 
 # Session
 server:

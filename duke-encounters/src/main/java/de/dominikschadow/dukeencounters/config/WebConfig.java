@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.config;
 
 import org.owasp.appsensor.core.AppSensorClient;
 import org.owasp.appsensor.core.DetectionSystem;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ import javax.validation.Validator;
  * @author Dominik Schadow
  */
 @Configuration
+@EnableConfigurationProperties(DukeEncountersProperties.class)
 @ComponentScan(basePackages = "org.owasp.appsensor")
 public class WebConfig {
     @Bean

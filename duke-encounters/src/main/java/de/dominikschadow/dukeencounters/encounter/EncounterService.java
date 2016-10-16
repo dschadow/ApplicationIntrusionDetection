@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.encounter;
 
 import com.google.common.base.Strings;
 import de.dominikschadow.dukeencounters.Constants;
+import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -28,7 +29,6 @@ import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -36,6 +36,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +58,23 @@ public class EncounterService {
     private final UserService userService;
     private final EventManager ids;
     private final DetectionSystem detectionSystem;
-    private final int latestEncounterAmount;
+    @Inject
+    private DukeEncountersProperties properties;
 
+    /**
+     * Constructor with all required properties for this service class.
+     *
+     * @param repository The encounter repository to query and write to
+     * @param userService The user service provides access to all user related information
+     * @param ids AppSensor EventManager reference for intrusion detection operations
+     * @param detectionSystem The application to protect by AppSensor
+     */
     public EncounterService(final EncounterRepository repository, final UserService userService,
-                            final EventManager ids, final DetectionSystem detectionSystem,
-                            @Value("${encounters.latest.amount}") final int latestEncounterAmount) {
+                            final EventManager ids, final DetectionSystem detectionSystem) {
         this.repository = repository;
         this.userService = userService;
         this.ids = ids;
         this.detectionSystem = detectionSystem;
-        this.latestEncounterAmount = latestEncounterAmount;
     }
 
     /**
@@ -75,10 +83,10 @@ public class EncounterService {
      * @return The list of latest encounters
      */
     public List<Encounter> getLatestEncounters() {
-        Pageable latestEncounters = new PageRequest(0, latestEncounterAmount, Sort.Direction.DESC, "date");
+        Pageable latestEncounters = new PageRequest(0, properties.getLatestAmount(), Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestEncounters);
 
-        if (encounters.size() > latestEncounterAmount) {
+        if (encounters.size() > properties.getLatestAmount()) {
             fireSqlIEvent();
         }
 
