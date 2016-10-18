@@ -58,23 +58,24 @@ public class EncounterService {
     private final UserService userService;
     private final EventManager ids;
     private final DetectionSystem detectionSystem;
-    @Inject
     private DukeEncountersProperties properties;
 
     /**
      * Constructor with all required properties for this service class.
      *
-     * @param repository The encounter repository to query and write to
-     * @param userService The user service provides access to all user related information
-     * @param ids AppSensor EventManager reference for intrusion detection operations
+     * @param repository      The encounter repository to query and write to
+     * @param userService     The user service provides access to all user related information
+     * @param ids             AppSensor EventManager reference for intrusion detection operations
      * @param detectionSystem The application to protect by AppSensor
+     * @param properties      Duke Encounter specific properties
      */
     public EncounterService(final EncounterRepository repository, final UserService userService,
-                            final EventManager ids, final DetectionSystem detectionSystem) {
+                            final EventManager ids, final DetectionSystem detectionSystem, DukeEncountersProperties properties) {
         this.repository = repository;
         this.userService = userService;
         this.ids = ids;
         this.detectionSystem = detectionSystem;
+        this.properties = properties;
     }
 
     /**
@@ -253,7 +254,7 @@ public class EncounterService {
      * Checks whether the given encounter id belongs to the given username.
      *
      * @param encounterId The encounter id to check
-     * @param username The username the encounter should belong to
+     * @param username    The username the encounter should belong to
      * @return true if the user is the owner of the encounter, false otherwise
      */
     public boolean isOwnEncounter(@NotNull final long encounterId, @NotNull final String username) {
