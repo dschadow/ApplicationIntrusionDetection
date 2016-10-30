@@ -72,13 +72,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .securityContext().securityContextRepository(securityContextRepository())
             .and()
-                .headers().contentSecurityPolicy("default-src 'self'");
+                .headers().contentSecurityPolicy("default-src 'self'; img-src 'self' https://camo.githubusercontent.com");
         // @formatter:on
     }
 
     /**
-     * BCryptPasswordEncoder constructor takes a work factor as first argument. The default is 10, the valid range is
-     * 4 to 31. The amount of work increases exponentially.
+     * BCryptPasswordEncoder constructor takes a work factor as argument. The default is 10, the valid range is 4 to 31.
+     * The amount of work increases exponentially.
      *
      * @return The PasswordEncoder to use for all dukeEncountersUser passwords
      */

@@ -4,6 +4,12 @@
 <body>
 
 <div class="container" id="main">
+    <div class="row">
+        <a href="https://github.com/dschadow/ApplicationIntrusionDetection"><img id="github"
+            src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+            alt="Fork me on GitHub"/></a>
+    </div>
+
     <nav class="navbar-inverse navbar-default navbar-fixed-top">
         <div class="container">
             <div th:replace="partials :: navbar-header"></div>
@@ -29,9 +35,11 @@
                         <small>The leading online platform for Java Duke spotting</small>
                     </h1>
 
-                    <p class="lead">This sample web application is using <a th:href="@{http://appsensor.org}" target="_blank">OWASP
+                    <p class="lead">This sample web application is using <a th:href="@{http://appsensor.org}"
+                                                                            target="_blank">OWASP
                         AppSensor</a> for Application Intrusion Detection. It is using a <a
-                            th:href="@{http://www.h2database.com}" target="_blank">h2</a> in-memory database to temporarily
+                            th:href="@{http://www.h2database.com}" target="_blank">h2</a> in-memory database to
+                        temporarily
                         persist all information. Keep in mind that all entered information will be lost when restarting
                         the application.
                     </p>
@@ -44,7 +52,8 @@
         <div class="col-12">
             <h2>Latest Encounters</h2>
 
-            <p class="lead"><a th:href="@{/encounters}">View all</a> encounters or <a th:href="@{/search}">search</a> for the ones
+            <p class="lead"><a th:href="@{/encounters}">View all</a> encounters or <a th:href="@{/search}">search</a>
+                for the ones
                 you
                 are interested in. <span th:if="${#httpServletRequest.remoteUser == null}">You have to <a
                         th:href="@{/register}">register</a> or <a th:href="@{/login}">login</a> to contribute.</span>
