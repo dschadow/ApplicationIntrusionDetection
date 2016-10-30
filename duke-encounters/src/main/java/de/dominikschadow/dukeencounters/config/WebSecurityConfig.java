@@ -35,7 +35,7 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import javax.sql.DataSource;
 
 /**
- * Spring Security configuration file.
+ * Spring Security configuration.
  *
  * @author Dominik Schadow
  */
@@ -43,9 +43,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private SecurityContextRepository securityContextRepository;
-
     @Autowired
     private DataSource dataSource;
 
@@ -71,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .rememberMe()
             .and()
-                .securityContext().securityContextRepository(securityContextRepository)
+                .securityContext().securityContextRepository(securityContextRepository())
             .and()
                 .headers().contentSecurityPolicy("default-src 'self'");
         // @formatter:on
@@ -97,6 +94,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    /**
+     * Enables JDBC authentication and sets the configured BCryptPasswordEncoder.
+     *
+     * @param auth The AuthenticationManagerBuilder
+     * @throws Exception during configuration
+     */
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
@@ -107,6 +110,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    /**
+     * Sets the AppSensorSecurityContextRepository as the SecurityContextRepository.
+     *
+     * @return The SecurityContextRepository to use
+     */
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new AppSensorSecurityContextRepository();
