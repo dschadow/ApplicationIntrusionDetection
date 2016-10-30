@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -62,7 +63,7 @@ public class EncounterControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
                 .andExpect(model().attributeExists("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(20)));
+                .andExpect(model().attribute("encounters", hasSize(21)));
     }
 
     @Test
