@@ -12,9 +12,8 @@ when restarting. Run this application with **mvn spring-boot:run**. After launch
 As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse, launch the app within an immutable image and open the web application 
 in your browser at **http://127.0.0.1:8080**.
 
-And of course you can use [Docker](https://www.docker.com) to create an image via `docker build -t duke-encounters .`, launch the container 
-via `docker run -d -i -p 8080:8080 -t duke-encounters` and open the web application in your browser at **http://[CONTAINER-IP]:8080** (you 
-can find out your container IP by executing `docker-machine ip`.
+And of course you can use [Docker](https://www.docker.com) to create an image via `mvn docker:build`, launch the container 
+via `docker run -d -i -p 8080:8080 -t duke-encounters` and open the web application in your browser at **http://localhost:8080**.
 
 Available users are listed in the [src/main/resources/data.sql](https://github.com/dschadow/ApplicationIntrusionDetection/blob/master/duke-encounters/src/main/resources/data.sql) 
 file. Username and password are always identical.

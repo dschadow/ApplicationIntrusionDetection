@@ -1,20 +1,10 @@
-FROM java:8
+FROM openjdk:8-jre-alpine
 MAINTAINER Dominik Schadow <dominikschadow@gmail.com>
 
 VOLUME /tmp
-EXPOSE 8080
 
-ENV USER_NAME duke
-ENV APP_HOME /home/$USER_NAME/app
+ADD duke-encounters.jar app.jar
 
-RUN useradd -ms /bin/bash $USER_NAME
-RUN mkdir $APP_HOME
+RUN sh -c 'touch /app.jar'
 
-COPY target/*.jar $APP_HOME/duke-encounters.jar
-RUN chown $USER_NAME $APP_HOME/duke-encounters.jar
-
-USER $USER_NAME
-WORKDIR $APP_HOME
-RUN bash -c 'touch duke-encounters.jar'
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","duke-encounters.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
