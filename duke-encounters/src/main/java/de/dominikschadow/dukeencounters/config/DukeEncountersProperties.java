@@ -13,6 +13,7 @@ public class DukeEncountersProperties {
      * The number of encounters to be shown in the latest encounters list.
      */
     private int latestAmount;
+    private int passwordStrengh;
 
     public int getLatestAmount() {
         return latestAmount;
@@ -20,5 +21,13 @@ public class DukeEncountersProperties {
 
     public void setLatestAmount(int latestAmount) {
         this.latestAmount = latestAmount;
+    }
+
+    public int getPasswordStrengh() {
+        return passwordStrengh;
+    }
+
+    public void setPasswordStrengh(int passwordStrengh) {
+        this.passwordStrengh = passwordStrengh;
     }
 }

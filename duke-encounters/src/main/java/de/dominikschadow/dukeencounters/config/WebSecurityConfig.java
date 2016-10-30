@@ -45,6 +45,8 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private DukeEncountersProperties properties;
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
@@ -82,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        return new BCryptPasswordEncoder(properties.getPasswordStrengh());
     }
 
     @Override
