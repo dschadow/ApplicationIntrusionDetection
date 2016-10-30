@@ -47,6 +47,7 @@ INSERT INTO encounters (id, event, location, country, comment, date, user_id) VA
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (18, 'JavaOne 2013', 'San Francisco', 'USA', '', '2013-09-22', 2);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (19, 'JavaOne 2014', 'San Francisco', 'USA', '', '2014-09-30', 1);
 INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (20, 'JavaOne 2015', 'San Francisco', 'USA', '20 years of Java!', '2015-10-26', 11);
+INSERT INTO encounters (id, event, location, country, comment, date, user_id) VALUES (21, 'JavaOne 2016', 'San Francisco', 'USA', '', '2016-09-18', 3);
 
 -- CONFIRMATIONS
 INSERT INTO confirmations (id, user_id, encounter_id, date) VALUES (1, 2, 19, '2014-09-30');
