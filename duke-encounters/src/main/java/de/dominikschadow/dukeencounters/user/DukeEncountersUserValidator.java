@@ -24,8 +24,6 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -42,8 +40,6 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  */
 @Named
 public class DukeEncountersUserValidator implements Validator {
-    private static final Logger logger = LoggerFactory.getLogger(DukeEncountersUserValidator.class);
-
     private final SpringValidatorAdapter validator;
     private final EventManager ids;
     private final UserService userService;
@@ -109,7 +105,6 @@ public class DukeEncountersUserValidator implements Validator {
         }
 
         if (userService.findUser(user.getUsername()) != null) {
-            logger.error("User with username {} already exists", user.getUsername());
             errors.rejectValue("username", Constants.USERNAME_ALREADY_EXISTS);
         }
     }
