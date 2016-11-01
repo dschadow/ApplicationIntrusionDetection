@@ -121,7 +121,7 @@ public class AccountController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his userdata", storedUser);
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 
@@ -145,7 +145,7 @@ public class AccountController {
 
             DukeEncountersUser storedUser = userService.updateUser(user);
 
-            logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated", storedUser);
+            logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his account", storedUser);
 
             redirectAttributes.addFlashAttribute("dataUpdated", true);
         } else {
