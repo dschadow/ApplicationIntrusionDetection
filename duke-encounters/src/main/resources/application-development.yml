@@ -19,8 +19,7 @@ info:
 
 # Logging
 logging:
-  path: /var/logs/
-  file: duke-encounters:log
+  file: ${sys:user.home}/duke-encounters.log
   level:
     root: INFO
     org.springframework: WARN

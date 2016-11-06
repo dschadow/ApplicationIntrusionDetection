@@ -36,8 +36,10 @@ info:
 
 # Logging
 logging:
-  path: /var/logs/
-  file: duke-encounters:log
+  file: /var/logs/duke-encounters.log
+  pattern:
+    console: "%d %-5level %marker %logger : %msg%n"
+    file: "%d %-5level %marker [%thread] %logger : %msg%n"
   level:
     root: WARN
     org.springframework: ERROR
