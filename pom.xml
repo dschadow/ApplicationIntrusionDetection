@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.0</appsensor.version>
-        <boxfuse.version>1.23.3.1189</boxfuse.version>
+        <boxfuse.version>1.23.4.1200</boxfuse.version>
         <sonar.language>java</sonar.language>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -30,7 +30,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.2.RELEASE</version>
+        <version>1.4.3.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.7.201606060606</version>
+                    <version>0.7.8</version>
                     <executions>
                         <execution>
                             <goals>
@@ -219,7 +219,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>1.4.4</version>
+                <version>1.4.4.1</version>
                 <reportSets>
                     <reportSet>
                         <reports>
