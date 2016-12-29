@@ -12,8 +12,8 @@
     <name>Duke Encounters</name>
 
     <description>Application Intrusion Detection with AppSensor sample project. Requires a server like Apache Tomcat or
-        the usage of Spring Boot. After launching, open the web application in your browser at http://localhost:8080.
-        Depending on your Boxfuse configuration you can deploy the image to AWS test or prod.
+        the embedded server by Spring Boot. After launching, open the web application in your browser at
+        http://localhost:8080. With Boxfuse you can deploy the image to AWS, or you can use Docker as container service.
     </description>
 
     <properties>
