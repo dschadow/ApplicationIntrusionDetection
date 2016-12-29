@@ -2,7 +2,7 @@
 duke:
   encounters:
     latest-amount: 10
-    password-strengh: 10
+    password-strength: 10
 
 # Session
 server:
