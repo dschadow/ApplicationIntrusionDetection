@@ -10,6 +10,9 @@ server:
     timeout: 1800
 
 spring:
+  h2:
+    console:
+      path: /admin/h2-console
   resources:
     chain:
       enabled: true
