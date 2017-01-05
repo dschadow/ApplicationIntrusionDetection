@@ -17,33 +17,32 @@
  */
 package de.dominikschadow.dukeencounters.search;
 
-import com.google.common.base.Strings;
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.encounter.BaseEncounterValidator;
 import de.dominikschadow.dukeencounters.encounter.Likelihood;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-
-import javax.inject.Named;
 
 /**
  * Validates a search filter: scans for basic Cross-Site Scripting and SQL Injection payload.
  *
  * @author Dominik Schadow
  */
-@Named
+@Component
 public class SearchFilterValidator extends BaseEncounterValidator {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
 
     public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
-                              UserService userService, SecurityValidationService securityValidationService) {
+                                 UserService userService, SecurityValidationService securityValidationService) {
         super(ids, detectionSystem, validator, userService, securityValidationService);
     }
 
@@ -66,8 +65,8 @@ public class SearchFilterValidator extends BaseEncounterValidator {
         } else if (securityValidationService.hasSqlIPayload(filter.getYear())) {
             fireSqlIEvent();
             errors.rejectValue("year", Constants.SQLI_ERROR_CODE);
-        } else if (!Strings.isNullOrEmpty(filter.getYear())) {
-            try {
+        } else if (StringUtils.isNotEmpty(filter.getYear())) {
+            if (StringUtils.isNumeric(filter.getYear())) {
                 int year = Integer.parseInt(filter.getYear());
 
                 if (year < Constants.YEAR_OF_JAVA_CREATION) {
@@ -75,8 +74,7 @@ public class SearchFilterValidator extends BaseEncounterValidator {
                             filter.getYear());
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
                 }
-            } catch (NumberFormatException ex) {
-                logger.error(ex.getMessage(), ex);
+            } else {
                 errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
             }
         }

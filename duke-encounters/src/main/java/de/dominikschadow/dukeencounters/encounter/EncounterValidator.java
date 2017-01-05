@@ -22,17 +22,16 @@ import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.event.EventManager;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-
-import javax.inject.Named;
 
 /**
  * Validates an encounter: checks required fields and scans for basic Cross-Site Scripting and SQL Injection payload.
  *
  * @author Dominik Schadow
  */
-@Named
+@Component
 public class EncounterValidator extends BaseEncounterValidator {
     public EncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
                               UserService userService, SecurityValidationService securityValidationService) {

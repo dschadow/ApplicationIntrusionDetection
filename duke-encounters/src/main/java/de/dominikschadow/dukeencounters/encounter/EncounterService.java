@@ -22,6 +22,7 @@ import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 import de.dominikschadow.dukeencounters.user.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -36,7 +37,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,14 +121,12 @@ public class EncounterService {
         }
         specifications.add(EncounterSpecification.encounterByCountry(country));
 
-        try {
+        if (StringUtils.isNumeric(filter.getYear())) {
             int year = Integer.parseInt(filter.getYear());
 
             if (year > Constants.YEAR_OF_JAVA_CREATION) {
                 specifications.add(EncounterSpecification.encounterAfterYear(year));
             }
-        } catch (NumberFormatException ex) {
-            logger.info("{} is not a valid year", filter.getYear());
         }
 
         //specifications.add(EncounterSpecification.encounterByLikelihood(Likelihood.fromString(filter.getLikelihood

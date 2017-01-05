@@ -24,11 +24,10 @@ import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-
-import javax.inject.Named;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
@@ -38,7 +37,7 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  *
  * @author Dominik Schadow
  */
-@Named
+@Component
 public class DukeEncountersUserValidator implements Validator {
     private final SpringValidatorAdapter validator;
     private final EventManager ids;

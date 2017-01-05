@@ -20,11 +20,10 @@ package de.dominikschadow.dukeencounters.account;
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-
-import javax.inject.Named;
 
 /**
  * Validates a request to change the users password. Makes sure that the current password is correct and that the new
@@ -32,7 +31,7 @@ import javax.inject.Named;
  *
  * @author Dominik Schadow
  */
-@Named
+@Component
 public class PasswordChangeValidator implements Validator {
     private final SpringValidatorAdapter validator;
     private final UserService userService;
