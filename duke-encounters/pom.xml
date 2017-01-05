@@ -194,7 +194,7 @@
                         <groupId>com.boxfuse.client</groupId>
                         <artifactId>boxfuse-maven-plugin</artifactId>
                         <configuration>
-                            <image>dukeencounters:${project.version}</image>
+                            <image>duke-encounters:${project.version}</image>
                             <healthcheck.path>/</healthcheck.path>
                         </configuration>
                         <executions>
@@ -254,7 +254,7 @@
                         <groupId>com.boxfuse.client</groupId>
                         <artifactId>boxfuse-maven-plugin</artifactId>
                         <configuration>
-                            <image>dukeencounters:${project.version}</image>
+                            <image>duke-encounters:${project.version}</image>
                             <healthcheck.path>/</healthcheck.path>
                         </configuration>
                         <executions>
