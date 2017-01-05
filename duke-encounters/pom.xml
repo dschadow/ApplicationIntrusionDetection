@@ -195,7 +195,6 @@
                         <artifactId>boxfuse-maven-plugin</artifactId>
                         <configuration>
                             <image>dukeencounters:${project.version}</image>
-                            <app>dukeencounters</app>
                             <healthcheck.path>/</healthcheck.path>
                         </configuration>
                         <executions>
@@ -256,7 +255,6 @@
                         <artifactId>boxfuse-maven-plugin</artifactId>
                         <configuration>
                             <image>dukeencounters:${project.version}</image>
-                            <app>dukeencounters</app>
                             <healthcheck.path>/</healthcheck.path>
                         </configuration>
                         <executions>
