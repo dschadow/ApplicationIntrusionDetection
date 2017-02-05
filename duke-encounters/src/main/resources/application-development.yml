@@ -19,7 +19,6 @@ info:
 
 # Logging
 logging:
-  file: ${sys:user.home}/duke-encounters.log
   level:
     root: INFO
     org.springframework: WARN
