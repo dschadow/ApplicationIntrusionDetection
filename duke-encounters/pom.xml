@@ -17,7 +17,6 @@
     </description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>de.dominikschadow.dukeencounters.DukeEncountersApplication</start-class>
     </properties>
 
@@ -153,13 +152,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <configuration>
-                    <tag>${project.artifactId}-${project.version}</tag>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
