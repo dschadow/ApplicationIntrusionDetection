@@ -23,10 +23,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-
-import javax.validation.Validator;
 
 /**
  * Spring configuration file.
@@ -37,16 +33,6 @@ import javax.validation.Validator;
 @EnableConfigurationProperties(DukeEncountersProperties.class)
 @ComponentScan(basePackages = "org.owasp.appsensor")
 public class WebConfig {
-    @Bean
-    public Validator localValidatorFactoryBean() {
-        return new LocalValidatorFactoryBean();
-    }
-
-    @Bean
-    public SpringValidatorAdapter springValidatorAdapter(final Validator jsr303Validator) {
-        return new SpringValidatorAdapter(jsr303Validator);
-    }
-
     @Bean
     public DetectionSystem detectionSystem(final AppSensorClient appSensorClient) {
         return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
