@@ -161,6 +161,12 @@
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>0.4.13</version>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
