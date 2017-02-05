@@ -12,8 +12,8 @@ body {
     margin-bottom: 0;
 }
 
-.well .page-header h1 {
-    margin-top: 0;
+h1 {
+    margin-top: 2px;
 }
 
 .well .page-header p {
