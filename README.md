@@ -21,5 +21,5 @@ file. Username and password are always identical.
 ##Meta
 [![Build Status](https://travis-ci.org/dschadow/ApplicationIntrusionDetection.svg)](https://travis-ci.org/dschadow/ApplicationIntrusionDetection)
 [![Code Climate](https://codeclimate.com/github/dschadow/ApplicationIntrusionDetection/badges/gpa.svg)](https://codeclimate.com/github/dschadow/ApplicationIntrusionDetection)
-[![codecov](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection/branch/master/graph/badge.svg)](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection)
+[![codecov](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection/branch/develop/graph/badge.svg)](https://codecov.io/gh/dschadow/ApplicationIntrusionDetection)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
