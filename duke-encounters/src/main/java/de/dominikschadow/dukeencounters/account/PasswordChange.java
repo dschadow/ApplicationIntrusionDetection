@@ -17,37 +17,16 @@
  */
 package de.dominikschadow.dukeencounters.account;
 
+import lombok.Data;
+
 /**
  * Updates the password of the selected user.
  *
  * @author Dominik Schadow
  */
+@Data
 public class PasswordChange {
     private String currentPassword;
     private String newPassword;
     private String newPasswordConfirmation;
-
-    public String getCurrentPassword() {
-        return currentPassword;
-    }
-
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-
-    public String getNewPasswordConfirmation() {
-        return newPasswordConfirmation;
-    }
-
-    public void setNewPasswordConfirmation(String newPasswordConfirmation) {
-        this.newPasswordConfirmation = newPasswordConfirmation;
-    }
 }

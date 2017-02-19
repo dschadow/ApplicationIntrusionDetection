@@ -20,8 +20,6 @@ package de.dominikschadow.dukeencounters.user;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;

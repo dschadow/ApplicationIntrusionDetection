@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.dukeencounters.encounter;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
+@Data
 public class Authority {
     @Id
     @GeneratedValue
@@ -44,30 +46,5 @@ public class Authority {
     public Authority(final String username, final String authority) {
         this.username = username;
         this.authority = authority;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    @Override
-    public String toString() {
-        return getAuthority() + " (" + getUsername() + ")";
     }
 }

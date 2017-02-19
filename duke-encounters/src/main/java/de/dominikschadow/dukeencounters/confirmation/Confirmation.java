@@ -19,7 +19,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -32,6 +32,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "confirmations")
+@Data
 public class Confirmation {
     @Id
     @GeneratedValue
@@ -44,46 +45,4 @@ public class Confirmation {
     private Encounter encounter;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date date;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public DukeEncountersUser getUser() {
-        return user;
-    }
-
-    public void setUser(DukeEncountersUser user) {
-        this.user = user;
-    }
-
-    public Encounter getEncounter() {
-        return encounter;
-    }
-
-    public void setEncounter(Encounter encounter) {
-        this.encounter = encounter;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).
-                append("id", getId()).
-                append("user", getUser()).
-                append("encounter", getEncounter()).
-                append("date", getDate()).
-                toString();
-    }
 }

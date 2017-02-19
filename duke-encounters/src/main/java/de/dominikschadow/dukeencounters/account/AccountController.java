@@ -18,17 +18,15 @@
 package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
-import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.confirmation.ConfirmationService;
-import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.Encounter;
+import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
 import de.dominikschadow.dukeencounters.user.Level;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

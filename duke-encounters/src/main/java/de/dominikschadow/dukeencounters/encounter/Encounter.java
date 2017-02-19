@@ -18,7 +18,7 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,6 +34,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "encounters")
+@Data
 public class Encounter {
     @Id
     @GeneratedValue
@@ -57,87 +58,4 @@ public class Encounter {
     private DukeEncountersUser user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
     private List<Confirmation> confirmations;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public DukeEncountersUser getUser() {
-        return user;
-    }
-
-    public void setUser(DukeEncountersUser user) {
-        this.user = user;
-    }
-
-    public List<Confirmation> getConfirmations() {
-        return confirmations;
-    }
-
-    public void setConfirmations(List<Confirmation> confirmations) {
-        this.confirmations = confirmations;
-    }
-
-    public String getLikelihood() {
-        return Likelihood.getLikelihood(getConfirmations()).getName();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).
-                append("id", getId()).
-                append("event", getEvent()).
-                append("location", getLocation()).
-                append("country", getCountry()).
-                append("comment", getComment()).
-                append("date", getDate()).
-                append("user", getUser()).
-                append("confirmations", getConfirmations()).
-                append("likelihood", getLikelihood()).
-                toString();
-    }
 }

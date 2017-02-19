@@ -21,8 +21,6 @@ import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;

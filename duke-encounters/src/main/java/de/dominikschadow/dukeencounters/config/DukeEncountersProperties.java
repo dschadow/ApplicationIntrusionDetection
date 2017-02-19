@@ -1,5 +1,6 @@
 package de.dominikschadow.dukeencounters.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,26 +9,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author Dominik Schadow
  */
 @ConfigurationProperties(prefix = "duke.encounters")
+@Data
 public class DukeEncountersProperties {
     /**
      * The number of encounters to be shown in the latest encounters list.
      */
     private int latestAmount;
     private int passwordStrength;
-
-    public int getLatestAmount() {
-        return latestAmount;
-    }
-
-    public void setLatestAmount(int latestAmount) {
-        this.latestAmount = latestAmount;
-    }
-
-    public int getPasswordStrength() {
-        return passwordStrength;
-    }
-
-    public void setPasswordStrength(int passwordStrength) {
-        this.passwordStrength = passwordStrength;
-    }
 }
