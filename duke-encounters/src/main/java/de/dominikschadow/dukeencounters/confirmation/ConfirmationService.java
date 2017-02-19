@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +36,8 @@ import java.util.Objects;
  * @author Dominik Schadow
  */
 @Service
+@Slf4j
 public class ConfirmationService {
-    private static final Logger logger = LoggerFactory.getLogger(ConfirmationService.class);
-
     private final ConfirmationRepository repository;
     private final UserService userService;
     private final EncounterService encounterService;
@@ -52,7 +52,7 @@ public class ConfirmationService {
     public List<Confirmation> getConfirmationsByUsername(@NotNull final String username) {
         List<Confirmation> confirmations = repository.findAllByUsername(username);
 
-        logger.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
+        log.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
 
         return confirmations;
     }
@@ -61,7 +61,7 @@ public class ConfirmationService {
                                                                 @NotNull final long encounterId) {
         Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
-        logger.info("Query for user {} confirmations returned {}", username, confirmation);
+        log.info("Query for user {} confirmations returned {}", username, confirmation);
 
         return confirmation;
     }
@@ -74,13 +74,13 @@ public class ConfirmationService {
 
         Confirmation confirmation = repository.save(newConfirmation);
 
-        logger.info("Created new confirmation {}", confirmation);
+        log.info("Created new confirmation {}", confirmation);
     }
 
     public void deleteConfirmation(@NotNull final String username, @NotNull final long confirmationId) {
         repository.delete(confirmationId);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
     public boolean hasConfirmedEncounter(@NotNull final String username, @NotNull final long encounterId) {
@@ -93,14 +93,14 @@ public class ConfirmationService {
         if (Objects.equals("own", type)) {
             String username = userService.getUsername();
 
-            logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
+            log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
 
             confirmations = repository.findAllByUsername(username);
         } else {
             confirmations = repository.findAll();
         }
 
-        logger.info("Query returned {} confirmations", confirmations.size());
+        log.info("Query returned {} confirmations", confirmations.size());
 
         return confirmations;
     }

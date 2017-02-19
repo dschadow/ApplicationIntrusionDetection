@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -45,9 +46,8 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  * @author Dominik Schadow
  */
 @Controller
+@Slf4j
 public class ConfirmationController {
-    private static final Logger logger = LoggerFactory.getLogger(ConfirmationController.class);
-
     private final ConfirmationService confirmationService;
     private final EncounterService encounterService;
     private final UserService userService;
@@ -80,13 +80,13 @@ public class ConfirmationController {
         String username = userService.getUsername();
 
         if (encounterService.isOwnEncounter(encounterId, username)) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
+            log.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     username, encounterId);
 
             fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("ownEncounter", true);
         } else if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to "
+            log.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to "
                     + "confirm it again", username, encounterId);
 
             fireConfirmationErrorEvent();
@@ -94,7 +94,7 @@ public class ConfirmationController {
         } else {
             confirmationService.addConfirmation(username, encounterId);
 
-            logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
+            log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
         }
 
         return new ModelAndView("redirect:/account");
@@ -107,7 +107,7 @@ public class ConfirmationController {
 
         confirmationService.deleteConfirmation(username, confirmationId);
 
-        logger.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
+        log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
 
         return new ModelAndView("redirect:/account");
     }

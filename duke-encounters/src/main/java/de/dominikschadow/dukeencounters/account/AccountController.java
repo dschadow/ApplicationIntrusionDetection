@@ -25,6 +25,7 @@ import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
 import de.dominikschadow.dukeencounters.user.Level;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +48,8 @@ import java.util.List;
  * @author Dominik Schadow
  */
 @Controller
+@Slf4j
 public class AccountController {
-    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
-
     private final EncounterService encounterService;
     private final ConfirmationService confirmationService;
     private final UserService userService;
@@ -68,7 +68,7 @@ public class AccountController {
     public String showMyAccount(final Model model) {
         String username = userService.getUsername();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
 
         List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
@@ -93,7 +93,7 @@ public class AccountController {
     public ModelAndView editMyAccount() {
         String username = userService.getUsername();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
 
         ModelAndView modelAndView = new ModelAndView("user/editAccount");
 
@@ -121,7 +121,7 @@ public class AccountController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his userdata", storedUser);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his userdata", storedUser);
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 
@@ -145,7 +145,7 @@ public class AccountController {
 
             DukeEncountersUser storedUser = userService.updateUser(user);
 
-            logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his account", storedUser);
+            log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his account", storedUser);
 
             redirectAttributes.addFlashAttribute("dataUpdated", true);
         } else {

@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +39,8 @@ import javax.validation.Valid;
  * @author Dominik Schadow
  */
 @Controller
+@Slf4j
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     private final UserService userService;
     private final DukeEncountersUserValidator validator;
 
@@ -75,7 +75,7 @@ public class UserController {
 
         DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("userCreated", newUser.getUsername());

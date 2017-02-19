@@ -22,6 +22,7 @@ import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -51,9 +52,8 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  * @author Dominik Schadow
  */
 @Service
+@Slf4j
 public class EncounterService {
-    private static final Logger logger = LoggerFactory.getLogger(EncounterService.class);
-
     private final EncounterRepository repository;
     private final UserService userService;
     private final EventManager ids;
@@ -146,12 +146,12 @@ public class EncounterService {
     public Encounter getEncounterById(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
 
         Encounter encounter = repository.findOne(encounterId);
 
         if (encounter == null) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
+            log.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
                     username, encounterId);
         }
 
@@ -167,7 +167,7 @@ public class EncounterService {
     public List<Encounter> getEncountersByUsername(@NotNull final String username) {
         List<Encounter> encounters = repository.findAllByUsername(username);
 
-        logger.info("Query for user {} encounters returned {} encounters", username, encounters.size());
+        log.info("Query for user {} encounters returned {} encounters", username, encounters.size());
 
         return encounters;
     }
@@ -181,7 +181,7 @@ public class EncounterService {
     public List<Encounter> getEncountersByEvent(@NotNull final String event) {
         List<Encounter> encounters = repository.findByEventContaining(event);
 
-        logger.info("Query for event {} returned {} encounters", event, encounters.size());
+        log.info("Query for event {} returned {} encounters", event, encounters.size());
 
         return encounters;
     }
@@ -198,14 +198,14 @@ public class EncounterService {
         if (Objects.equals("own", type)) {
             String username = userService.getUsername();
 
-            logger.warn(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
+            log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
 
             encounters = repository.findAllByUsername(username);
         } else {
             encounters = repository.findAll();
         }
 
-        logger.info("Query returned {} encounters", encounters.size());
+        log.info("Query returned {} encounters", encounters.size());
 
         return encounters;
     }
@@ -219,11 +219,11 @@ public class EncounterService {
     public void deleteEncounter(@NotNull final long encounterId) {
         String username = userService.getUsername();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
         repository.delete(encounterId);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
 
     /**
@@ -236,14 +236,14 @@ public class EncounterService {
     public Encounter createEncounter(@NotNull final Encounter newEncounter) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
                 user.getUsername(), newEncounter);
 
         newEncounter.setUser(user);
 
         Encounter encounter = repository.save(newEncounter);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
 
         return encounter;
     }
@@ -260,7 +260,7 @@ public class EncounterService {
 
         boolean owner = encounter != null;
 
-        logger.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
+        log.info("User {} is {} owner of encounter {}", username, owner ? "the" : "not the", encounterId);
 
         return owner;
     }

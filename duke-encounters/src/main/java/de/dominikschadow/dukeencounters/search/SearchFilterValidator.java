@@ -22,6 +22,7 @@ import de.dominikschadow.dukeencounters.encounter.BaseEncounterValidator;
 import de.dominikschadow.dukeencounters.encounter.Likelihood;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.event.EventManager;
@@ -38,9 +39,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
  * @author Dominik Schadow
  */
 @Component
+@Slf4j
 public class SearchFilterValidator extends BaseEncounterValidator {
-    private static final Logger logger = LoggerFactory.getLogger(SearchFilterValidator.class);
-
     public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
                                  UserService userService, SecurityValidationService securityValidationService) {
         super(ids, detectionSystem, validator, userService, securityValidationService);
@@ -70,7 +70,7 @@ public class SearchFilterValidator extends BaseEncounterValidator {
                 int year = Integer.parseInt(filter.getYear());
 
                 if (year < Constants.YEAR_OF_JAVA_CREATION) {
-                    logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
+                    log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as event year - possible typo",
                             filter.getYear());
                     errors.rejectValue("year", Constants.INVALID_YEAR_ERROR_CODE);
                 }
@@ -82,15 +82,15 @@ public class SearchFilterValidator extends BaseEncounterValidator {
         try {
             Likelihood.fromString(filter.getLikelihood());
         } catch (IllegalArgumentException ex) {
-            logger.error(ex.getMessage(), ex);
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
+            log.error(ex.getMessage(), ex);
+            log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
                     filter.getLikelihood());
             fireInvalidValueEvent();
             errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE);
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
-            logger.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
+            log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
             fireInvalidValueEvent();
             errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE);

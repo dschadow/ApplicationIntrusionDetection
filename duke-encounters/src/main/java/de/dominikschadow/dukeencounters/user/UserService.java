@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.encounter.Authority;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
@@ -39,9 +40,8 @@ import java.util.Date;
  * @author Dominik Schadow
  */
 @Service
+@Slf4j
 public class UserService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
@@ -61,7 +61,7 @@ public class UserService {
      */
     @Transactional
     public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
-        logger.info("Creating user with username {}", newUser.getEmail());
+        log.info("Creating user with username {}", newUser.getEmail());
         Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
 
         newUser.setEnabled(true);
@@ -72,7 +72,7 @@ public class UserService {
 
         DukeEncountersUser user = userRepository.save(newUser);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getAuthority().getAuthority());
 
         return user;

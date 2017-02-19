@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +42,8 @@ import javax.validation.Valid;
  * @author Dominik Schadow
  */
 @Controller
+@Slf4j
 public class PasswordController {
-    private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
-
     private final UserService userService;
     private final PasswordChangeValidator validator;
 
@@ -63,7 +63,7 @@ public class PasswordController {
     public ModelAndView changePassword(@ModelAttribute final PasswordChange passwordChange) {
         String username = userService.getUsername();
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
 
         ModelAndView modelAndView = new ModelAndView("user/changePassword");
 
@@ -92,7 +92,7 @@ public class PasswordController {
 
         DukeEncountersUser storedUser = userService.updateUser(user);
 
-        logger.warn(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 
