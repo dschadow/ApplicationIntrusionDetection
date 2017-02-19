@@ -17,6 +17,8 @@
  */
 package de.dominikschadow.dukeencounters.encounter;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Strings;
 import de.dominikschadow.dukeencounters.user.Level;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
@@ -60,4 +62,12 @@ public class DukeEncountersUser {
     private boolean enabled;
     @OneToOne
     private Authority authority;
+
+    @Override
+    public String toString() {
+        String name = Strings.nullToEmpty(getFirstname()) + " " + Strings.nullToEmpty(getLastname());
+        name = CharMatcher.WHITESPACE.trimTrailingFrom(name);
+
+        return name;
+    }
 }
