@@ -58,4 +58,8 @@ public class Encounter {
     private DukeEncountersUser user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
     private List<Confirmation> confirmations;
+
+    public String getLikelihood() {
+        return Likelihood.getLikelihood(getConfirmations()).getName();
+    }
 }
