@@ -72,7 +72,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationsByUsernameWhenUsernameIsValidReturnsConfirmations() throws Exception {
+    public void getConfirmationsByUsernameWhenUsernameIsValidShouldReturnConfirmations() throws Exception {
         given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation));
         List<Confirmation> confirmations = service.getConfirmationsByUsername("test");
 
@@ -80,13 +80,26 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidReturnsConfirmation() throws Exception {
+    public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidShouldReturnConfirmation() throws Exception {
         given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(testConfirmation);
         Confirmation confirmation = service.getConfirmationByUsernameAndEncounterId("test", 1);
 
         assertThat(confirmation.getId()).isEqualTo(1);
     }
 
+    @Test
+    public void getOwnConfirmationsShouldReturnConfirmations() throws Exception {
+        given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation));
+        List<Confirmation> confirmations = service.getConfirmations("own");
 
+        assertThat(confirmations.size()).isEqualTo(1);
+    }
 
+    @Test
+    public void getConfirmationsWithTypeNullShouldReturnAllConfirmations() throws Exception {
+        given(repository.findAll()).willReturn(Lists.newArrayList(testConfirmation));
+        List<Confirmation> confirmations = service.getConfirmations(null);
+
+        assertThat(confirmations.size()).isEqualTo(1);
+    }
 }
