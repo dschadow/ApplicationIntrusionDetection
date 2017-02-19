@@ -20,6 +20,7 @@ package de.dominikschadow.dukeencounters.user;
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
+import lombok.AllArgsConstructor;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -38,23 +39,13 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  * @author Dominik Schadow
  */
 @Component
+@AllArgsConstructor
 public class DukeEncountersUserValidator implements Validator {
     private final SpringValidatorAdapter validator;
     private final EventManager ids;
     private final UserService userService;
     private final SecurityValidationService securityValidationService;
     private final DetectionSystem detectionSystem;
-
-    public DukeEncountersUserValidator(final SpringValidatorAdapter validator, final EventManager ids,
-                                       final UserService userService,
-                                       final SecurityValidationService securityValidationService,
-                                       final DetectionSystem detectionSystem) {
-        this.validator = validator;
-        this.ids = ids;
-        this.userService = userService;
-        this.securityValidationService = securityValidationService;
-        this.detectionSystem = detectionSystem;
-    }
 
     @Override
     public boolean supports(final Class<?> clazz) {

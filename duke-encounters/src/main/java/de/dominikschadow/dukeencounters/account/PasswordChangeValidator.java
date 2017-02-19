@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -32,14 +33,10 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
  * @author Dominik Schadow
  */
 @Component
+@AllArgsConstructor
 public class PasswordChangeValidator implements Validator {
     private final SpringValidatorAdapter validator;
     private final UserService userService;
-
-    public PasswordChangeValidator(final SpringValidatorAdapter validator, final UserService userService) {
-        this.validator = validator;
-        this.userService = userService;
-    }
 
     @Override
     public boolean supports(final Class<?> clazz) {

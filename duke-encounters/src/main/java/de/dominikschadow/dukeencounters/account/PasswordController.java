@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,14 +42,10 @@ import javax.validation.Valid;
  */
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class PasswordController {
     private final UserService userService;
     private final PasswordChangeValidator validator;
-
-    public PasswordController(final UserService userService, final PasswordChangeValidator validator) {
-        this.userService = userService;
-        this.validator = validator;
-    }
 
     /**
      * Loads the change password page.

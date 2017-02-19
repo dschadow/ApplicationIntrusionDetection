@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.stereotype.Service;
@@ -35,17 +36,11 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ConfirmationService {
     private final ConfirmationRepository repository;
     private final UserService userService;
     private final EncounterService encounterService;
-
-    public ConfirmationService(final ConfirmationRepository repository, final UserService userService,
-                               final EncounterService encounterService) {
-        this.repository = repository;
-        this.userService = userService;
-        this.encounterService = encounterService;
-    }
 
     public List<Confirmation> getConfirmationsByUsername(@NotNull final String username) {
         List<Confirmation> confirmations = repository.findAllByUsername(username);

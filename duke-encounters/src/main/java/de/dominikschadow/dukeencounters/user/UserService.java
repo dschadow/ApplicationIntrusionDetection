@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.encounter.Authority;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
@@ -39,17 +40,11 @@ import java.util.Date;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserService(final UserRepository userRepository, final AuthorityRepository authorityRepository,
-                       final PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     /**
      * Creates a new user. This user receives the normal user role, is enabled and has the {@link Level} NEWBIE.

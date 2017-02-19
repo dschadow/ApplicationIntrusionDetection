@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.search;
 
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,14 +37,10 @@ import java.util.Map;
  * @author Dominik Schadow
  */
 @Controller
+@AllArgsConstructor
 public class SearchController {
     private final EncounterService encounterService;
     private final SearchFilterValidator validator;
-
-    public SearchController(final EncounterService encounterService, final SearchFilterValidator validator) {
-        this.encounterService = encounterService;
-        this.validator = validator;
-    }
 
     /**
      * Shows the search form.

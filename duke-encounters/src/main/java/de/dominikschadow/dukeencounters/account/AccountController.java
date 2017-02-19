@@ -25,6 +25,7 @@ import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
 import de.dominikschadow.dukeencounters.user.Level;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,19 +48,12 @@ import java.util.List;
  */
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class AccountController {
     private final EncounterService encounterService;
     private final ConfirmationService confirmationService;
     private final UserService userService;
     private final DukeEncountersUserValidator validator;
-
-    public AccountController(final EncounterService encounterService, final ConfirmationService confirmationService,
-                             final UserService userService, final DukeEncountersUserValidator validator) {
-        this.encounterService = encounterService;
-        this.confirmationService = confirmationService;
-        this.userService = userService;
-        this.validator = validator;
-    }
 
     @GetMapping("/account")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

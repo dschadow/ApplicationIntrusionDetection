@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.home;
 
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +32,9 @@ import java.util.List;
  * @author Dominik Schadow
  */
 @Controller
+@AllArgsConstructor
 public class HomeController {
     private final EncounterService encounterService;
-
-    public HomeController(final EncounterService encounterService) {
-        this.encounterService = encounterService;
-    }
 
     /**
      * Queries for the latest encounters, adds them to the model and returns the index page.

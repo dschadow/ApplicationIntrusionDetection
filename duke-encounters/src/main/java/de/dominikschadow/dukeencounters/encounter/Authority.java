@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 @Data
+@NoArgsConstructor
 public class Authority {
     @Id
     @GeneratedValue
@@ -38,10 +40,6 @@ public class Authority {
     private String username;
     @NotBlank(message = "Authority may not be null")
     private String authority;
-
-    public Authority() {
-        // required for JPA
-    }
 
     public Authority(final String username, final String authority) {
         this.username = username;

@@ -22,6 +22,7 @@ import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -51,30 +52,13 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class EncounterService {
     private final EncounterRepository repository;
     private final UserService userService;
     private final EventManager ids;
     private final DetectionSystem detectionSystem;
     private DukeEncountersProperties properties;
-
-    /**
-     * Constructor with all required properties for this service class.
-     *
-     * @param repository      The encounter repository to query and write to
-     * @param userService     The user service provides access to all user related information
-     * @param ids             AppSensor EventManager reference for intrusion detection operations
-     * @param detectionSystem The application to protect by AppSensor
-     * @param properties      Duke Encounter specific properties
-     */
-    public EncounterService(final EncounterRepository repository, final UserService userService,
-                            final EventManager ids, final DetectionSystem detectionSystem, DukeEncountersProperties properties) {
-        this.repository = repository;
-        this.userService = userService;
-        this.ids = ids;
-        this.detectionSystem = detectionSystem;
-        this.properties = properties;
-    }
 
     /**
      * Returns the configured number of latest encounters.

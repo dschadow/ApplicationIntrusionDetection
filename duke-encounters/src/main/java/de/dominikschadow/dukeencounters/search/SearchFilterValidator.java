@@ -41,7 +41,7 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 public class SearchFilterValidator extends BaseEncounterValidator {
     public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
                                  UserService userService, SecurityValidationService securityValidationService) {
-        super(ids, detectionSystem, validator, userService, securityValidationService);
+        super(validator, securityValidationService, ids, userService, detectionSystem);
     }
 
     @Override

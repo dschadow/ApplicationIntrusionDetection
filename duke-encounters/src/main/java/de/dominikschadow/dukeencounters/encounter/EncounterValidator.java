@@ -35,7 +35,7 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 public class EncounterValidator extends BaseEncounterValidator {
     public EncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
                               UserService userService, SecurityValidationService securityValidationService) {
-        super(ids, detectionSystem, validator, userService, securityValidationService);
+        super(validator, securityValidationService, ids, userService, detectionSystem);
     }
 
     @Override

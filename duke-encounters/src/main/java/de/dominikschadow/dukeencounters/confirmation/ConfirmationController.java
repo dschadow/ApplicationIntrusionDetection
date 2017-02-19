@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -45,22 +46,13 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
  */
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class ConfirmationController {
     private final ConfirmationService confirmationService;
     private final EncounterService encounterService;
     private final UserService userService;
     private final DetectionSystem detectionSystem;
     private final EventManager ids;
-
-    public ConfirmationController(final ConfirmationService confirmationService,
-                                  final EncounterService encounterService, final UserService userService,
-                                  final DetectionSystem detectionSystem, final EventManager ids) {
-        this.confirmationService = confirmationService;
-        this.encounterService = encounterService;
-        this.userService = userService;
-        this.detectionSystem = detectionSystem;
-        this.ids = ids;
-    }
 
     @GetMapping("/confirmations")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

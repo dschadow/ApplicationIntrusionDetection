@@ -20,6 +20,7 @@ package de.dominikschadow.dukeencounters.encounter;
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
@@ -35,21 +36,13 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.*;
  *
  * @author Dominik Schadow
  */
+@AllArgsConstructor
 public abstract class BaseEncounterValidator implements Validator {
     protected final SpringValidatorAdapter validator;
     protected final SecurityValidationService securityValidationService;
     private final EventManager ids;
     private final UserService userService;
     private final DetectionSystem detectionSystem;
-
-    public BaseEncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
-                                  UserService userService, SecurityValidationService securityValidationService) {
-        this.ids = ids;
-        this.detectionSystem = detectionSystem;
-        this.validator = validator;
-        this.userService = userService;
-        this.securityValidationService = securityValidationService;
-    }
 
     /**
      * Validates the base data of an encounter: event, location and country.

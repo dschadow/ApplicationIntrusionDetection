@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.stereotype.Controller;
@@ -38,14 +39,10 @@ import javax.validation.Valid;
  */
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
     private final DukeEncountersUserValidator validator;
-
-    public UserController(final UserService userService, final DukeEncountersUserValidator validator) {
-        this.userService = userService;
-        this.validator = validator;
-    }
 
     /**
      * Shows the registration page.

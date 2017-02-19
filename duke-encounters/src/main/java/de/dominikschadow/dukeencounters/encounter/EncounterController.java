@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.user.UserService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -43,22 +44,13 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
  * @author Dominik Schadow
  */
 @Controller
+@AllArgsConstructor
 public class EncounterController {
     private final EncounterService encounterService;
     private final EncounterValidator validator;
     private final UserService userService;
     private final DetectionSystem detectionSystem;
     private final EventManager ids;
-
-    public EncounterController(final EncounterService encounterService, final EncounterValidator validator,
-                               final UserService userService, final DetectionSystem detectionSystem,
-                               final EventManager ids) {
-        this.encounterService = encounterService;
-        this.validator = validator;
-        this.userService = userService;
-        this.detectionSystem = detectionSystem;
-        this.ids = ids;
-    }
 
     @GetMapping("/encounters")
     public String getEncounters(final Model model, @RequestParam(name = "type", required = false) final String type) {
