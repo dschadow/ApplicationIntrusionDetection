@@ -60,7 +60,7 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public void addConfirmation(@NotNull final String username, @NonNull final long encounterId) {
+    public Confirmation addConfirmation(@NotNull final String username, @NonNull final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
         newConfirmation.setUser(userService.getDukeEncountersUser(username));
         newConfirmation.setDate(new Date());
@@ -69,6 +69,8 @@ public class ConfirmationService {
         Confirmation confirmation = repository.save(newConfirmation);
 
         log.info("Created new confirmation {}", confirmation);
+
+        return confirmation;
     }
 
     public void deleteConfirmation(@NonNull final String username, @NonNull final long confirmationId) {
