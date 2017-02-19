@@ -17,6 +17,7 @@
  */
 package de.dominikschadow.dukeencounters.confirmation;
 
+import com.google.common.collect.Lists;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Before;
@@ -26,8 +27,11 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 
@@ -65,6 +69,14 @@ public class ConfirmationServiceTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("username");
         service.getConfirmationsByUsername(null);
+    }
+
+    @Test
+    public void getConfirmationsByUsernameWhenUsernameIsValidReturnsConfirmations() throws Exception {
+        given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation));
+        List<Confirmation> confirmations = service.getConfirmationsByUsername("test");
+
+        assertThat(confirmations.size()).isEqualTo(1);
     }
 
     @Test
