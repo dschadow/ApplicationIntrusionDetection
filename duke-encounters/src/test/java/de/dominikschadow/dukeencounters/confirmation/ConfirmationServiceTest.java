@@ -28,6 +28,8 @@ import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 
 /**
  * Tests the [@link ConfirmationService} class.
@@ -67,7 +69,7 @@ public class ConfirmationServiceTest {
 
     @Test
     public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidReturnsConfirmation() throws Exception {
-        given(repository.findByUsernameAndEncounterId("test", 1)).willReturn(testConfirmation);
+        given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(testConfirmation);
         Confirmation confirmation = service.getConfirmationByUsernameAndEncounterId("test", 1);
 
         assertThat(confirmation.getId()).isEqualTo(1);
