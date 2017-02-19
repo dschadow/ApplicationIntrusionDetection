@@ -66,7 +66,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationByUsernameAndEncounterId() throws Exception {
+    public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidReturnsConfirmation() throws Exception {
         given(repository.findByUsernameAndEncounterId("test", 1)).willReturn(testConfirmation);
         Confirmation confirmation = service.getConfirmationByUsernameAndEncounterId("test", 1);
 
