@@ -18,6 +18,8 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import com.google.common.collect.Lists;
+import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Before;
@@ -31,8 +33,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.doNothing;
 
 /**
  * Tests the [@link ConfirmationService} class.
@@ -53,14 +55,24 @@ public class ConfirmationServiceTest {
     private ConfirmationService service;
 
     private Confirmation testConfirmation;
+    private DukeEncountersUser testUser;
+    private Encounter testEncounter;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         service = new ConfirmationService(repository, userService, encounterService);
 
+        testUser = new DukeEncountersUser();
+        testUser.setUsername("test");
+
+        testEncounter = new Encounter();
+        testEncounter.setId(1);
+
         testConfirmation = new Confirmation();
         testConfirmation.setId(1);
+        testConfirmation.setEncounter(testEncounter);
+        testConfirmation.setUser(testUser);
     }
 
     @Test
@@ -100,5 +112,38 @@ public class ConfirmationServiceTest {
         List<Confirmation> confirmations = service.getConfirmations(null);
 
         assertThat(confirmations.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void hasConfirmedEncounterForAlreadyConfirmedEncounterShouldReturnTrue() throws Exception {
+        given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(testConfirmation);
+        boolean hasConfirmedEncounter = service.hasConfirmedEncounter("test", 1);
+
+        assertThat(hasConfirmedEncounter).isTrue();
+    }
+
+    @Test
+    public void hasConfirmedEncounterForUnconfirmedEncounterShouldReturnFalse() throws Exception {
+        given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(null);
+        boolean hasConfirmedEncounter = service.hasConfirmedEncounter("test", 1);
+
+        assertThat(hasConfirmedEncounter).isFalse();
+    }
+
+    @Test
+    public void deleteEncounterForOwnEncounterShouldSucceed() throws Exception {
+        doNothing().when(repository).delete(1l);
+        service.deleteConfirmation("test", 1);
+    }
+
+    @Test
+    public void addConfirmationWithValidDataShouldSucceed() throws Exception {
+        given(userService.getDukeEncountersUser(anyString())).willReturn(testUser);
+        given(encounterService.getEncounterById(anyLong())).willReturn(testEncounter);
+        given(repository.save(any(Confirmation.class))).willReturn(testConfirmation);
+        Confirmation confirmation = service.addConfirmation("test", 1);
+
+        assertThat(confirmation.getEncounter().getId()).isEqualTo(1);
+        assertThat(confirmation.getUser().getUsername()).isEqualTo("test");
     }
 }
