@@ -20,6 +20,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class ConfirmationService {
     private final UserService userService;
     private final EncounterService encounterService;
 
-    public List<Confirmation> getConfirmationsByUsername(@NotNull final String username) {
+    public List<Confirmation> getConfirmationsByUsername(@NonNull final String username) {
         List<Confirmation> confirmations = repository.findAllByUsername(username);
 
         log.info("Query for user {} confirmations returned {} confirmations", username, confirmations.size());
@@ -50,8 +51,8 @@ public class ConfirmationService {
         return confirmations;
     }
 
-    public Confirmation getConfirmationByUsernameAndEncounterId(@NotNull final String username,
-                                                                @NotNull final long encounterId) {
+    public Confirmation getConfirmationByUsernameAndEncounterId(@NonNull final String username,
+                                                                @NonNull final long encounterId) {
         Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
         log.info("Query for user {} confirmations returned {}", username, confirmation);
@@ -59,7 +60,7 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public void addConfirmation(@NotNull final String username, @NotNull final long encounterId) {
+    public void addConfirmation(@NotNull final String username, @NonNull final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
         newConfirmation.setUser(userService.getDukeEncountersUser(username));
         newConfirmation.setDate(new Date());
@@ -70,13 +71,13 @@ public class ConfirmationService {
         log.info("Created new confirmation {}", confirmation);
     }
 
-    public void deleteConfirmation(@NotNull final String username, @NotNull final long confirmationId) {
+    public void deleteConfirmation(@NonNull final String username, @NonNull final long confirmationId) {
         repository.delete(confirmationId);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
-    public boolean hasConfirmedEncounter(@NotNull final String username, @NotNull final long encounterId) {
+    public boolean hasConfirmedEncounter(@NonNull final String username, @NonNull final long encounterId) {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 
