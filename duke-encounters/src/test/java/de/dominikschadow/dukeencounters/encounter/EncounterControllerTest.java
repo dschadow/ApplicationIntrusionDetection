@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2017 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -30,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -67,15 +66,29 @@ public class EncounterControllerTest {
     }
 
     @Test
-    public void searchEncounter() throws Exception {
+    public void searchEncounterWithCompleteSearchFilterShouldReturnResult() throws Exception {
         mvc.perform(post("/encounters").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("event", "JavaOne 2015")
                 .param("location", "San Francisco")
                 .param("likelihood", "ANY")
-                .param("country", "USA"))
+                .param("country", "USA")
+                .param("year", "2015")
+                .param("confirmations", "1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
                 .andExpect(model().attribute("encounters", hasSize(1)));
+    }
+
+    @Test
+    public void searchEncounterWithMinimalisticSearchFilterShouldReturnResult() throws Exception {
+        mvc.perform(post("/encounters").with(csrf())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("event", "JavaOne")
+                .param("location", "San Francisco")
+                .param("likelihood", "ANY"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("encounters"))
+                .andExpect(model().attribute("encounters", hasSize(21)));
     }
 }
