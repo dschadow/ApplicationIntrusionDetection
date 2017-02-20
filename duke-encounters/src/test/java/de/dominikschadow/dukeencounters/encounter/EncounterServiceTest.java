@@ -28,10 +28,12 @@ import org.owasp.appsensor.core.event.EventManager;
 
 import java.util.List;
 
+import static de.dominikschadow.dukeencounters.TestData.testEncounter;
 import static de.dominikschadow.dukeencounters.TestData.threeTestEncounters;
 import static de.dominikschadow.dukeencounters.TestData.twoTestEncounters;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 
@@ -70,6 +72,15 @@ public class EncounterServiceTest {
     }
 
     @Test
+    public void getLatestEncountersOutsideLimitsFiresSqlIEvent() throws Exception {
+        given(properties.getLatestAmount()).willReturn(2);
+        given(repository.findWithPageable(anyObject())).willReturn(threeTestEncounters());
+        List<Encounter> latestEncounters = service.getLatestEncounters();
+
+        assertThat(latestEncounters.size()).isEqualTo(3);
+    }
+
+    @Test
     public void getEncountersByUsernameShouldReturnList() throws Exception {
         given(repository.findAllByUsername(anyString())).willReturn(threeTestEncounters());
         List<Encounter> encounters = service.getEncountersByUsername("test");
@@ -83,5 +94,21 @@ public class EncounterServiceTest {
         List<Encounter> encounters = service.getEncountersByEvent("test");
 
         assertThat(encounters.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void isOwnEncountersForOwnEncounterShouldReturnTrue() throws Exception {
+        given(repository.findByIdAndUsername(anyLong(), anyString())).willReturn(testEncounter(1));
+        boolean ownEncounter = service.isOwnEncounter(1, "test");
+
+        assertThat(ownEncounter).isTrue();
+    }
+
+    @Test
+    public void isOwnEncountersForOtherEncounterShouldReturnFalse() throws Exception {
+        given(repository.findByIdAndUsername(anyLong(), anyString())).willReturn(null);
+        boolean ownEncounter = service.isOwnEncounter(1, "test");
+
+        assertThat(ownEncounter).isFalse();
     }
 }
