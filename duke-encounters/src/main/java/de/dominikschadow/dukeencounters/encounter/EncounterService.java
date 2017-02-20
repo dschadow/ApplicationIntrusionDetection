@@ -58,7 +58,7 @@ public class EncounterService {
     private final UserService userService;
     private final EventManager ids;
     private final DetectionSystem detectionSystem;
-    private DukeEncountersProperties properties;
+    private final DukeEncountersProperties properties;
 
     /**
      * Returns the configured number of latest encounters.
