@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2017 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -52,7 +52,7 @@ public class ConfirmationService {
     }
 
     public Confirmation getConfirmationByUsernameAndEncounterId(@NonNull final String username,
-                                                                @NonNull final long encounterId) {
+                                                                final long encounterId) {
         Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
         log.info("Query for user {} confirmations returned {}", username, confirmation);
@@ -60,7 +60,7 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public Confirmation addConfirmation(@NotNull final String username, @NonNull final long encounterId) {
+    public Confirmation addConfirmation(@NotNull final String username, final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
         newConfirmation.setUser(userService.getDukeEncountersUser(username));
         newConfirmation.setDate(new Date());
@@ -73,13 +73,13 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public void deleteConfirmation(@NonNull final String username, @NonNull final long confirmationId) {
+    public void deleteConfirmation(@NonNull final String username, final long confirmationId) {
         repository.delete(confirmationId);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }
 
-    public boolean hasConfirmedEncounter(@NonNull final String username, @NonNull final long encounterId) {
+    public boolean hasConfirmedEncounter(@NonNull final String username, final long encounterId) {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 
