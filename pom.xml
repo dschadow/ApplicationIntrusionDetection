@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.1</appsensor.version>
-        <boxfuse.version>1.25.3.1269</boxfuse.version>
+        <boxfuse.version>1.25.4.1271</boxfuse.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
