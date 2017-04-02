@@ -36,14 +36,14 @@
     </parent>
 
     <issueManagement>
-        <system>GitHub</system>
+        <system>GitHub Issue Tracking</system>
         <url>https://github.com/dschadow/ApplicationIntrusionDetection/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</connection>
-        <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
         <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
+        <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection.git</connection>
+        <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
     </scm>
 
     <repositories>
