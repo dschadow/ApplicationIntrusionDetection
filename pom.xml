@@ -48,9 +48,9 @@
 
     <repositories>
         <repository>
-            <id>gemfire-repository</id>
-            <name>Gemfire Repository</name>
-            <url>http://dist.gemstone.com/maven/release</url>
+            <id>spring-plugins-repository</id>
+            <name>Spring Artifactory Plugins(Dependencies) Repository</name>
+            <url>http://repo.springsource.org/plugins-release</url>
         </repository>
     </repositories>
 
