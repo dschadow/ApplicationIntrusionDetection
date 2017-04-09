@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-	environment {
-        env.PATH = "${tool 'Maven 3.3.9'}/bin:${env.PATH}"
-	}
-
     stages {
 		stage('Clone') {
 			steps {
