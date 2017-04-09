@@ -1,13 +1,11 @@
 pipeline {
     agent any
 
-    stages {
-		stage('Configure') {
-			steps {
-				env.PATH = "${tool 'Maven 3.3.9'}/bin:${env.PATH}"
-			}
-		}
+	environment {
+        env.PATH = "${tool 'Maven 3.3.9'}/bin:${env.PATH}"
+	}
 
+    stages {
 		stage('Clone') {
 			steps {
 				git 'https://github.com/dschadow/ApplicationIntrusionDetection.git'
