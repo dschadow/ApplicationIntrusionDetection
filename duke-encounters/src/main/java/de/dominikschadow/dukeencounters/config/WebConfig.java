@@ -23,6 +23,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import javax.validation.Validator;
 
 /**
  * Spring configuration file.
@@ -37,5 +40,10 @@ public class WebConfig {
     public DetectionSystem detectionSystem(final AppSensorClient appSensorClient) {
         return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
                 .getClientApplicationIdentificationHeaderValue());
+    }
+
+    @Bean
+    public Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
     }
 }
