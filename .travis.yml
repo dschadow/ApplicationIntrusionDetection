@@ -5,6 +5,7 @@ branches:
   only:
     - develop
 before_install:
+  - echo "MAVEN_OPTS='-Xmx2048m'" > ~/.mavenrc
   - mvn versions:set -DnewVersion=$TRAVIS_BUILD_NUMBER
 script: mvn deploy cobertura:cobertura
 after_success:
