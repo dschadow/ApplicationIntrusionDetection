@@ -14,6 +14,10 @@ pipeline {
         VERSION = env.BUILD_NUMBER
     }
 
+    triggers {
+        pollSCM '@daily'
+    }
+
     stages {
 		stage('Checkout') {
 			steps {
