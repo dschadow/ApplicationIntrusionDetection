@@ -11,6 +11,13 @@ pipeline {
     }
 
     stages {
+        stage('Configure') {
+            steps {
+                version = currentBuild.number
+                currentBuild.displayName = version
+            }
+        }
+
 		stage('Checkout') {
 			steps {
 				git 'https://github.com/dschadow/ApplicationIntrusionDetection'
@@ -19,7 +26,7 @@ pipeline {
 
 		stage('Version') {
 			steps {
-                sh "mvn -B versions:set -DnewVersion=" + currentBuild.number
+                sh "mvn -B versions:set -DnewVersion=$version"
 			}
 		}
 
