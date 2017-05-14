@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        VERSION = currentBuild.number
+        VERSION = env.BUILD_NUMBER
     }
 
     stages {
