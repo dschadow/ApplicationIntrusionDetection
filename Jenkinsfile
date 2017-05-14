@@ -11,6 +11,10 @@ pipeline {
     }
 
     stages {
+        stage('Configure') {
+            version = env.BUILD_NUMBER
+        }
+
 		stage('Checkout') {
 			steps {
 				git 'https://github.com/dschadow/ApplicationIntrusionDetection'
@@ -19,13 +23,13 @@ pipeline {
 
 		stage('Version') {
 			steps {
-				sh 'mvn versions:set'
+                sh "mvn -B versions:set -DnewVersion=$version"
 			}
 		}
 
 		stage('Build') {
 			steps {
-				sh 'mvn clean package'
+				sh 'mvn -B clean package'
 			}
 		}
 
