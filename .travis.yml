@@ -4,7 +4,7 @@ jdk: oraclejdk8
 branches:
   only:
     - develop
-install:  mvn versions:set -DnewVersion=$env.TRAVIS_BUILD_NUMBER
+install:  mvn versions:set -DnewVersion=$TRAVIS_BUILD_NUMBER
 script: mvn deploy cobertura:cobertura
 after_success:
   - curl --data build=true -X POST https://registry.hub.docker.com/u/dschadow/applicationintrusiondetection/trigger/21839a64-31aa-48fc-bcd6-1020e15b4ec3/
