@@ -23,7 +23,7 @@ pipeline {
 
 		stage('Version') {
 			steps {
-                sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}"
+                sh "mvn versions:set -DnewVersion=${env.BUILD_NUMBER}"
 			}
 		}
 
