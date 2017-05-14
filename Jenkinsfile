@@ -6,6 +6,10 @@ pipeline {
         jdk 'Java 8'
     }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     stages {
 		stage('Checkout') {
 			steps {
@@ -27,6 +31,7 @@ pipeline {
 
 		stage('Archive') {
 			steps {
+				archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true)
 				junit(testResults: '**/target/**TEST*.xml', allowEmptyResults: true)
 			}
 		}
