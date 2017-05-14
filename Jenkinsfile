@@ -8,12 +8,14 @@ pipeline {
 
     stages {
         stage('Configure') {
-            version = env.BUILD_NUMBER
-            currentBuild.displayName = version
+            steps {
+                version = env.BUILD_NUMBER
+                currentBuild.displayName = version
 
-            properties([
-                    buildDiscarder(logRotator(numToKeepStr: '5'))
-            ])
+                properties([
+                        buildDiscarder(logRotator(numToKeepStr: '5'))
+                ])
+            }
         }
 
 		stage('Checkout') {
