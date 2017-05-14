@@ -7,9 +7,9 @@ pipeline {
     }
 
     stages {
-		stage('Clone') {
+		stage('Checkout') {
 			steps {
-				git 'https://github.com/dschadow/ApplicationIntrusionDetection.git'
+				git 'https://github.com/dschadow/ApplicationIntrusionDetection'
 			}
 		}
 
@@ -27,7 +27,7 @@ pipeline {
 
 		stage('Archive') {
 			steps {
-				junit allowEmptyResults: true, testResults: '**/target/**TEST*.xml'
+				junit(testResults: '**/target/**TEST*.xml', allowEmptyResults: true)
 			}
 		}
 	}
