@@ -6,13 +6,14 @@ pipeline {
         jdk 'Java 8'
     }
 
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-    }
-
     stages {
         stage('Configure') {
             version = env.BUILD_NUMBER
+            currentBuild.displayName = version
+
+            properties([
+                    buildDiscarder(logRotator(numToKeepStr: '5'))
+            ])
         }
 
 		stage('Checkout') {
