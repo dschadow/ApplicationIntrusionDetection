@@ -10,10 +10,6 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
-    environment {
-        VERSION = env.BUILD_NUMBER
-    }
-
     triggers {
         pollSCM '@daily'
     }
@@ -27,7 +23,7 @@ pipeline {
 
 		stage('Version') {
 			steps {
-                sh "mvn -B versions:set -DnewVersion=$VERSION"
+                sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}"
 			}
 		}
 
