@@ -10,14 +10,11 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
-    stages {
-        stage('Configure') {
-            steps {
-                version = currentBuild.number
-                currentBuild.displayName = version
-            }
-        }
+    environment {
+        VERSION = currentBuild.number
+    }
 
+    stages {
 		stage('Checkout') {
 			steps {
 				git 'https://github.com/dschadow/ApplicationIntrusionDetection'
@@ -26,7 +23,7 @@ pipeline {
 
 		stage('Version') {
 			steps {
-                sh "mvn -B versions:set -DnewVersion=$version"
+                sh "mvn -B versions:set -DnewVersion=$VERSION"
 			}
 		}
 
