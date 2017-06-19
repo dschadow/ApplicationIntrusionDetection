@@ -8,6 +8,8 @@ duke:
 server:
   session:
     timeout: 1800
+    cookie:
+      http-only: true
 
 spring:
   h2:

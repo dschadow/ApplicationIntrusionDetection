@@ -2,6 +2,8 @@
 server:
   session:
     timeout: 3600
+    cookie:
+      http-only: true
 
 # Actuator
 management:
