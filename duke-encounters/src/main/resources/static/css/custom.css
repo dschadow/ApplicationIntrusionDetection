@@ -25,6 +25,10 @@ h1 {
     text-align: center;
 }
 
+input[type='checkbox'] {
+    margin-top: 0;
+}
+
 footer {
     background: #333;
     color: #eee;
