@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.context.SecurityContextRepository;
 
+import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
 
 /**
@@ -70,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-            .rememberMe()
+            .rememberMe().rememberMeParameter("remember-me")
                 .and()
             .securityContext().securityContextRepository(securityContextRepository())
                 .and()
@@ -125,5 +126,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new AppSensorSecurityContextRepository();
+    }
+
+    /**
+     * Adds the {@link SessionTimeoutListener} to invalidate a user session after the configured timeout.
+     *
+     * @return The SessionTimeoutListener
+     */
+    @Bean
+    public HttpSessionListener httpSessionTimeoutListener() {
+        return new SessionTimeoutListener();
     }
 }
