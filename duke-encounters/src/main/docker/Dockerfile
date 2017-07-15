@@ -3,8 +3,8 @@ MAINTAINER Dominik Schadow <dominikschadow@gmail.com>
 
 VOLUME /tmp
 
-ADD duke-encounters.jar app.jar
+ADD duke-encounters.jar /app/app.jar
 
-RUN sh -c 'touch /app.jar'
+RUN sh -c 'touch /app/app.jar'
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
