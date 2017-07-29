@@ -17,7 +17,7 @@ pipeline {
     stages {
 		stage('Checkout') {
 			steps {
-				git url: 'https://github.com/dschadow/ApplicationIntrusionDetection', branch: 'develop'
+				git 'https://github.com/dschadow/ApplicationIntrusionDetection'
 			}
 		}
 
