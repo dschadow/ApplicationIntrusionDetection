@@ -4,6 +4,7 @@ pipeline {
     tools {
         maven 'Maven 3.5.0'
         jdk 'Java 8'
+        sonar 'Sonar'
     }
 
     options {
@@ -29,7 +30,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn -B package sonar:sonar'
+                sh 'mvn -B package'
+            }
+        }
+
+        stage('Sonar') {
+            steps {
+                sh "mvn sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}"
             }
         }
 
