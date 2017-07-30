@@ -14,6 +14,10 @@ pipeline {
         pollSCM '@daily'
     }
 
+    environment {
+        EMAIL_RECIPIENTS = [$class: 'DevelopersRecipientProvider']
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -43,7 +47,7 @@ pipeline {
 
     post {
         failure {
-            mail to:"${DEFAULT_RECIPIENTS}", subject:"${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure", body: "FAILURE: ${currentBuild.fullDisplayName} on ${env.JENKINS_URL}"
+            mail to:"${env.EMAIL_RECIPIENTS}", subject:"${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure", body: "FAILURE: ${currentBuild.fullDisplayName} on ${env.JENKINS_URL}"
         }
     }
 }
