@@ -50,7 +50,7 @@ pipeline {
                     recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
 
-            slackSend (color: '#FF0000', message: "FAILURE: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]: (${env.BUILD_URL})")
+            slackSend (color: '#FF0000', message: "FAILURE: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]: ${env.BUILD_URL}")
         }
     }
 }
