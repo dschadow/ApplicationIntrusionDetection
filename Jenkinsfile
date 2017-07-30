@@ -43,19 +43,7 @@ pipeline {
 
     post {
         failure {
-            step {
-                def to = emailextrecipients([
-                        [$class: 'DevelopersRecipientProvider']
-                ])
-                def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure"
-                def content = '${JELLY_SCRIPT,template="html"}'
-
-                if (to != null && !to.isEmpty()) {
-                    emailext(body: content, mimeType: 'text/html',
-                            replyTo: '$DEFAULT_REPLYTO', subject: subject,
-                            to: to, attachLog: true)
-                }
-            }
+            mail to:"dominikschadow@gmail.com", subject:"${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure", body: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure"
         }
     }
 }
