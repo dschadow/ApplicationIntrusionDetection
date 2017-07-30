@@ -43,7 +43,7 @@ pipeline {
 
     post {
         failure {
-            mail to:"dominikschadow@gmail.com", subject:"${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure", body: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure"
+            mail to:"${env.DEFAULT_RECIPIENTS}", subject:"${env.JOB_NAME} - Build #${env.BUILD_NUMBER} Failure", body: "FAILURE: ${currentBuild.fullDisplayName} on ${env.JENKINS_URL}"
         }
     }
 }
