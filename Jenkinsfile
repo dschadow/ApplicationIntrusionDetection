@@ -43,7 +43,7 @@ pipeline {
 
     post {
         failure {
-            steps {
+            step {
                 def to = emailextrecipients([
                         [$class: 'DevelopersRecipientProvider']
                 ])
