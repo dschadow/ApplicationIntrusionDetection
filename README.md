@@ -16,7 +16,7 @@ your browser at **http://localhost:8080**.
 As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse, launch the app within an immutable image and open 
 the web application in your browser at **http://localhost:8080**.
 
-And of course you can use [Docker](https://www.docker.com). First you have to set a new version for the application via `mvn versions:set` in the repository root directory (ApplicationIntrusionDetection). Enter (almost) any version number you like. After that create the Docker image with `mvn package docker:build` and launch the container via `docker container run -d -p 8080:8080 -t dschadow/duke-encounters`. After that, open the web application in your browser at **http://localhost:8080**.
+And of course you can use [Docker](https://www.docker.com). First you have to set a new version for the application via `mvn versions:set` in the repository root directory (ApplicationIntrusionDetection). Enter (almost) any version number you like. Create the Docker image with `mvn package docker:build` and launch the container via `docker container run -d -p 8080:8080 -t dschadow/duke-encounters`. After that, open the web application in your browser at **http://localhost:8080**.
 
 Available users are listed in the [src/main/resources/data.sql](https://github.com/dschadow/ApplicationIntrusionDetection/blob/master/duke-encounters/src/main/resources/data.sql) 
 file. Username and password are always identical.
