@@ -218,14 +218,14 @@ public class EncounterService {
     public Encounter createEncounter(@NotNull final Encounter newEncounter) {
         DukeEncountersUser user = userService.getDukeEncountersUser();
 
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new encounter {}",
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new {}",
                 user.getUsername(), newEncounter);
 
         newEncounter.setUser(user);
 
         Encounter encounter = repository.save(newEncounter);
 
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), newEncounter);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created encounter {}", user.getUsername(), encounter.getId());
 
         return encounter;
     }

@@ -20,7 +20,7 @@ package de.dominikschadow.dukeencounters.confirmation;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -34,6 +34,7 @@ import java.util.Date;
 @Entity
 @Table(name = "confirmations")
 @Data
+@ToString(exclude = {"user", "encounter"})
 public class Confirmation {
     @Id
     @GeneratedValue
@@ -46,14 +47,4 @@ public class Confirmation {
     private Encounter encounter;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date date;
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).
-                append("id", getId()).
-                append("user", getUser()).
-                append("encounter", getEncounter()).
-                append("date", getDate()).
-                toString();
-    }
 }

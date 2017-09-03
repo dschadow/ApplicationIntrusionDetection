@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,6 +36,7 @@ import java.util.List;
 @Entity
 @Table(name = "encounters")
 @Data
+@ToString
 public class Encounter {
     @Id
     @GeneratedValue

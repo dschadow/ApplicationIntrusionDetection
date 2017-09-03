@@ -68,7 +68,7 @@ public class ConfirmationService {
 
         Confirmation confirmation = repository.save(newConfirmation);
 
-        log.info("Created new confirmation {}", confirmation);
+        log.info("User {} created new {}", username, confirmation);
 
         return confirmation;
     }

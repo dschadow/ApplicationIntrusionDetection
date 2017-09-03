@@ -19,6 +19,7 @@ package de.dominikschadow.dukeencounters.encounter;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ import javax.persistence.*;
 @Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 @Data
 @NoArgsConstructor
+@ToString
 public class Authority {
     @Id
     @GeneratedValue
