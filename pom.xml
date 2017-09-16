@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.2</appsensor.version>
-        <boxfuse.version>1.29.0.1396</boxfuse.version>
+        <boxfuse.version>1.29.1.1400</boxfuse.version>
         <findbugs.version>3.0.5</findbugs.version>
         <jacoco.version>0.7.9</jacoco.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
