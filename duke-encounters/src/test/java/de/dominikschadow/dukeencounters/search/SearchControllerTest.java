@@ -17,23 +17,21 @@
  */
 package de.dominikschadow.dukeencounters.search;
 
-import de.dominikschadow.dukeencounters.DukeEncountersApplication;
-import org.junit.Before;
+import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import static de.dominikschadow.dukeencounters.TestData.twoTestEncounters;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -43,33 +41,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Dominik Schadow
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DukeEncountersApplication.class)
-@WebAppConfiguration
+@WebMvcTest(SearchController.class)
 public class SearchControllerTest {
     @Autowired
-    private WebApplicationContext context;
-
     private MockMvc mvc;
 
-    @Before
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-    }
+    @MockBean
+    private EncounterService encounterService;
+    @MockBean
+    private SearchFilterValidator validator;
 
     @Test
-    public void searchEncounter() throws Exception {
-        mvc.perform(get("/search"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("search"));
-    }
-
-    @Test
+    @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
     public void quickSearchEncounter() throws Exception {
+        given(encounterService.getEncountersByEvent("JavaOne")).willReturn(twoTestEncounters());
+
         mvc.perform(post("/search").with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("quickSearch", "JavaOne 2015"))
+                .param("quickSearch", "JavaOne"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(1)));
+                .andExpect(model().attribute("encounters", hasSize(2)));
     }
 }
