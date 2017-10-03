@@ -17,24 +17,33 @@
  */
 package de.dominikschadow.dukeencounters.encounter;
 
-import de.dominikschadow.dukeencounters.DukeEncountersApplication;
-import org.junit.Before;
+import de.dominikschadow.dukeencounters.search.SearchFilter;
+import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.owasp.appsensor.core.DetectionSystem;
+import org.owasp.appsensor.core.User;
+import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import static de.dominikschadow.dukeencounters.TestData.twoTestEncounters;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -43,52 +52,54 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Dominik Schadow
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DukeEncountersApplication.class)
-@WebAppConfiguration
+@WebMvcTest(EncounterController.class)
 public class EncounterControllerTest {
     @Autowired
-    private WebApplicationContext context;
-
     private MockMvc mvc;
 
-    @Before
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-    }
+    @MockBean
+    private EncounterService encounterService;
+    @MockBean
+    private EncounterValidator encounterValidator;
+    @MockBean
+    private UserService userService;
+    @MockBean
+    private DetectionSystem detectionSystem;
+    @MockBean
+    private EventManager eventManager;
 
     @Test
+    @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
     public void listEncounters() throws Exception {
+        given(encounterService.getEncounters(anyString())).willReturn(twoTestEncounters());
+        given(userService.getUser()).willReturn(new User("Test"));
+
         mvc.perform(get("/encounters"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("encounters"))
                 .andExpect(model().attributeExists("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(21)));
+                .andExpect(model().attribute("encounters", hasSize(2)));
     }
 
-    @Test
-    public void searchEncounterWithCompleteSearchFilterShouldReturnResult() throws Exception {
-        mvc.perform(post("/encounters").with(csrf())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("event", "JavaOne 2015")
-                .param("location", "San Francisco")
-                .param("likelihood", "ANY")
-                .param("country", "USA")
-                .param("year", "2015")
-                .param("confirmations", "1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(1)));
-    }
+    /**
+     * Search the encounters based on the given search filter.
+     *
+     * @param searchFilter The search filter identifying encounters
+     * @param result       BindingResult
+     * @return ModelAndView with encounters URL and a model map
+     */
+    @PostMapping("/encounters")
+    public ModelAndView searchEncounters(@Valid final SearchFilter searchFilter, final BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("search", "formErrors", result.getAllErrors());
+        }
 
-    @Test
-    public void searchEncounterWithMinimalisticSearchFilterShouldReturnResult() throws Exception {
-        mvc.perform(post("/encounters").with(csrf())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("event", "JavaOne")
-                .param("location", "San Francisco")
-                .param("likelihood", "ANY"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("encounters"))
-                .andExpect(model().attribute("encounters", hasSize(21)));
+        List<Encounter> encounters = encounterService.getEncounters(searchFilter);
+
+        Map<String, Object> modelMap = new LinkedHashMap<>();
+        modelMap.put("encounters", encounters);
+        modelMap.put("searchFilter", searchFilter);
+
+        return new ModelAndView("encounters", modelMap);
     }
 }

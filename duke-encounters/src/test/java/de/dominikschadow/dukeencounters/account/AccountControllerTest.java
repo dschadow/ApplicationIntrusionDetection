@@ -19,8 +19,8 @@ package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.confirmation.ConfirmationService;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.user.UserService;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
+import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Tests the [@link AccountController} class.
@@ -42,6 +41,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountController.class)
 public class AccountControllerTest {
+    @Autowired
+    private MockMvc mvc;
+
     @MockBean
     private EncounterService encounterService;
     @MockBean
@@ -51,18 +53,15 @@ public class AccountControllerTest {
     @MockBean
     private DukeEncountersUserValidator dukeEncountersUserValidator;
 
-    @Autowired
-    private MockMvc mvc;
-
     @Test
     @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
     public void verifyAccountAuthorizeOK() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/account")).andExpect(MockMvcResultMatchers.status().isOk());
+        mvc.perform(get("/account")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "DUMMY")
     public void verifyAccountAuthorizeNOK() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/account")).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mvc.perform(get("/account")).andExpect(status().isForbidden());
     }
 }

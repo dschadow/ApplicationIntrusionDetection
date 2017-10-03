@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.dukeencounters.services;
 
-import de.dominikschadow.dukeencounters.DukeEncountersApplication;
 import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +35,7 @@ import static org.junit.Assert.assertNotEquals;
  * @author Dominik Schadow
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DukeEncountersApplication.class)
+@SpringBootTest
 public class UserServiceTest {
     @Autowired
     private UserService userService;

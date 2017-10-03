@@ -20,8 +20,10 @@ package de.dominikschadow.dukeencounters;
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
+import de.dominikschadow.dukeencounters.search.SearchFilter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +51,9 @@ public class TestData {
     public static Encounter testEncounter(long id) {
         Encounter testEncounter = new Encounter();
         testEncounter.setId(id);
+        testEncounter.setComment("Test");
+        testEncounter.setCountry("Test");
+        testEncounter.setDate(new Date());
 
         return testEncounter;
     }
@@ -68,5 +73,17 @@ public class TestData {
         encounters.add(testEncounter(3));
 
         return encounters;
+    }
+
+    public static SearchFilter searchFilter() {
+        SearchFilter searchFilter = new SearchFilter();
+        searchFilter.setEvent("JavaOne");
+        searchFilter.setLocation("San Francisco");
+        searchFilter.setCountry("USA");
+        searchFilter.setYear("2015");
+        searchFilter.setConfirmations(1);
+        searchFilter.setLikelihood("ANY");
+
+        return searchFilter;
     }
 }
