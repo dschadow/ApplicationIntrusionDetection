@@ -18,7 +18,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.2</appsensor.version>
-        <boxfuse.version>1.30.2.1410</boxfuse.version>
+        <boxfuse.version>1.30.3.1419</boxfuse.version>
         <findbugs.version>3.0.5</findbugs.version>
         <jacoco.version>0.7.9</jacoco.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -121,12 +121,7 @@
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery</artifactId>
-                <version>3.1.1-1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
+                <version>3.2.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -195,18 +190,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.7</version>
-                    <configuration>
-                        <formats>
-                            <format>html</format>
-                            <format>xml</format>
-                        </formats>
-                        <check/>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <groupId>com.boxfuse.client</groupId>
                     <artifactId>boxfuse-maven-plugin</artifactId>
                     <version>${boxfuse.version}</version>
@@ -263,7 +246,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>3.0.1</version>
+                <version>3.0.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
