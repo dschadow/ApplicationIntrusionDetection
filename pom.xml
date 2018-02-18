@@ -12,7 +12,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.2</appsensor.version>
-        <boxfuse.version>1.31.1.1429</boxfuse.version>
+        <boxfuse.version>1.32.0.1441</boxfuse.version>
         <jacoco.version>0.8.0</jacoco.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -55,6 +55,13 @@
         <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection.git</connection>
         <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
     </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <repositories>
         <repository>
