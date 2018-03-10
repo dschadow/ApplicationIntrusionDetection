@@ -57,13 +57,13 @@ public class EncounterServiceTest {
     private EncounterService service;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         service = new EncounterService(repository, userService, ids, detectionSystem, properties);
     }
 
     @Test
-    public void getLatestEncountersInsideLimitsShouldReturnList() throws Exception {
+    public void getLatestEncountersInsideLimitsShouldReturnList() {
         given(properties.getLatestAmount()).willReturn(2);
         given(repository.findWithPageable(anyObject())).willReturn(twoTestEncounters());
         List<Encounter> latestEncounters = service.getLatestEncounters();
@@ -72,7 +72,7 @@ public class EncounterServiceTest {
     }
 
     @Test
-    public void getLatestEncountersOutsideLimitsFiresSqlIEvent() throws Exception {
+    public void getLatestEncountersOutsideLimitsFiresSqlIEvent() {
         given(properties.getLatestAmount()).willReturn(2);
         given(repository.findWithPageable(anyObject())).willReturn(threeTestEncounters());
         List<Encounter> latestEncounters = service.getLatestEncounters();
@@ -81,7 +81,7 @@ public class EncounterServiceTest {
     }
 
     @Test
-    public void getEncountersByUsernameShouldReturnList() throws Exception {
+    public void getEncountersByUsernameShouldReturnList() {
         given(repository.findAllByUsername(anyString())).willReturn(threeTestEncounters());
         List<Encounter> encounters = service.getEncountersByUsername("test");
 
@@ -89,7 +89,7 @@ public class EncounterServiceTest {
     }
 
     @Test
-    public void getEncountersByEventShouldReturnList() throws Exception {
+    public void getEncountersByEventShouldReturnList() {
         given(repository.findByEventContaining(anyString())).willReturn(threeTestEncounters());
         List<Encounter> encounters = service.getEncountersByEvent("test");
 
@@ -97,7 +97,7 @@ public class EncounterServiceTest {
     }
 
     @Test
-    public void isOwnEncountersForOwnEncounterShouldReturnTrue() throws Exception {
+    public void isOwnEncountersForOwnEncounterShouldReturnTrue() {
         given(repository.findByIdAndUsername(anyLong(), anyString())).willReturn(testEncounter(1));
         boolean ownEncounter = service.isOwnEncounter(1, "test");
 
@@ -105,7 +105,7 @@ public class EncounterServiceTest {
     }
 
     @Test
-    public void isOwnEncountersForOtherEncounterShouldReturnFalse() throws Exception {
+    public void isOwnEncountersForOtherEncounterShouldReturnFalse() {
         given(repository.findByIdAndUsername(anyLong(), anyString())).willReturn(null);
         boolean ownEncounter = service.isOwnEncounter(1, "test");
 

@@ -60,14 +60,14 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationsByUsernameWhenUsernameIsNullShouldThrowException() throws Exception {
+    public void getConfirmationsByUsernameWhenUsernameIsNullShouldThrowException() {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("username");
         service.getConfirmationsByUsername(null);
     }
 
     @Test
-    public void getConfirmationsByUsernameWhenUsernameIsValidShouldReturnConfirmations() throws Exception {
+    public void getConfirmationsByUsernameWhenUsernameIsValidShouldReturnConfirmations() {
         given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation()));
         List<Confirmation> confirmations = service.getConfirmationsByUsername("test");
 
@@ -75,7 +75,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidShouldReturnConfirmation() throws Exception {
+    public void getConfirmationByUsernameAndEncounterIdWhenUsernameAndIdAreValidShouldReturnConfirmation() {
         given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(testConfirmation());
         Confirmation confirmation = service.getConfirmationByUsernameAndEncounterId("test", 1);
 
@@ -83,7 +83,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getOwnConfirmationsShouldReturnConfirmations() throws Exception {
+    public void getOwnConfirmationsShouldReturnConfirmations() {
         given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation()));
         List<Confirmation> confirmations = service.getConfirmations("own");
 
@@ -91,7 +91,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void getConfirmationsWithTypeNullShouldReturnAllConfirmations() throws Exception {
+    public void getConfirmationsWithTypeNullShouldReturnAllConfirmations() {
         given(repository.findAll()).willReturn(Lists.newArrayList(testConfirmation()));
         List<Confirmation> confirmations = service.getConfirmations(null);
 
@@ -99,7 +99,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void hasConfirmedEncounterForAlreadyConfirmedEncounterShouldReturnTrue() throws Exception {
+    public void hasConfirmedEncounterForAlreadyConfirmedEncounterShouldReturnTrue() {
         given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(testConfirmation());
         boolean hasConfirmedEncounter = service.hasConfirmedEncounter("test", 1);
 
@@ -107,7 +107,7 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void hasConfirmedEncounterForUnconfirmedEncounterShouldReturnFalse() throws Exception {
+    public void hasConfirmedEncounterForUnconfirmedEncounterShouldReturnFalse() {
         given(repository.findByUsernameAndEncounterId(anyString(), anyLong())).willReturn(null);
         boolean hasConfirmedEncounter = service.hasConfirmedEncounter("test", 1);
 
@@ -115,13 +115,13 @@ public class ConfirmationServiceTest {
     }
 
     @Test
-    public void deleteEncounterForOwnEncounterShouldSucceed() throws Exception {
+    public void deleteEncounterForOwnEncounterShouldSucceed() {
         doNothing().when(repository).delete(1l);
         service.deleteConfirmation("test", 1);
     }
 
     @Test
-    public void addConfirmationWithValidDataShouldSucceed() throws Exception {
+    public void addConfirmationWithValidDataShouldSucceed() {
         given(userService.getDukeEncountersUser(anyString())).willReturn(testUser());
         given(encounterService.getEncounterById(anyLong())).willReturn(testEncounter(1));
         given(repository.save(any(Confirmation.class))).willReturn(testConfirmation());
