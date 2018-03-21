@@ -12,7 +12,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.2</appsensor.version>
-        <boxfuse.version>1.32.1.1442</boxfuse.version>
+        <boxfuse.version>1.32.2.1447</boxfuse.version>
         <jacoco.version>0.8.0</jacoco.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
