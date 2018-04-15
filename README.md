@@ -11,7 +11,7 @@ This repository is all about Application Intrusion Detection. Have a look at my
 [h2](http://www.h2database.com) in-memory database and a [Thymeleaf](http://www.thymeleaf.org) UI. Keep in mind that 
 all entered information is only stored temporarily and will be reset when restarting. 
 
-## Running
+## Build and Run
 No matter what type you choose, the web application should be available on **http://localhost:8080**. Any modern browser
 will work. Most parts of the application require a logged in user. You can either register a new one or use one of the 
 available users listed in the [src/main/resources/data.sql](https://github.com/dschadow/ApplicationIntrusionDetection/blob/master/duke-encounters/src/main/resources/data.sql) file. Username 
