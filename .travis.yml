@@ -1,13 +1,24 @@
 sudo: false
+
+services:
+  - docker
+
 language: java
 jdk: oraclejdk8
+
 branches:
   only:
   - develop
+
 before_install:
 - mvn versions:set -DnewVersion=$TRAVIS_BUILD_NUMBER
+- docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT .
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push $DOCKER_IMAGE:$TRAVIS_COMMIT
+
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+
 env:
   matrix:
     secure: UiS7i35qI6Zw5CpOxhypvd3+4wbvY1NsvE11cxDEnDUUTrMv5Yva8rkE0FGp/9WZUgHx58vHGoLpFENZRL+tYTqDoW/uRuLYkjTAcIw3e8TkUhUDqRpD86QmuYHXlu9P9aI5XGxGES8UtuhdUWQGBl1CgGVhz2yftM7BNfCQOMFYb9CEPiRrt/nXfBBu/G5U2yX/TP7q0StQES7L364yHvtRS/Qnc30G7GoT2Id90X0Gmalv92Sf5nMerzLZUCRUNifTe+mAZA5DmDiL8YjQYxGskp6LuzXE6XHDiRy2JgHZakv08sDXl3LgSYvwYFfI6Z6DgAew2itugbVHKVI0Oq43WWPgxuf3DJm8lzsHdPFHJMM/NsBKixnfCnf4ZYDJjSTiU+R6k+gYiBffJ6OtNgNR3aAXGyMlAQTc4aDLzyvWyCuTrJq87K7OX6GF7172pnNuUQ15mvEQD+0CkJSsWndKtA9VN97OwoIX9SKJtW7KnanjsWCtnnzYsiOUy4Yn6VDacmD13V38H810PMzOvhLMp+VwmuxVY+DonMa74G/8G+6B1laGf7CDL+nINa19VZybj6tOV02woVcMyNoAUDdpqxumjogbuzNqhwbUE30mv5xpLE+JFklyVZBczq0VRvl7kel13aaqZGz9byCy0GFRgSIS1n3CGT1KLdXC3TM=
