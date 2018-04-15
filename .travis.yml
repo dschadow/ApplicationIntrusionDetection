@@ -12,12 +12,12 @@ branches:
 
 before_install:
 - mvn versions:set -DnewVersion=$TRAVIS_BUILD_NUMBER
-- docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT duke-encounters
-- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-- docker push $DOCKER_IMAGE:$TRAVIS_COMMIT
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+- docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT duke-encounters
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push $DOCKER_IMAGE:$TRAVIS_COMMIT
 
 env:
   matrix:
