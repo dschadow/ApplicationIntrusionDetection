@@ -164,7 +164,7 @@
                 <configuration>
                     <skipDockerBuild>false</skipDockerBuild>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>.</dockerDirectory>
+                    <dockerDirectory>duke-encounters</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
