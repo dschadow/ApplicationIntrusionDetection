@@ -55,7 +55,7 @@ public class UserService {
     @Transactional
     public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
         log.info("Creating user with username {}", newUser.getEmail());
-        Authority authority = authorityRepository.save(new Authority(newUser.getUsername(), "ROLE_USER"));
+        Authority authority = authorityRepository.save(Authority.builder().username(newUser.getUsername()).authority("ROLE_USER").build());
 
         newUser.setEnabled(true);
         newUser.setLevel(Level.NEWBIE);
