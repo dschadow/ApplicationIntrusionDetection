@@ -3,8 +3,8 @@ body {
 }
 
 .btn-dropdown-logout {
-    margin-top: 8px;
     margin-left: 20px;
+    margin-top: 8px;
 }
 
 .well .page-header {
@@ -16,7 +16,7 @@ h1 {
     margin-top: 2px;
 }
 
-.well .page-header p {
+.page-header .well p {
     margin-bottom: 5px;
 }
 
