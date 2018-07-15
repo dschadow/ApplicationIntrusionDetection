@@ -8,8 +8,8 @@ body {
 }
 
 .well .page-header {
-    margin-top: 0;
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 h1 {
@@ -37,8 +37,8 @@ footer {
 }
 
 .unstyled {
-    list-style: none;
     padding: 0;
+    list-style: none;
 }
 
 #encountersAndConfirmations {
@@ -62,9 +62,9 @@ footer {
 }
 
 #github {
-    position: absolute;
-    top: 0;
-    right: 0;
     border: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 9999;
 }
