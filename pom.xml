@@ -9,21 +9,30 @@
     <name>Application Intrusion Detection</name>
     <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
 
-    <properties>
-        <docker.image.prefix>dschadow</docker.image.prefix>
-        <appsensor.version>2.3.2</appsensor.version>
-        <boxfuse.version>1.32.2.1447</boxfuse.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
     <description>This repository contains application intrusion detection sample projects.</description>
 
     <organization>
         <name>Dominik Schadow</name>
         <url>http://www.dominikschadow.de</url>
     </organization>
+
+    <issueManagement>
+        <system>GitHub Issue Tracking</system>
+        <url>https://github.com/dschadow/ApplicationIntrusionDetection/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
+        <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection.git</connection>
+        <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -44,23 +53,18 @@
         <relativePath/>
     </parent>
 
-    <issueManagement>
-        <system>GitHub Issue Tracking</system>
-        <url>https://github.com/dschadow/ApplicationIntrusionDetection/issues</url>
-    </issueManagement>
+    <properties>
+        <docker.image.prefix>dschadow</docker.image.prefix>
+        <appsensor.version>2.3.3</appsensor.version>
+        <boxfuse.version>1.32.2.1447</boxfuse.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
-    <scm>
-        <url>https://github.com/dschadow/ApplicationIntrusionDetection</url>
-        <connection>scm:git:git://github.com/dschadow/ApplicationIntrusionDetection.git</connection>
-        <developerConnection>scm:git:git@github.com:dschadow/ApplicationIntrusionDetection.git</developerConnection>
-    </scm>
-
-    <licenses>
-        <license>
-            <name>Apache License 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
+    <modules>
+        <module>duke-encounters</module>
+    </modules>
 
     <repositories>
         <repository>
@@ -118,12 +122,6 @@
                 <groupId>org.owasp.appsensor</groupId>
                 <artifactId>appsensor-integration-spring-security</artifactId>
                 <version>${appsensor.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>spring-security-core</artifactId>
-                        <groupId>org.springframework.security</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
@@ -227,8 +225,4 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <modules>
-        <module>duke-encounters</module>
-    </modules>
 </project>
