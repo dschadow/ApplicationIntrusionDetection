@@ -1,15 +1,15 @@
 Application Intrusion Detection
 ============
-This repository is all about Application Intrusion Detection. Have a look at my 
+This repository is all about Application Intrusion Detection. Have a look at the 
 [presentations](https://blog.dominikschadow.de/events) I've given on this topic or watch the recordings at 
 [W-JAX 2015](https://jaxenter.de/web-app-security-43952) (German) or [JavaZone 2016](https://vimeo.com/181788148) 
-(English).
+(English) for more information.
 
 # Duke Encounters
 **Duke Encounters** is a demo web application utilizing Application Intrusion Detection based on 
 [OWASP AppSensor](http://appsensor.org). It is using [Spring Boot](http://projects.spring.io/spring-boot) with a 
 [h2](http://www.h2database.com) in-memory database and a [Thymeleaf](http://www.thymeleaf.org) UI. Keep in mind that 
-all entered information is only stored temporarily and will be reset when restarting. 
+all entered information is only stored temporarily and will be reset when restarting the application. 
 
 ## Build and Run
 No matter what type you choose, the web application should be available on **http://localhost:8080**. Any modern browser
@@ -17,13 +17,14 @@ will work. Most parts of the application require a logged in user. You can eithe
 available users listed in the [src/main/resources/data.sql](https://github.com/dschadow/ApplicationIntrusionDetection/blob/master/duke-encounters/src/main/resources/data.sql) file. Username 
 and password are always identical.
 
-### Maven Build
-You can run the application with **mvn spring-boot:run**.
+### Maven
+[Java 8](http://www.oracle.com/technetwork/java/javase) and [Maven 3](https://maven.apache.org) are required to run 
+this application. You can run the application with **mvn spring-boot:run**.
 
-### Boxfuse Build 
+### Boxfuse 
 As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse, launch the app within an immutable image.
 
-### Docker Build
+### Docker
 And you can use [Docker](https://www.docker.com). You can either build the image yourself or pull one from Docker Hub.
 To build it yourself you have to set a new version for the application via `mvn versions:set` in the repository root 
 directory (ApplicationIntrusionDetection). Enter (almost) any version number you like. Create the Docker image with 
