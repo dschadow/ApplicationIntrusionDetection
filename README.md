@@ -22,7 +22,7 @@ and password are always identical.
 this application. You can run the application with **mvn spring-boot:run**.
 
 ### Boxfuse 
-As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse, launch the app within an immutable image.
+As an alternative, you can use [Boxfuse](https://boxfuse.com) to fuse and launch the app within an immutable image.
 
 ### Docker
 And you can use [Docker](https://www.docker.com). You can either build the image yourself or pull one from Docker Hub.
