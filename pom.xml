@@ -56,7 +56,7 @@
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
         <appsensor.version>2.3.3</appsensor.version>
-        <boxfuse.version>1.32.2.1447</boxfuse.version>
+        <boxfuse.version>1.33.0.1460</boxfuse.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
