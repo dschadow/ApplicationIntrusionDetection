@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -55,26 +55,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
                 .mvcMatchers().authenticated()
-                .and()
+            .and()
             .csrf()
                 .ignoringAntMatchers("/admin/h2-console/*")
-                .and()
+            .and()
             .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/account")
                 .permitAll()
-                .and()
+            .and()
             .exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                .and()
+            .and()
             .logout()
                 .logoutSuccessUrl("/")
                 .permitAll()
-                .and()
+            .and()
             .rememberMe().rememberMeParameter("remember-me")
-                .and()
+            .and()
             .securityContext().securityContextRepository(securityContextRepository())
-                .and()
+            .and()
             .headers()
                 .contentSecurityPolicy("default-src 'self'; img-src 'self' https://camo.githubusercontent.com")
                 .and()
@@ -108,8 +108,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @param auth The AuthenticationManagerBuilder
      * @throws Exception during configuration
      */
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth
             .jdbcAuthentication()
