@@ -19,7 +19,6 @@ package de.dominikschadow.dukeencounters.confirmation;
 
 import com.google.common.collect.Lists;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +28,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static de.dominikschadow.dukeencounters.TestData.*;
+import static de.dominikschadow.dukeencounters.TestData.testConfirmation;
+import static de.dominikschadow.dukeencounters.TestData.testEncounter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.*;
@@ -47,8 +47,6 @@ public class ConfirmationServiceTest {
     @Mock
     private ConfirmationRepository repository;
     @Mock
-    private UserService userService;
-    @Mock
     private EncounterService encounterService;
 
     private ConfirmationService service;
@@ -56,7 +54,7 @@ public class ConfirmationServiceTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        service = new ConfirmationService(repository, userService, encounterService);
+        service = new ConfirmationService(repository, encounterService);
     }
 
     @Test
@@ -122,7 +120,6 @@ public class ConfirmationServiceTest {
 
     @Test
     public void addConfirmationWithValidDataShouldSucceed() {
-        given(userService.getDukeEncountersUser(anyString())).willReturn(testUser());
         given(encounterService.getEncounterById(anyLong())).willReturn(testEncounter(1));
         given(repository.save(any(Confirmation.class))).willReturn(testConfirmation());
         Confirmation confirmation = service.addConfirmation("test", 1);

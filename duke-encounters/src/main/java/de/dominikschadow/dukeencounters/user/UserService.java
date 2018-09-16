@@ -89,7 +89,7 @@ public class UserService {
         return passwordEncoder.matches(currentPassword, updatedPassword);
     }
 
-    public User findUser(final String username) {
+    public User findUser(@NotNull final String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -98,10 +98,6 @@ public class UserService {
         appSensorUser.setUsername(user.getUsername());
 
         return appSensorUser;
-    }
-
-    public User getDukeEncountersUser(@NotNull final String username) {
-        return userRepository.findByUsername(username);
     }
 
     public String hashPassword(String password) {
