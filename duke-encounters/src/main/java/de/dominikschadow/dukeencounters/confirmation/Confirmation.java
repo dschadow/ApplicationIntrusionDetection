@@ -18,7 +18,7 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.Encounter;
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.Data;
 import lombok.ToString;
 

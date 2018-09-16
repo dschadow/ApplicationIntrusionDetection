@@ -18,8 +18,7 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.encounter.User;
-import de.dominikschadow.dukeencounters.user.UserService;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -37,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
@@ -52,7 +52,6 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
 public class ConfirmationController {
     private final ConfirmationService confirmationService;
     private final EncounterService encounterService;
-    private final UserService userService;
     private final DetectionSystem detectionSystem;
     private final EventManager ids;
 
@@ -73,13 +72,13 @@ public class ConfirmationController {
             log.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
                     user.getUsername(), encounterId);
 
-            fireConfirmationErrorEvent();
+            fireConfirmationErrorEvent(user.getUsername());
             redirectAttributes.addFlashAttribute("ownEncounter", true);
         } else if (confirmationService.hasConfirmedEncounter(user.getUsername(), encounterId)) {
             log.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to "
                     + "confirm it again", user.getUsername(), encounterId);
 
-            fireConfirmationErrorEvent();
+            fireConfirmationErrorEvent(user.getUsername());
             redirectAttributes.addFlashAttribute("secondConfirm", true);
         } else {
             confirmationService.addConfirmation(user, encounterId);
@@ -100,8 +99,8 @@ public class ConfirmationController {
         return new ModelAndView("redirect:/account");
     }
 
-    private void fireConfirmationErrorEvent() {
+    private void fireConfirmationErrorEvent(@NotNull final String username) {
         DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE5-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(new org.owasp.appsensor.core.User(username), detectionPoint, detectionSystem));
     }
 }

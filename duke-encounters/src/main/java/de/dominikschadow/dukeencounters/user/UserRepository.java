@@ -17,7 +17,6 @@
  */
 package de.dominikschadow.dukeencounters.user;
 
-import de.dominikschadow.dukeencounters.encounter.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

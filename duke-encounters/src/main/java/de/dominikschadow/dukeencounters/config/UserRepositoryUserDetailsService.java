@@ -1,6 +1,6 @@
 package de.dominikschadow.dukeencounters.config;
 
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

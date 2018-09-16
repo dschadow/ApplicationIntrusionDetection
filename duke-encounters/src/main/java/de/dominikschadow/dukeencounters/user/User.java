@@ -15,8 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.dukeencounters.encounter;
+package de.dominikschadow.dukeencounters.user;
 
+import de.dominikschadow.dukeencounters.encounter.Authority;
 import de.dominikschadow.dukeencounters.user.Level;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;

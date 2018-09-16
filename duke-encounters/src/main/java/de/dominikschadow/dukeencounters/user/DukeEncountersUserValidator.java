@@ -18,7 +18,6 @@
 package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.Constants;
-import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import lombok.AllArgsConstructor;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -29,6 +28,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+
+import javax.validation.constraints.NotNull;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.owasp.appsensor.core.DetectionPoint.Category.INPUT_VALIDATION;
@@ -59,39 +60,35 @@ public class DukeEncountersUserValidator implements Validator {
         User user = (User) target;
 
         if (securityValidationService.hasXssPayload(user.getFirstname())) {
-            fireXssEvent();
+            fireXssEvent(user.getUsername());
             errors.rejectValue("firstname", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(user.getFirstname())) {
-            fireSqlIEvent();
+            fireSqlIEvent(user.getUsername());
             errors.rejectValue("firstname", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(user.getLastname())) {
-            fireXssEvent();
+            fireXssEvent(user.getUsername());
             errors.rejectValue("lastname", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(user.getLastname())) {
-            fireSqlIEvent();
+            fireSqlIEvent(user.getUsername());
             errors.rejectValue("lastname", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(user.getUsername())) {
-            fireXssEvent();
+            fireXssEvent(user.getUsername());
             errors.rejectValue("username", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(user.getUsername())) {
-            fireSqlIEvent();
+            fireSqlIEvent(user.getUsername());
             errors.rejectValue("username", Constants.SQLI_ERROR_CODE);
         }
 
         if (securityValidationService.hasXssPayload(user.getEmail())) {
-            fireXssEvent();
+            fireXssEvent(user.getUsername());
             errors.rejectValue("email", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(user.getEmail())) {
-            fireSqlIEvent();
+            fireSqlIEvent(user.getUsername());
             errors.rejectValue("email", Constants.SQLI_ERROR_CODE);
-        }
-
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            errors.rejectValue("password", Constants.NOT_MATCHING_PASSWORDS_ERROR_CODE);
         }
 
         if (userService.findUser(user.getUsername()) != null) {
@@ -99,13 +96,13 @@ public class DukeEncountersUserValidator implements Validator {
         }
     }
 
-    private void fireXssEvent() {
+    private void fireXssEvent(@NotNull final String username) {
         DetectionPoint detectionPoint = new DetectionPoint(INPUT_VALIDATION, "IE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(new org.owasp.appsensor.core.User(username), detectionPoint, detectionSystem));
     }
 
-    private void fireSqlIEvent() {
+    private void fireSqlIEvent(@NotNull final String username) {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(new org.owasp.appsensor.core.User(username), detectionPoint, detectionSystem));
     }
 }

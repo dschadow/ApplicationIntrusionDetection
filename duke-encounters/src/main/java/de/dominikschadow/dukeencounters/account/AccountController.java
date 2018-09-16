@@ -21,7 +21,7 @@ import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.confirmation.ConfirmationService;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;

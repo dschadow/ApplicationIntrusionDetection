@@ -19,7 +19,7 @@ package de.dominikschadow.dukeencounters;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 
 import java.util.ArrayList;

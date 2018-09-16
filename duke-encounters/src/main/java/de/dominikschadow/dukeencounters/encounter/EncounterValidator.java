@@ -34,8 +34,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 @Component
 public class EncounterValidator extends BaseEncounterValidator {
     public EncounterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
-                              UserService userService, SecurityValidationService securityValidationService) {
-        super(validator, securityValidationService, ids, userService, detectionSystem);
+                              SecurityValidationService securityValidationService) {
+        super(validator, securityValidationService, ids, detectionSystem);
     }
 
     @Override
@@ -49,13 +49,13 @@ public class EncounterValidator extends BaseEncounterValidator {
 
         Encounter encounter = (Encounter) target;
 
-        validateBaseData(encounter.getEvent(), encounter.getLocation(), encounter.getCountry(), errors);
+        validateBaseData(encounter.getUser().getUsername(), encounter.getEvent(), encounter.getLocation(), encounter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(encounter.getComment())) {
-            fireXssEvent();
+            fireXssEvent(encounter.getUser().getUsername());
             errors.rejectValue("comment", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(encounter.getComment())) {
-            fireSqlIEvent();
+            fireSqlIEvent(encounter.getUser().getUsername());
             errors.rejectValue("comment", Constants.SQLI_ERROR_CODE);
         }
     }

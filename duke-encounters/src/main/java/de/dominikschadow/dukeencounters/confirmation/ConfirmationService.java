@@ -18,7 +18,7 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

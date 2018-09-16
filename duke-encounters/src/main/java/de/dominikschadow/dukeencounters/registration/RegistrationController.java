@@ -17,8 +17,7 @@
  */
 package de.dominikschadow.dukeencounters.registration;
 
-import de.dominikschadow.dukeencounters.encounter.User;
-import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
+import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +25,12 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
 /**
- * Controller to handle all user related requests.
+ * Controller to handle all registration related requests.
  *
  * @author Dominik Schadow
  */
@@ -42,7 +39,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class RegistrationController {
     private final UserService userService;
-    private final DukeEncountersUserValidator validator;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -67,10 +63,5 @@ public class RegistrationController {
 //        modelAndView.addObject("userCreated", newUser.getUsername());
 
         return "redirect:/login";
-    }
-
-    @InitBinder
-    protected void initBinder(final WebDataBinder binder) {
-        binder.setValidator(validator);
     }
 }

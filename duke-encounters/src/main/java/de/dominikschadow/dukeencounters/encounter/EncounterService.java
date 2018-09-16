@@ -21,7 +21,7 @@ import com.google.common.base.Strings;
 import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
-import de.dominikschadow.dukeencounters.user.UserService;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +56,6 @@ import static org.springframework.data.jpa.domain.Specifications.where;
 @AllArgsConstructor
 public class EncounterService {
     private final EncounterRepository repository;
-    private final UserService userService;
     private final EventManager ids;
     private final DetectionSystem detectionSystem;
     private final DukeEncountersProperties properties;
@@ -66,12 +65,12 @@ public class EncounterService {
      *
      * @return The list of latest encounters
      */
-    public List<Encounter> getLatestEncounters() {
+    public List<Encounter> getLatestEncounters(@NotNull final String username) {
         Pageable latestEncounters = PageRequest.of(0, properties.getLatestAmount(), Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestEncounters);
 
         if (encounters.size() > properties.getLatestAmount()) {
-            fireSqlIEvent();
+            fireSqlIEvent(username);
         }
 
         return encounters;
@@ -243,8 +242,8 @@ public class EncounterService {
         return owner;
     }
 
-    private void fireSqlIEvent() {
+    private void fireSqlIEvent(@NotNull final String username) {
         DetectionPoint detectionPoint = new DetectionPoint(COMMAND_INJECTION, "CIE1-002");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(new org.owasp.appsensor.core.User(username), detectionPoint, detectionSystem));
     }
 }

@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;

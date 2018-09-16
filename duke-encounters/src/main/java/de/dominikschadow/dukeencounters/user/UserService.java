@@ -19,7 +19,6 @@ package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.account.PasswordChange;
 import de.dominikschadow.dukeencounters.encounter.Authority;
-import de.dominikschadow.dukeencounters.encounter.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
@@ -91,13 +90,6 @@ public class UserService {
 
     public User findUser(@NotNull final String username) {
         return userRepository.findByUsername(username);
-    }
-
-    public org.owasp.appsensor.core.User getAppSensorUser(User user) {
-        org.owasp.appsensor.core.User appSensorUser = new org.owasp.appsensor.core.User();
-        appSensorUser.setUsername(user.getUsername());
-
-        return appSensorUser;
     }
 
     public String hashPassword(String password) {

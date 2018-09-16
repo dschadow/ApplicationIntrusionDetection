@@ -21,7 +21,6 @@ import de.dominikschadow.dukeencounters.Constants;
 import de.dominikschadow.dukeencounters.encounter.BaseEncounterValidator;
 import de.dominikschadow.dukeencounters.encounter.Likelihood;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
-import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionSystem;
@@ -40,8 +39,8 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 @Slf4j
 public class SearchFilterValidator extends BaseEncounterValidator {
     public SearchFilterValidator(EventManager ids, DetectionSystem detectionSystem, SpringValidatorAdapter validator,
-                                 UserService userService, SecurityValidationService securityValidationService) {
-        super(validator, securityValidationService, ids, userService, detectionSystem);
+                                 SecurityValidationService securityValidationService) {
+        super(validator, securityValidationService, ids, detectionSystem);
     }
 
     @Override
@@ -55,13 +54,16 @@ public class SearchFilterValidator extends BaseEncounterValidator {
 
         SearchFilter filter = (SearchFilter) target;
 
-        validateBaseData(filter.getEvent(), filter.getLocation(), filter.getCountry(), errors);
+        // FIXME find username
+        String username = "";
+
+        validateBaseData(username, filter.getEvent(), filter.getLocation(), filter.getCountry(), errors);
 
         if (securityValidationService.hasXssPayload(filter.getYear())) {
-            fireXssEvent();
+            fireXssEvent(username);
             errors.rejectValue("year", Constants.XSS_ERROR_CODE);
         } else if (securityValidationService.hasSqlIPayload(filter.getYear())) {
-            fireSqlIEvent();
+            fireSqlIEvent(username);
             errors.rejectValue("year", Constants.SQLI_ERROR_CODE);
         } else if (StringUtils.isNotEmpty(filter.getYear())) {
             if (StringUtils.isNumeric(filter.getYear())) {
@@ -83,14 +85,14 @@ public class SearchFilterValidator extends BaseEncounterValidator {
             log.error(ex.getMessage(), ex);
             log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} as likelihood - out of configured range",
                     filter.getLikelihood());
-            fireInvalidValueEvent();
+            fireInvalidValueEvent(username);
             errors.rejectValue("likelihood", Constants.ATTACK_ERROR_CODE);
         }
 
         if (filter.getConfirmations() < 0 || filter.getConfirmations() > 10) {
             log.info(SecurityMarkers.SECURITY_FAILURE, "Requested {} confirmations - out of configured range",
                     filter.getConfirmations());
-            fireInvalidValueEvent();
+            fireInvalidValueEvent(username);
             errors.rejectValue("confirmations", Constants.ATTACK_ERROR_CODE);
         }
     }

@@ -19,7 +19,9 @@ package de.dominikschadow.dukeencounters.home;
 
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +45,8 @@ public class HomeController {
      * @return Index URL
      */
     @GetMapping("/")
-    public String home(final Model model) {
-        List<Encounter> encounters = encounterService.getLatestEncounters();
+    public String home(@AuthenticationPrincipal User user, final Model model) {
+        List<Encounter> encounters = encounterService.getLatestEncounters(user.getUsername());
         model.addAttribute("encounters", encounters);
 
         return "index";

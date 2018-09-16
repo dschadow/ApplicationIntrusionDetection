@@ -17,7 +17,7 @@
  */
 package de.dominikschadow.dukeencounters.account;
 
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

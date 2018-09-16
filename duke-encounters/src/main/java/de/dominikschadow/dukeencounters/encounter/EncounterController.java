@@ -17,7 +17,7 @@
  */
 package de.dominikschadow.dukeencounters.encounter;
 
-import de.dominikschadow.dukeencounters.user.UserService;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
@@ -49,7 +50,6 @@ import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
 public class EncounterController {
     private final EncounterService encounterService;
     private final EncounterValidator validator;
-    private final UserService userService;
     private final DetectionSystem detectionSystem;
     private final EventManager ids;
 
@@ -100,7 +100,7 @@ public class EncounterController {
         Encounter encounter = encounterService.getEncounterById(user.getUsername(), encounterId);
 
         if (encounter == null) {
-            fireInvalidUrlParameterEvent();
+            fireInvalidUrlParameterEvent(user.getUsername());
             redirectAttributes.addFlashAttribute("encounterFailure", true);
             redirectAttributes.addFlashAttribute("confirmable", true);
 
@@ -112,9 +112,9 @@ public class EncounterController {
         return "user/encounterDetails";
     }
 
-    private void fireInvalidUrlParameterEvent() {
+    private void fireInvalidUrlParameterEvent(@NotNull final String username) {
         DetectionPoint detectionPoint = new DetectionPoint(REQUEST, "RE8-001");
-        ids.addEvent(new Event(userService.getAppSensorUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(new org.owasp.appsensor.core.User(username), detectionPoint, detectionSystem));
     }
 
     @InitBinder

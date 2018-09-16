@@ -1,6 +1,6 @@
 package de.dominikschadow.dukeencounters.registration;
 
-import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
