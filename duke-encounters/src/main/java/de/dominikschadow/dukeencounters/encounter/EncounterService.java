@@ -126,9 +126,7 @@ public class EncounterService {
      * @param encounterId The encounter id to search for
      * @return The matching encounter or null if no match is available
      */
-    public Encounter getEncounterById(@NotNull final long encounterId) {
-        String username = userService.getUsername();
-
+    public Encounter getEncounterById(@NotNull final String username, @NotNull final long encounterId) {
         log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
 
         Optional<Encounter> encounter = repository.findById(encounterId);
@@ -177,12 +175,10 @@ public class EncounterService {
      * @param type The type of encounter
      * @return The list of encounters matching the given type
      */
-    public List<Encounter> getEncounters(final String type) {
+    public List<Encounter> getEncounters(@NotNull final String username, final String type) {
         List<Encounter> encounters;
 
         if (Objects.equals("own", type)) {
-            String username = userService.getUsername();
-
             log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying encounters for user {}", username);
 
             encounters = repository.findAllByUsername(username);
@@ -201,9 +197,7 @@ public class EncounterService {
      * @param encounterId The encounter id to delete
      */
     @Transactional
-    public void deleteEncounter(@NotNull final long encounterId) {
-        String username = userService.getUsername();
-
+    public void deleteEncounter(@NotNull final String username, @NotNull final long encounterId) {
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
         repository.deleteById(encounterId);
@@ -214,13 +208,12 @@ public class EncounterService {
     /**
      * Creates the encounter matching the given data.
      *
+     * @param user The user creating the encounter
      * @param newEncounter The new encounter to create
      * @return The created encounter including the database id
      */
     @Transactional
-    public Encounter createEncounter(@NotNull final Encounter newEncounter) {
-        User user = userService.getDukeEncountersUser();
-
+    public Encounter createEncounter(@NotNull final User user, @NotNull final Encounter newEncounter) {
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new {}",
                 user.getUsername(), newEncounter);
 

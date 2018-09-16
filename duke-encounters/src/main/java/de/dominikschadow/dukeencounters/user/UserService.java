@@ -23,9 +23,6 @@ import de.dominikschadow.dukeencounters.encounter.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,26 +85,12 @@ public class UserService {
         return userRepository.save(currentUser);
     }
 
-    public boolean confirmPassword(@NotNull final String password) {
-        return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
+    public boolean confirmPassword(@NotNull final String currentPassword, @NotNull final String updatedPassword) {
+        return passwordEncoder.matches(currentPassword, updatedPassword);
     }
 
     public User findUser(final String username) {
         return userRepository.findByUsername(username);
-    }
-
-    public String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = authentication.getName();
-
-        if (authentication instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication;
-
-            username = userDetails.getUsername();
-        }
-
-        return username;
     }
 
     public org.owasp.appsensor.core.User getAppSensorUser(User user) {
@@ -115,10 +98,6 @@ public class UserService {
         appSensorUser.setUsername(user.getUsername());
 
         return appSensorUser;
-    }
-
-    public User getDukeEncountersUser() {
-        return getDukeEncountersUser(getUsername());
     }
 
     public User getDukeEncountersUser(@NotNull final String username) {

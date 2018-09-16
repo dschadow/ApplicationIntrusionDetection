@@ -25,6 +25,7 @@ import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +35,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
@@ -54,10 +54,11 @@ public class EncounterController {
     private final EventManager ids;
 
     @GetMapping("/encounters")
-    public String getEncounters(final Model model, final Principal principal, @RequestParam(name = "type", required = false) final String type) {
-        boolean confirmable = !StringUtils.equals(principal.getName(), "anonymousUser") && !StringUtils.equals("own", type);
+    public String getEncounters(@AuthenticationPrincipal User user, final Model model, @RequestParam(name = "type", required = false) final String type) {
+        // FIXME user.getUsername() may not work for anonymous
+        boolean confirmable = !StringUtils.equals(user.getUsername(), "anonymousUser") && !StringUtils.equals("own", type);
 
-        List<Encounter> encounters = encounterService.getEncounters(type);
+        List<Encounter> encounters = encounterService.getEncounters(user.getUsername(), type);
         model.addAttribute("encounters", encounters);
         model.addAttribute("confirmable", confirmable);
 
@@ -72,13 +73,13 @@ public class EncounterController {
 
     @PostMapping("/encounter/create")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String saveEncounter(@Valid final Encounter encounter, final Model model, final BindingResult result) {
+    public String saveEncounter(@AuthenticationPrincipal User user, @Valid final Encounter encounter, final Model model, final BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("formErrors", result.getAllErrors());
             return "user/createEncounter";
         }
 
-        encounterService.createEncounter(encounter);
+        encounterService.createEncounter(user, encounter);
         model.addAttribute("confirmable", true);
 
         return "redirect:/encounters";
@@ -86,17 +87,17 @@ public class EncounterController {
 
     @PostMapping("/encounter/delete")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView deleteEncounter(final long encounterId) {
-        encounterService.deleteEncounter(encounterId);
+    public ModelAndView deleteEncounter(@AuthenticationPrincipal User user, final long encounterId) {
+        encounterService.deleteEncounter(user.getUsername(), encounterId);
 
         return new ModelAndView("redirect:/account");
     }
 
     @GetMapping("/encounter/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String encounterById(@PathVariable("id") final long encounterId, final Model model,
+    public String encounterById(@AuthenticationPrincipal User user, @PathVariable("id") final long encounterId, final Model model,
                                 final RedirectAttributes redirectAttributes) {
-        Encounter encounter = encounterService.getEncounterById(encounterId);
+        Encounter encounter = encounterService.getEncounterById(user.getUsername(), encounterId);
 
         if (encounter == null) {
             fireInvalidUrlParameterEvent();

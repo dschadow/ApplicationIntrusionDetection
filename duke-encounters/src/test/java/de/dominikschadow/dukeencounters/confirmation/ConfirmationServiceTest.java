@@ -85,7 +85,7 @@ public class ConfirmationServiceTest {
     @Test
     public void getOwnConfirmationsShouldReturnConfirmations() {
         given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation()));
-        List<Confirmation> confirmations = service.getConfirmations("own");
+        List<Confirmation> confirmations = service.getConfirmations(user, "own");
 
         assertThat(confirmations.size()).isEqualTo(1);
     }
@@ -93,7 +93,7 @@ public class ConfirmationServiceTest {
     @Test
     public void getConfirmationsWithTypeNullShouldReturnAllConfirmations() {
         given(repository.findAll()).willReturn(Lists.newArrayList(testConfirmation()));
-        List<Confirmation> confirmations = service.getConfirmations(null);
+        List<Confirmation> confirmations = service.getConfirmations(user, null);
 
         assertThat(confirmations.size()).isEqualTo(1);
     }

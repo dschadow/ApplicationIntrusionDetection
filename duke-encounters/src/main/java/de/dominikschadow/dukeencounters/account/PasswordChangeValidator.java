@@ -49,7 +49,8 @@ public class PasswordChangeValidator implements Validator {
 
         PasswordChange passwordChange = (PasswordChange) target;
 
-        if (!userService.confirmPassword(passwordChange.getCurrentPassword())) {
+        // FIXME currentPassword
+        if (!userService.confirmPassword("", passwordChange.getCurrentPassword())) {
             errors.rejectValue("currentPassword", Constants.CURRENT_PASSWORD_NOT_CORRECT_ERROR_CODE);
         }
 

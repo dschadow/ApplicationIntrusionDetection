@@ -18,7 +18,7 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
-import de.dominikschadow.dukeencounters.user.UserService;
+import de.dominikschadow.dukeencounters.encounter.User;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,6 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +39,6 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ConfirmationService {
     private final ConfirmationRepository repository;
-    private final UserService userService;
     private final EncounterService encounterService;
 
     public List<Confirmation> getConfirmationsByUsername(@NonNull final String username) {
@@ -51,8 +49,7 @@ public class ConfirmationService {
         return confirmations;
     }
 
-    public Confirmation getConfirmationByUsernameAndEncounterId(@NonNull final String username,
-                                                                final long encounterId) {
+    public Confirmation getConfirmationByUsernameAndEncounterId(@NonNull final String username, final long encounterId) {
         Confirmation confirmation = repository.findByUsernameAndEncounterId(username, encounterId);
 
         log.info("Query for user {} confirmations returned {}", username, confirmation);
@@ -60,15 +57,14 @@ public class ConfirmationService {
         return confirmation;
     }
 
-    public Confirmation addConfirmation(@NotNull final String username, final long encounterId) {
+    public Confirmation addConfirmation(@NotNull final User user, final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
-        newConfirmation.setUser(userService.getDukeEncountersUser(username));
-        newConfirmation.setDate(LocalDate.now());
-        newConfirmation.setEncounter(encounterService.getEncounterById(encounterId));
+        newConfirmation.setUser(user);
+        newConfirmation.setEncounter(encounterService.getEncounterById(user.getUsername(), encounterId));
 
         Confirmation confirmation = repository.save(newConfirmation);
 
-        log.info("User {} created new {}", username, confirmation);
+        log.info("User {} created new {}", user.getUsername(), confirmation);
 
         return confirmation;
     }
@@ -83,15 +79,13 @@ public class ConfirmationService {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 
-    public List<Confirmation> getConfirmations(final String type) {
+    public List<Confirmation> getConfirmations(@NonNull final User user, final String type) {
         List<Confirmation> confirmations;
 
         if (Objects.equals("own", type)) {
-            String username = userService.getUsername();
+            log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", user.getUsername());
 
-            log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", username);
-
-            confirmations = repository.findAllByUsername(username);
+            confirmations = repository.findAllByUsername(user.getUsername());
         } else {
             confirmations = repository.findAll();
         }

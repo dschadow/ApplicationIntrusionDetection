@@ -18,6 +18,7 @@
 package de.dominikschadow.dukeencounters.confirmation;
 
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
+import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import org.owasp.appsensor.core.Event;
 import org.owasp.appsensor.core.event.EventManager;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,9 +58,9 @@ public class ConfirmationController {
 
     @GetMapping("/confirmations")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String getConfirmations(final Model model,
+    public String getConfirmations(@AuthenticationPrincipal User user, final Model model,
                                    @RequestParam(name = "type", required = false) final String type) {
-        List<Confirmation> confirmations = confirmationService.getConfirmations(type);
+        List<Confirmation> confirmations = confirmationService.getConfirmations(user, type);
         model.addAttribute("confirmations", confirmations);
 
         return "user/confirmations";
@@ -66,25 +68,23 @@ public class ConfirmationController {
 
     @PostMapping("/confirmation/add")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView addConfirmation(final long encounterId, final RedirectAttributes redirectAttributes) {
-        String username = userService.getUsername();
-
-        if (encounterService.isOwnEncounter(encounterId, username)) {
+    public ModelAndView addConfirmation(@AuthenticationPrincipal User user, final long encounterId, final RedirectAttributes redirectAttributes) {
+        if (encounterService.isOwnEncounter(encounterId, user.getUsername())) {
             log.info(SecurityMarkers.SECURITY_FAILURE, "User {} is owner of encounter {} and tried to confirm it",
-                    username, encounterId);
+                    user.getUsername(), encounterId);
 
             fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("ownEncounter", true);
-        } else if (confirmationService.hasConfirmedEncounter(username, encounterId)) {
+        } else if (confirmationService.hasConfirmedEncounter(user.getUsername(), encounterId)) {
             log.info(SecurityMarkers.SECURITY_FAILURE, "User {} has already confirmed encounter {} and tried to "
-                    + "confirm it again", username, encounterId);
+                    + "confirm it again", user.getUsername(), encounterId);
 
             fireConfirmationErrorEvent();
             redirectAttributes.addFlashAttribute("secondConfirm", true);
         } else {
-            confirmationService.addConfirmation(username, encounterId);
+            confirmationService.addConfirmation(user, encounterId);
 
-            log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", username, encounterId);
+            log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} confirmed encounter {}", user.getUsername(), encounterId);
         }
 
         return new ModelAndView("redirect:/account");
@@ -92,12 +92,10 @@ public class ConfirmationController {
 
     @PostMapping("/confirmation/revoke")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView revokeConfirmation(final long confirmationId) {
-        String username = userService.getUsername();
+    public ModelAndView revokeConfirmation(@AuthenticationPrincipal User user, final long confirmationId) {
+        confirmationService.deleteConfirmation(user.getUsername(), confirmationId);
 
-        confirmationService.deleteConfirmation(username, confirmationId);
-
-        log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", username, confirmationId);
+        log.info(SecurityMarkers.SECURITY_SUCCESS, "User {} revoked confirmation {}", user.getUsername(), confirmationId);
 
         return new ModelAndView("redirect:/account");
     }

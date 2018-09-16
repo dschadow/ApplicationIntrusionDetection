@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -56,14 +56,11 @@ public class PasswordController {
      */
     @GetMapping("/account/password")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView changePassword(@ModelAttribute final PasswordChange passwordChange) {
-        String username = userService.getUsername();
-
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", username);
+    public ModelAndView changePassword(@AuthenticationPrincipal User user, @ModelAttribute final PasswordChange passwordChange) {
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is changing his password", user.getUsername());
 
         ModelAndView modelAndView = new ModelAndView("user/changePassword");
 
-        User user = userService.getDukeEncountersUser();
         modelAndView.addObject("userlevel", user.getLevel().getName());
 
         return modelAndView;
@@ -77,10 +74,8 @@ public class PasswordController {
      */
     @PostMapping("/account/password")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updatePassword(Authentication authentication, @Valid final PasswordChange password, final BindingResult result,
+    public ModelAndView updatePassword(@AuthenticationPrincipal User user, @Valid final PasswordChange password, final BindingResult result,
                                        final RedirectAttributes redirectAttributes) {
-        User user = (User) authentication.getPrincipal();
-
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
         }

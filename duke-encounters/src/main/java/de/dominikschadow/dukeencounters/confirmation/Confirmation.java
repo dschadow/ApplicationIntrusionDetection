@@ -46,4 +46,9 @@ public class Confirmation {
     private Encounter encounter;
     @Temporal(TemporalType.DATE)
     private LocalDate date;
+
+    @PrePersist
+    public void prePersist() {
+        setDate(LocalDate.now());
+    }
 }

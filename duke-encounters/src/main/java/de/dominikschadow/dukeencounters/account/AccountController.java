@@ -23,13 +23,12 @@ import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
 import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
-import de.dominikschadow.dukeencounters.user.Level;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -58,34 +57,22 @@ public class AccountController {
 
     @GetMapping("/account")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String showMyAccount(final Model model) {
-        String username = userService.getUsername();
+    public String showMyAccount(@AuthenticationPrincipal User user, final Model model) {
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", user.getUsername());
 
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is accessing his account", username);
+        List<Encounter> encounters = encounterService.getEncountersByUsername(user.getUsername());
+        List<Confirmation> confirmations = confirmationService.getConfirmationsByUsername(user.getUsername());
 
-        List<Encounter> encounters = encounterService.getEncountersByUsername(username);
         model.addAttribute("encounters", encounters);
-
-        List<Confirmation> confirmations = confirmationService.getConfirmationsByUsername(username);
         model.addAttribute("confirmations", confirmations);
-
-        String userLevel = Level.ROOKIE.getName();
-
-        User dukeEncountersUser = userService.getDukeEncountersUser(username);
-        if (dukeEncountersUser != null && dukeEncountersUser.getLevel() != null) {
-            userLevel = dukeEncountersUser.getLevel().getName();
-        }
-
-        model.addAttribute("userlevel", userLevel);
+        model.addAttribute("userlevel", user.getLevel().getName());
 
         return "user/account";
     }
 
     @GetMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView editMyAccount(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-
+    public ModelAndView editMyAccount(@AuthenticationPrincipal User user) {
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", user.getUsername());
 
         ModelAndView modelAndView = new ModelAndView("user/editAccount");
@@ -104,10 +91,8 @@ public class AccountController {
      */
     @PostMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateUser(Authentication authentication, @ModelAttribute final User updatedUser,
+    public ModelAndView updateUser(@AuthenticationPrincipal User user, @ModelAttribute final User updatedUser,
                                    final RedirectAttributes redirectAttributes) {
-        User user = (User) authentication.getPrincipal();
-
         User storedUser = userService.updateUser(user, updatedUser);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his user data", storedUser);
@@ -126,11 +111,9 @@ public class AccountController {
      */
     @PostMapping("/account/accountdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateAccount(Authentication authentication, @ModelAttribute final User updatedUser,
+    public ModelAndView updateAccount(@AuthenticationPrincipal User user, @ModelAttribute final User updatedUser,
                                       final RedirectAttributes redirectAttributes) {
-        User user = (User) authentication.getPrincipal();
-
-        if (userService.confirmPassword(updatedUser.getPassword())) {
+        if (userService.confirmPassword(user.getPassword(), updatedUser.getPassword())) {
             User storedUser = userService.updateUser(user, updatedUser);
 
             log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his user data", storedUser);
