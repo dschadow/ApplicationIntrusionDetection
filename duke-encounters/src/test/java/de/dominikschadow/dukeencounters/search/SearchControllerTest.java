@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *

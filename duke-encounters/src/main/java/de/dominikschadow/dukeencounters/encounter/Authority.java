@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -20,9 +20,10 @@ package de.dominikschadow.dukeencounters.encounter;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Holds a role in the application.
@@ -34,10 +35,10 @@ import javax.persistence.*;
 @Data
 @Builder
 @ToString
-public class Authority {
+public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @NotBlank(message = "Username may not be null")
     private String username;
     @NotBlank(message = "Authority may not be null")

@@ -116,7 +116,7 @@ public class ConfirmationServiceTest {
 
     @Test
     public void deleteEncounterForOwnEncounterShouldSucceed() {
-        doNothing().when(repository).delete(1l);
+        doNothing().when(repository).deleteById(1l);
         service.deleteConfirmation("test", 1);
     }
 

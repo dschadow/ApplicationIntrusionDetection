@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -41,6 +41,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -66,7 +67,7 @@ public class EncounterService {
      * @return The list of latest encounters
      */
     public List<Encounter> getLatestEncounters() {
-        Pageable latestEncounters = new PageRequest(0, properties.getLatestAmount(), Sort.Direction.DESC, "date");
+        Pageable latestEncounters = PageRequest.of(0, properties.getLatestAmount(), Sort.Direction.DESC, "date");
         List<Encounter> encounters = repository.findWithPageable(latestEncounters);
 
         if (encounters.size() > properties.getLatestAmount()) {
@@ -130,14 +131,16 @@ public class EncounterService {
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying details for encounter with id {}", encounterId);
 
-        Encounter encounter = repository.findOne(encounterId);
+        Optional<Encounter> encounter = repository.findById(encounterId);
 
-        if (encounter == null) {
+        if (!encounter.isPresent()) {
             log.info(SecurityMarkers.SECURITY_FAILURE, "User {} tried to access encounter {} which does not exist",
                     username, encounterId);
+
+            throw new EncounterNotFoundException("Encounter not found");
         }
 
-        return encounter;
+        return encounter.get();
     }
 
     /**
@@ -203,7 +206,7 @@ public class EncounterService {
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to delete encounter {}", username, encounterId);
 
-        repository.delete(encounterId);
+        repository.deleteById(encounterId);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted encounter {}", username, encounterId);
     }
@@ -216,7 +219,7 @@ public class EncounterService {
      */
     @Transactional
     public Encounter createEncounter(@NotNull final Encounter newEncounter) {
-        DukeEncountersUser user = userService.getDukeEncountersUser();
+        User user = userService.getDukeEncountersUser();
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is trying to create a new {}",
                 user.getUsername(), newEncounter);

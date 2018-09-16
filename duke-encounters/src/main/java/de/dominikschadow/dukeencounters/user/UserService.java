@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -17,11 +17,11 @@
  */
 package de.dominikschadow.dukeencounters.user;
 
+import de.dominikschadow.dukeencounters.account.PasswordChange;
 import de.dominikschadow.dukeencounters.encounter.Authority;
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.owasp.appsensor.core.User;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +31,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * CRUD services for users.
@@ -53,17 +52,15 @@ public class UserService {
      * @return The created user with all fields filled
      */
     @Transactional
-    public DukeEncountersUser createUser(@NotNull final DukeEncountersUser newUser) {
+    public User createUser(@NotNull final User newUser) {
         log.info("Creating user with username {}", newUser.getEmail());
         Authority authority = authorityRepository.save(Authority.builder().username(newUser.getUsername()).authority("ROLE_USER").build());
 
         newUser.setEnabled(true);
         newUser.setLevel(Level.NEWBIE);
-        newUser.setRegistrationDate(new Date());
         newUser.setAuthority(authority);
-        newUser.setPassword(hashPassword(newUser.getPassword()));
 
-        DukeEncountersUser user = userRepository.save(newUser);
+        User user = userRepository.save(newUser);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "Created a new user with username {} and id {} with role {}",
                 user.getUsername(), user.getId(), user.getAuthority().getAuthority());
@@ -72,15 +69,30 @@ public class UserService {
     }
 
     @Transactional
-    public DukeEncountersUser updateUser(@NotNull final DukeEncountersUser dukeEncountersUser) {
-        return userRepository.save(dukeEncountersUser);
+    public User updateUser(@NotNull final User user, @NotNull final User updatedUser) {
+        User currentUser = findUser(user.getUsername());
+
+        currentUser.setFirstname(updatedUser.getFirstname());
+        currentUser.setLastname(updatedUser.getLastname());
+        currentUser.setEmail(updatedUser.getEmail());
+
+        return userRepository.save(currentUser);
+    }
+
+    @Transactional
+    public User updatePassword(@NotNull final User user, @NotNull final PasswordChange password) {
+        User currentUser = findUser(user.getUsername());
+
+        currentUser.setPassword(hashPassword(password.getNewPassword()));
+
+        return userRepository.save(currentUser);
     }
 
     public boolean confirmPassword(@NotNull final String password) {
         return passwordEncoder.matches(password, getDukeEncountersUser().getPassword());
     }
 
-    public DukeEncountersUser findUser(final String username) {
+    public User findUser(final String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -98,15 +110,18 @@ public class UserService {
         return username;
     }
 
-    public User getUser() {
-        return new User(getUsername());
+    public org.owasp.appsensor.core.User getAppSensorUser(User user) {
+        org.owasp.appsensor.core.User appSensorUser = new org.owasp.appsensor.core.User();
+        appSensorUser.setUsername(user.getUsername());
+
+        return appSensorUser;
     }
 
-    public DukeEncountersUser getDukeEncountersUser() {
+    public User getDukeEncountersUser() {
         return getDukeEncountersUser(getUsername());
     }
 
-    public DukeEncountersUser getDukeEncountersUser(@NotNull final String username) {
+    public User getDukeEncountersUser(@NotNull final String username) {
         return userRepository.findByUsername(username);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -15,20 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.dominikschadow.dukeencounters.user;
+package de.dominikschadow.dukeencounters.registration;
 
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.User;
+import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
+import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -40,42 +40,33 @@ import javax.validation.Valid;
 @Controller
 @Slf4j
 @AllArgsConstructor
-public class UserController {
+public class RegistrationController {
     private final UserService userService;
     private final DukeEncountersUserValidator validator;
-
-    /**
-     * Shows the registration page.
-     *
-     * @param dukeEncountersUser The new DukeEncountersUser
-     * @return Register URL
-     */
-    @GetMapping("/register")
-    public String register(@ModelAttribute final DukeEncountersUser dukeEncountersUser) {
-        return "register";
-    }
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Creates the new user and stores it in the database.
      *
-     * @param dukeEncountersUser The new user to register
-     * @param result The binding result
+     * @param registrationForm The new user data to register
+     * @param errors Errors in the page
      * @return Login URL
      */
     @PostMapping("/register")
-    public ModelAndView createUser(@Valid final DukeEncountersUser dukeEncountersUser, final BindingResult result) {
-        if (result.hasErrors()) {
-            return new ModelAndView("register", "formErrors", result.getAllErrors());
+    public String createUser(@Valid final RegistrationForm registrationForm, final Errors errors) {
+        if (errors.hasErrors()) {
+//            return new ModelAndView("register", "formErrors", errors.getAllErrors());
+            return "/register";
         }
 
-        DukeEncountersUser newUser = userService.createUser(dukeEncountersUser);
+        User newUser = userService.createUser(registrationForm.toUser(passwordEncoder));
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} created", newUser);
 
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("userCreated", newUser.getUsername());
+//        ModelAndView modelAndView = new ModelAndView("login");
+//        modelAndView.addObject("userCreated", newUser.getUsername());
 
-        return modelAndView;
+        return "redirect:/login";
     }
 
     @InitBinder

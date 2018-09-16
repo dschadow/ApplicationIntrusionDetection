@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -19,9 +19,9 @@ package de.dominikschadow.dukeencounters.account;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.confirmation.ConfirmationService;
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
 import de.dominikschadow.dukeencounters.encounter.EncounterService;
+import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.user.DukeEncountersUserValidator;
 import de.dominikschadow.dukeencounters.user.Level;
 import de.dominikschadow.dukeencounters.user.UserService;
@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -70,7 +71,7 @@ public class AccountController {
 
         String userLevel = Level.ROOKIE.getName();
 
-        DukeEncountersUser dukeEncountersUser = userService.getDukeEncountersUser(username);
+        User dukeEncountersUser = userService.getDukeEncountersUser(username);
         if (dukeEncountersUser != null && dukeEncountersUser.getLevel() != null) {
             userLevel = dukeEncountersUser.getLevel().getName();
         }
@@ -82,14 +83,12 @@ public class AccountController {
 
     @GetMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView editMyAccount() {
-        String username = userService.getUsername();
+    public ModelAndView editMyAccount(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
 
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", username);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} is editing his account", user.getUsername());
 
         ModelAndView modelAndView = new ModelAndView("user/editAccount");
-
-        DukeEncountersUser user = userService.getDukeEncountersUser();
         modelAndView.addObject("user", user);
         modelAndView.addObject("userlevel", user.getLevel().getName());
 
@@ -105,15 +104,13 @@ public class AccountController {
      */
     @PostMapping("/account/userdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateUser(@ModelAttribute final DukeEncountersUser updatedUser,
+    public ModelAndView updateUser(Authentication authentication, @ModelAttribute final User updatedUser,
                                    final RedirectAttributes redirectAttributes) {
-        DukeEncountersUser user = userService.getDukeEncountersUser();
-        user.setFirstname(updatedUser.getFirstname());
-        user.setLastname(updatedUser.getLastname());
+        User user = (User) authentication.getPrincipal();
 
-        DukeEncountersUser storedUser = userService.updateUser(user);
+        User storedUser = userService.updateUser(user, updatedUser);
 
-        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his userdata", storedUser);
+        log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his user data", storedUser);
 
         redirectAttributes.addFlashAttribute("dataUpdated", true);
 
@@ -129,15 +126,14 @@ public class AccountController {
      */
     @PostMapping("/account/accountdata")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updateAccount(@ModelAttribute final DukeEncountersUser updatedUser,
+    public ModelAndView updateAccount(Authentication authentication, @ModelAttribute final User updatedUser,
                                       final RedirectAttributes redirectAttributes) {
+        User user = (User) authentication.getPrincipal();
+
         if (userService.confirmPassword(updatedUser.getPassword())) {
-            DukeEncountersUser user = userService.getDukeEncountersUser();
-            user.setEmail(updatedUser.getEmail());
+            User storedUser = userService.updateUser(user, updatedUser);
 
-            DukeEncountersUser storedUser = userService.updateUser(user);
-
-            log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his account", storedUser);
+            log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} updated his user data", storedUser);
 
             redirectAttributes.addFlashAttribute("dataUpdated", true);
         } else {

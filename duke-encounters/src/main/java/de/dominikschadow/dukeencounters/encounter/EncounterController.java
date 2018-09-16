@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.REQUEST;
@@ -53,9 +54,8 @@ public class EncounterController {
     private final EventManager ids;
 
     @GetMapping("/encounters")
-    public String getEncounters(final Model model, @RequestParam(name = "type", required = false) final String type) {
-        boolean confirmable = !StringUtils.equals(userService.getUser().getUsername(), "anonymousUser")
-                && !StringUtils.equals("own", type);
+    public String getEncounters(final Model model, final Principal principal, @RequestParam(name = "type", required = false) final String type) {
+        boolean confirmable = !StringUtils.equals(principal.getName(), "anonymousUser") && !StringUtils.equals("own", type);
 
         List<Encounter> encounters = encounterService.getEncounters(type);
         model.addAttribute("encounters", encounters);
@@ -113,7 +113,7 @@ public class EncounterController {
 
     private void fireInvalidUrlParameterEvent() {
         DetectionPoint detectionPoint = new DetectionPoint(REQUEST, "RE8-001");
-        ids.addEvent(new Event(userService.getUser(), detectionPoint, detectionSystem));
+        ids.addEvent(new Event(userService.getAppSensorUser(), detectionPoint, detectionSystem));
     }
 
     @InitBinder

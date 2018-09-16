@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -17,12 +17,13 @@
  */
 package de.dominikschadow.dukeencounters.account;
 
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -62,7 +63,7 @@ public class PasswordController {
 
         ModelAndView modelAndView = new ModelAndView("user/changePassword");
 
-        DukeEncountersUser user = userService.getDukeEncountersUser();
+        User user = userService.getDukeEncountersUser();
         modelAndView.addObject("userlevel", user.getLevel().getName());
 
         return modelAndView;
@@ -71,21 +72,20 @@ public class PasswordController {
     /**
      * Updates the users password and stores it in the database.
      *
-     * @param update The new password
+     * @param password The new password
      * @return Account page
      */
     @PostMapping("/account/password")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ModelAndView updatePassword(@Valid final PasswordChange update, final BindingResult result,
+    public ModelAndView updatePassword(Authentication authentication, @Valid final PasswordChange password, final BindingResult result,
                                        final RedirectAttributes redirectAttributes) {
+        User user = (User) authentication.getPrincipal();
+
         if (result.hasErrors()) {
             return new ModelAndView("user/changePassword", "formErrors", result.getAllErrors());
         }
 
-        DukeEncountersUser user = userService.getDukeEncountersUser();
-        user.setPassword(userService.hashPassword(update.getNewPassword()));
-
-        DukeEncountersUser storedUser = userService.updateUser(user);
+        User storedUser = userService.updatePassword(user, password);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} changed his password", storedUser.getUsername());
 

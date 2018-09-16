@@ -31,8 +31,7 @@
 
     <div class="row" id="register">
         <div class="col-12">
-            <form class="form-horizontal" action="#" th:action="@{/register}" th:object="${dukeEncountersUser}"
-                  method="post" role="form">
+            <form class="form-horizontal" th:action="@{/register}" id="registrationForm" method="post" role="form">
                 <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
                     <p th:each="err : ${#fields.allErrors()}" th:text="${err}">
                         Validation error
@@ -42,40 +41,37 @@
                 <div th:class="${#fields.hasErrors('firstname')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="firstname">First name</label>
                     <div class="col-sm-10">
-                        <input type="text" autofocus="autofocus" id="firstname" name="firstname" th:field="*{firstname}"
-                               class="form-control"/>
+                        <input type="text" autofocus="autofocus" id="firstname" name="firstname" class="form-control"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('lastname')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="lastname">Last name</label>
                     <div class="col-sm-10">
-                        <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control"/>
+                        <input type="text" id="lastname" name="lastname" class="form-control"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('username')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="username">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" id="username" name="username" th:field="*{username}" class="form-control"/>
+                        <input type="text" id="username" name="username" class="form-control"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('email')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="email">Email</label>
                     <div class="col-sm-10">
-                        <input type="text" id="email" name="email" th:field="*{email}" class="form-control"/>
+                        <input type="text" id="email" name="email" class="form-control"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('password')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="password">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" autocomplete="off" id="password" name="password" th:field="*{password}"
-                               class="form-control"/>
+                        <input type="password" autocomplete="off" id="password" name="password" class="form-control"/>
                     </div>
                 </div>
                 <div th:class="${#fields.hasErrors('confirmPassword')} ? 'form-group has-error has-feedback' : 'form-group'">
                     <label class="col-sm-2 control-label" for="confirmPassword">Confirm password</label>
                     <div class="col-sm-10">
-                        <input type="password" autocomplete="off" id="confirmPassword" name="confirmPassword"
-                               th:field="*{confirmPassword}" class="form-control"/>
+                        <input type="password" autocomplete="off" id="confirmPassword" name="confirmPassword" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">

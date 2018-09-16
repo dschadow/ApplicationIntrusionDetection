@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -17,14 +17,14 @@
  */
 package de.dominikschadow.dukeencounters.user;
 
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * JPA repository class to access {@link DukeEncountersUser}s.
+ * JPA repository class to access {@link User}s.
  *
  * @author Dominik Schadow
  */
-public interface UserRepository extends JpaRepository<DukeEncountersUser, Long> {
-    DukeEncountersUser findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
 }

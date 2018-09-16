@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -25,6 +25,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Validator;
 
@@ -36,7 +39,7 @@ import javax.validation.Validator;
 @Configuration
 @EnableConfigurationProperties(DukeEncountersProperties.class)
 @ComponentScan(basePackages = "org.owasp.appsensor")
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
     @Bean
     public DetectionSystem detectionSystem(final AppSensorClient appSensorClient) {
         return new DetectionSystem(appSensorClient.getConfiguration().getServerConnection()
@@ -51,5 +54,12 @@ public class WebConfig {
     @Bean
     public SpringValidatorAdapter springValidatorAdapter(final Validator jsr303Validator) {
         return new SpringValidatorAdapter(jsr303Validator);
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/register").setViewName("register");
+        registry.addViewController("/search").setViewName("search");
+        registry.addViewController("/login").setViewName("login");
     }
 }

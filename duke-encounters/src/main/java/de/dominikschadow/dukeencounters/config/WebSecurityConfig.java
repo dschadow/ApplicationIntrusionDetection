@@ -26,6 +26,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -46,39 +47,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private DukeEncountersProperties properties;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
         http
             .authorizeRequests()
-                .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/", "/register", "/encounters", "/search", "/error").permitAll()
-                .mvcMatchers().authenticated()
+                .mvcMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                .mvcMatchers("/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
             .and()
-            .csrf()
-                .ignoringAntMatchers("/admin/h2-console/*")
+                .csrf()
+                    .ignoringAntMatchers("/admin/h2-console/*")
             .and()
-            .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/account")
-                .permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/account")
+                    .permitAll()
             .and()
-            .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+                .exceptionHandling()
+                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
             .and()
-            .logout()
-                .logoutSuccessUrl("/")
-                .permitAll()
+                .logout()
+                    .logoutSuccessUrl("/")
             .and()
-            .rememberMe().rememberMeParameter("remember-me")
+                .rememberMe()
+                    .rememberMeParameter("remember-me")
             .and()
-            .securityContext().securityContextRepository(securityContextRepository())
+                .securityContext()
+                    .securityContextRepository(securityContextRepository())
             .and()
-            .headers()
-                .contentSecurityPolicy("default-src 'self'; img-src 'self' https://camo.githubusercontent.com")
-                .and()
-                .frameOptions().sameOrigin();
+                .headers()
+                    .contentSecurityPolicy("default-src 'self'; img-src 'self' https://camo.githubusercontent.com")
+                    .and()
+                        .frameOptions()
+                            .sameOrigin();
         // @formatter:on
     }
 
@@ -112,6 +117,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth
+            .userDetailsService(userDetailsService)
+            .and()
             .jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder());

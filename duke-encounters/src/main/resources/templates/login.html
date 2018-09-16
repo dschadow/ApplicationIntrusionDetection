@@ -39,8 +39,8 @@
     <div class="row" id="login">
         <div class="col-12">
             <form class="form-horizontal" action="#" th:action="@{/login}" method="post" role="form">
-                <div th:if="${loginError}" class="alert alert-danger" role="alert">
-                    Login failed - wrong username and/or password.
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    Login failed - check your username and password.
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="username">Username</label>

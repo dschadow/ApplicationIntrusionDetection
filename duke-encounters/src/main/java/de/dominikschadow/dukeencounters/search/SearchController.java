@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -41,17 +41,6 @@ import java.util.Map;
 public class SearchController {
     private final EncounterService encounterService;
     private final SearchFilterValidator validator;
-
-    /**
-     * Shows the search form.
-     *
-     * @param searchFilter The new SearchFilter
-     * @return Search URL
-     */
-    @GetMapping("/search")
-    public String searchEncounters(@ModelAttribute final SearchFilter searchFilter) {
-        return "search";
-    }
 
     /**
      * Uses the input text to search for the encounter event.

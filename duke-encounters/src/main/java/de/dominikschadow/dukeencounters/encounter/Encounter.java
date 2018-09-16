@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -20,12 +20,11 @@ package de.dominikschadow.dukeencounters.encounter;
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -40,24 +39,26 @@ import java.util.List;
 public class Encounter {
     @Id
     @GeneratedValue
-    private long id;
-    @NotBlank(message = "An event is required for each encounter")
+    private Long id;
+    @Length(min = 3, max = 255, message = "Event is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String event;
-    @NotBlank(message = "A location is required for each encounter")
+    @Length(min = 3, max = 255, message = "Location is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String location;
-    @NotBlank(message = "A country is required for each encounter")
+    @Length(min = 3, max = 255, message = "Country is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String country;
+    @Length(max = 1024, message = "Comment can not contain more than 1024 characters")
+    @Column(length = 1024)
     private String comment;
     @NotNull(message = "A date in the format MM/dd/yyyy is required for each encounter")
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date date;
+    @Temporal(TemporalType.DATE)
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private DukeEncountersUser user;
+    private User user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
     private List<Confirmation> confirmations;
 

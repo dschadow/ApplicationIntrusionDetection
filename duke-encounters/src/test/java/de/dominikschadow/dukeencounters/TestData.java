@@ -18,8 +18,8 @@
 package de.dominikschadow.dukeencounters;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
+import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
 
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class TestData {
         return testConfirmation;
     }
 
-    public static DukeEncountersUser testUser() {
-        DukeEncountersUser testUser = new DukeEncountersUser();
+    public static User testUser() {
+        User testUser = new User();
         testUser.setUsername("test");
 
         return testUser;

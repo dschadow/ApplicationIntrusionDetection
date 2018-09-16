@@ -26,7 +26,7 @@ import org.owasp.security.logging.SecurityMarkers;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,7 +63,7 @@ public class ConfirmationService {
     public Confirmation addConfirmation(@NotNull final String username, final long encounterId) {
         Confirmation newConfirmation = new Confirmation();
         newConfirmation.setUser(userService.getDukeEncountersUser(username));
-        newConfirmation.setDate(new Date());
+        newConfirmation.setDate(LocalDate.now());
         newConfirmation.setEncounter(encounterService.getEncounterById(encounterId));
 
         Confirmation confirmation = repository.save(newConfirmation);
@@ -74,7 +74,7 @@ public class ConfirmationService {
     }
 
     public void deleteConfirmation(@NonNull final String username, final long confirmationId) {
-        repository.delete(confirmationId);
+        repository.deleteById(confirmationId);
 
         log.warn(SecurityMarkers.SECURITY_AUDIT, "User {} deleted confirmation {}", username, confirmationId);
     }

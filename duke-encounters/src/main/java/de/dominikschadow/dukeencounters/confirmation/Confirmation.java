@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -17,17 +17,16 @@
  */
 package de.dominikschadow.dukeencounters.confirmation;
 
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
+import de.dominikschadow.dukeencounters.encounter.User;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
- * Represents a single confirmation of a single encounter.
+ * Represents a confirmation of an encounter.
  *
  * @author Dominik Schadow
  */
@@ -38,13 +37,13 @@ import java.util.Date;
 public class Confirmation {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private DukeEncountersUser user;
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "encounter_id", nullable = false)
     private Encounter encounter;
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date date;
+    @Temporal(TemporalType.DATE)
+    private LocalDate date;
 }

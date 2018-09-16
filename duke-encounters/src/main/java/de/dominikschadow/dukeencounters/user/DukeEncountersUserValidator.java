@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Dominik Schadow, dominikschadow@gmail.com
+ * Copyright (C) 2018 Dominik Schadow, dominikschadow@gmail.com
  *
  * This file is part of the Application Intrusion Detection project.
  *
@@ -18,7 +18,7 @@
 package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.Constants;
-import de.dominikschadow.dukeencounters.encounter.DukeEncountersUser;
+import de.dominikschadow.dukeencounters.encounter.User;
 import de.dominikschadow.dukeencounters.security.SecurityValidationService;
 import lombok.AllArgsConstructor;
 import org.owasp.appsensor.core.DetectionPoint;
@@ -49,14 +49,14 @@ public class DukeEncountersUserValidator implements Validator {
 
     @Override
     public boolean supports(final Class<?> clazz) {
-        return DukeEncountersUser.class.equals(clazz);
+        return User.class.equals(clazz);
     }
 
     @Override
     public void validate(final Object target, final Errors errors) {
         validator.validate(target, errors);
 
-        DukeEncountersUser user = (DukeEncountersUser) target;
+        User user = (User) target;
 
         if (securityValidationService.hasXssPayload(user.getFirstname())) {
             fireXssEvent();
