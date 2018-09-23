@@ -24,6 +24,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
@@ -42,25 +43,26 @@ public class Encounter {
     @GeneratedValue
     private Long id;
 
-    @Size(min = 3, max = 255, message = "Event is required and must be between 3 and 255 characters long")
+    @Size(min = 3, max = 255, message = "Event is required and must be between {min} and {max} characters long")
     @Column(nullable = false)
     private String event;
 
-    @Size(min = 3, max = 255, message = "Location is required and must be between 3 and 255 characters long")
+    @Size(min = 3, max = 255, message = "Location is required and must be between {min} and {max} characters long")
     @Column(nullable = false)
     private String location;
 
-    @Size(min = 3, max = 255, message = "Country is required and must be between 3 and 255 characters long")
+    @Size(min = 3, max = 255, message = "Country is required and must be between {min} and {max} characters long")
     @Column(nullable = false)
     private String country;
 
-    @Size(max = 1024, message = "Comment can not contain more than 1024 characters")
+    @Size(max = 1024, message = "Comment can not contain more than {max} characters")
     @Column(length = 1024)
     private String comment;
 
     @NotNull(message = "A date in the format MM/dd/yyyy is required for each encounter")
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @Past(message = "Encounter date must be in the past")
     private LocalDate date;
 
     @ManyToOne
