@@ -17,11 +17,9 @@
  */
 package de.dominikschadow.dukeencounters.encounter;
 
-import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.owasp.appsensor.core.DetectionSystem;
-import org.owasp.appsensor.core.User;
 import org.owasp.appsensor.core.event.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,7 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static de.dominikschadow.dukeencounters.TestData.twoTestEncounters;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -53,8 +51,6 @@ public class EncounterControllerTest {
     @MockBean
     private EncounterValidator encounterValidator;
     @MockBean
-    private UserService userService;
-    @MockBean
     private DetectionSystem detectionSystem;
     @MockBean
     private EventManager eventManager;
@@ -62,8 +58,7 @@ public class EncounterControllerTest {
     @Test
     @WithMockUser(username = "arthur@dent.com", password = "arthur@dent.com", roles = "USER")
     public void listEncounters() throws Exception {
-        given(encounterService.getEncounters(anyString())).willReturn(twoTestEncounters());
-        given(userService.getUser()).willReturn(new User("Test"));
+        given(encounterService.getEncounters(anyString(), anyString())).willReturn(twoTestEncounters());
 
         mvc.perform(get("/encounters"))
                 .andExpect(status().isOk())

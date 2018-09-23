@@ -44,7 +44,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.owasp.appsensor.core.DetectionPoint.Category.COMMAND_INJECTION;
-import static org.springframework.data.jpa.domain.Specifications.where;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 /**
  * CRUD service for all encounter related operations.

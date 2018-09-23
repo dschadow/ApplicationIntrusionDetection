@@ -19,11 +19,11 @@ package de.dominikschadow.dukeencounters;
 
 import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.encounter.Encounter;
-import de.dominikschadow.dukeencounters.user.User;
 import de.dominikschadow.dukeencounters.search.SearchFilter;
+import de.dominikschadow.dukeencounters.user.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +34,7 @@ import java.util.List;
 public class TestData {
     public static Confirmation testConfirmation() {
         Confirmation testConfirmation = new Confirmation();
-        testConfirmation.setId(1);
+        testConfirmation.setId(1L);
         testConfirmation.setEncounter(testEncounter(1));
         testConfirmation.setUser(testUser());
 
@@ -42,10 +42,7 @@ public class TestData {
     }
 
     public static User testUser() {
-        User testUser = new User();
-        testUser.setUsername("test");
-
-        return testUser;
+        return User.builder().firstname("I am").lastname("a User").email("test@test.de").password("test").enabled(true).username("test").build();
     }
 
     public static Encounter testEncounter(long id) {
@@ -53,7 +50,7 @@ public class TestData {
         testEncounter.setId(id);
         testEncounter.setComment("Test");
         testEncounter.setCountry("Test");
-        testEncounter.setDate(new Date());
+        testEncounter.setDate(LocalDate.now());
 
         return testEncounter;
     }

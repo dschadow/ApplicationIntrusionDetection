@@ -37,10 +37,9 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class Authority implements GrantedAuthority {
     @Id
-    @GeneratedValue
-    private Long id;
     @NotBlank(message = "Username may not be null")
     private String username;
+
     @NotBlank(message = "Authority may not be null")
     private String authority;
 }

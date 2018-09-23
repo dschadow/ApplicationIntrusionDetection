@@ -18,14 +18,13 @@
 package de.dominikschadow.dukeencounters.user;
 
 import de.dominikschadow.dukeencounters.encounter.Authority;
-import de.dominikschadow.dukeencounters.user.Level;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,28 +45,38 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
-    @Length(min = 3, max = 255, message = "Firstname is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Firstname is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String firstname;
-    @Length(min = 3, max = 255, message = "Lastname is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Lastname is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String lastname;
-    @Length(min = 3, max = 255, message = "Username is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Username is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String username;
+
     @Email(message = "E-mail address is required")
     @Column(nullable = false)
     private String email;
-    @Length(min = 10, max = 1024, message = "Password is required and must be between 10 and 1024 characters long")
+
+    @Size(min = 10, max = 1024, message = "Password is required and must be between 10 and 1024 characters long")
     @Column(nullable = false, length = 60)
     private String password;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime registrationDate;
+
     @Enumerated(EnumType.STRING)
     private Level level;
+
     private boolean enabled;
+
     @OneToOne
+    @JoinColumn(name = "username")
     private Authority authority;
 
     @Override

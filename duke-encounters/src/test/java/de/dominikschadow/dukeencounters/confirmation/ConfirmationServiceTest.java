@@ -28,11 +28,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static de.dominikschadow.dukeencounters.TestData.testConfirmation;
-import static de.dominikschadow.dukeencounters.TestData.testEncounter;
+import static de.dominikschadow.dukeencounters.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 
 /**
@@ -82,8 +81,9 @@ public class ConfirmationServiceTest {
 
     @Test
     public void getOwnConfirmationsShouldReturnConfirmations() {
-        given(repository.findAllByUsername(anyString())).willReturn(Lists.newArrayList(testConfirmation()));
-        List<Confirmation> confirmations = service.getConfirmations(user, "own");
+        given(repository.findAllByUsername(testUser().getUsername())).willReturn(Lists.newArrayList(testConfirmation()));
+
+        List<Confirmation> confirmations = service.getConfirmations(testUser(), "own");
 
         assertThat(confirmations.size()).isEqualTo(1);
     }
@@ -91,7 +91,7 @@ public class ConfirmationServiceTest {
     @Test
     public void getConfirmationsWithTypeNullShouldReturnAllConfirmations() {
         given(repository.findAll()).willReturn(Lists.newArrayList(testConfirmation()));
-        List<Confirmation> confirmations = service.getConfirmations(user, null);
+        List<Confirmation> confirmations = service.getConfirmations(null, null);
 
         assertThat(confirmations.size()).isEqualTo(1);
     }
@@ -120,9 +120,10 @@ public class ConfirmationServiceTest {
 
     @Test
     public void addConfirmationWithValidDataShouldSucceed() {
-        given(encounterService.getEncounterById(anyLong())).willReturn(testEncounter(1));
+        given(encounterService.getEncounterById("test", 1)).willReturn(testEncounter(1));
         given(repository.save(any(Confirmation.class))).willReturn(testConfirmation());
-        Confirmation confirmation = service.addConfirmation("test", 1);
+
+        Confirmation confirmation = service.addConfirmation(testUser(), 1);
 
         assertThat(confirmation.getEncounter().getId()).isEqualTo(1);
         assertThat(confirmation.getUser().getUsername()).isEqualTo("test");

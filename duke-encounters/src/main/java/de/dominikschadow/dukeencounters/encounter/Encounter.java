@@ -21,10 +21,10 @@ import de.dominikschadow.dukeencounters.confirmation.Confirmation;
 import de.dominikschadow.dukeencounters.user.User;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,26 +41,33 @@ public class Encounter {
     @Id
     @GeneratedValue
     private Long id;
-    @Length(min = 3, max = 255, message = "Event is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Event is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String event;
-    @Length(min = 3, max = 255, message = "Location is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Location is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String location;
-    @Length(min = 3, max = 255, message = "Country is required and must be between 3 and 255 characters long")
+
+    @Size(min = 3, max = 255, message = "Country is required and must be between 3 and 255 characters long")
     @Column(nullable = false)
     private String country;
-    @Length(max = 1024, message = "Comment can not contain more than 1024 characters")
+
+    @Size(max = 1024, message = "Comment can not contain more than 1024 characters")
     @Column(length = 1024)
     private String comment;
+
     @NotNull(message = "A date in the format MM/dd/yyyy is required for each encounter")
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private LocalDate date;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encounter")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounter")
     private List<Confirmation> confirmations;
 
     public String getLikelihood() {

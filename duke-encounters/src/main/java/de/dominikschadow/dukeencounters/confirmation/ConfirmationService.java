@@ -79,10 +79,10 @@ public class ConfirmationService {
         return getConfirmationByUsernameAndEncounterId(username, encounterId) != null;
     }
 
-    public List<Confirmation> getConfirmations(@NonNull final User user, final String type) {
+    public List<Confirmation> getConfirmations(final User user, final String type) {
         List<Confirmation> confirmations;
 
-        if (Objects.equals("own", type)) {
+        if (user != null && Objects.equals("own", type)) {
             log.warn(SecurityMarkers.SECURITY_AUDIT, "Querying confirmations for user {}", user.getUsername());
 
             confirmations = repository.findAllByUsername(user.getUsername());

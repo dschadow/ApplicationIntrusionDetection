@@ -18,24 +18,20 @@
 package de.dominikschadow.dukeencounters.encounter;
 
 import de.dominikschadow.dukeencounters.config.DukeEncountersProperties;
-import de.dominikschadow.dukeencounters.user.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.owasp.appsensor.core.DetectionSystem;
 import org.owasp.appsensor.core.event.EventManager;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static de.dominikschadow.dukeencounters.TestData.testEncounter;
-import static de.dominikschadow.dukeencounters.TestData.threeTestEncounters;
-import static de.dominikschadow.dukeencounters.TestData.twoTestEncounters;
+import static de.dominikschadow.dukeencounters.TestData.*;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 
 /**
  * Tests the [@link EncounterService} class.
@@ -45,8 +41,6 @@ import static org.mockito.Matchers.anyString;
 public class EncounterServiceTest {
     @Mock
     private EncounterRepository repository;
-    @Mock
-    private UserService userService;
     @Mock
     private EventManager ids;
     @Mock
@@ -59,14 +53,14 @@ public class EncounterServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new EncounterService(repository, userService, ids, detectionSystem, properties);
+        service = new EncounterService(repository, ids, detectionSystem, properties);
     }
 
     @Test
     public void getLatestEncountersInsideLimitsShouldReturnList() {
         given(properties.getLatestAmount()).willReturn(2);
-        given(repository.findWithPageable(anyObject())).willReturn(twoTestEncounters());
-        List<Encounter> latestEncounters = service.getLatestEncounters();
+        given(repository.findWithPageable(any(Pageable.class))).willReturn(twoTestEncounters());
+        List<Encounter> latestEncounters = service.getLatestEncounters("test");
 
         assertThat(latestEncounters.size()).isEqualTo(2);
     }
@@ -74,8 +68,8 @@ public class EncounterServiceTest {
     @Test
     public void getLatestEncountersOutsideLimitsFiresSqlIEvent() {
         given(properties.getLatestAmount()).willReturn(2);
-        given(repository.findWithPageable(anyObject())).willReturn(threeTestEncounters());
-        List<Encounter> latestEncounters = service.getLatestEncounters();
+        given(repository.findWithPageable(any(Pageable.class))).willReturn(threeTestEncounters());
+        List<Encounter> latestEncounters = service.getLatestEncounters("test");
 
         assertThat(latestEncounters.size()).isEqualTo(3);
     }

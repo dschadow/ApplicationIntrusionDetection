@@ -38,12 +38,15 @@ public class Confirmation {
     @Id
     @GeneratedValue
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "encounter_id", nullable = false)
     private Encounter encounter;
+
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
