@@ -55,7 +55,7 @@
 
     <properties>
         <docker.image.prefix>dschadow</docker.image.prefix>
-        <appsensor.version>2.3.3</appsensor.version>
+        <appsensor.version>3.0.0</appsensor.version>
         <boxfuse.version>1.33.0.1460</boxfuse.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -124,6 +124,11 @@
                 <version>${appsensor.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.8.1</version>
+            </dependency>
             <dependency>
                 <groupId>org.owasp</groupId>
                 <artifactId>security-logging-logback</artifactId>
