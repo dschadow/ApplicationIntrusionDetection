@@ -49,7 +49,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.15.RELEASE</version>
+        <version>1.5.16.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -171,7 +171,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>1.1.1</version>
+                    <version>1.2.0</version>
                     <configuration>
                         <skipDockerBuild>true</skipDockerBuild>
                     </configuration>
@@ -207,7 +207,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>3.3.1</version>
+                <version>3.3.2</version>
                 <configuration>
                     <!-- analyzers not required in this project -->
                     <pyDistributionAnalyzerEnabled>false</pyDistributionAnalyzerEnabled>
